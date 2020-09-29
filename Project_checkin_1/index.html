@@ -1,0 +1,119 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel = "stylesheet" href = "styles.css">
+
+    <title>Stock Broker App</title>
+</head>
+<body>
+    <nav></nav>
+
+    <div id = "dashboard-body" class = "dashboard">
+
+        <div id = "portfolio" class = "view">
+            <div>
+                <h2>User Funds</h2>
+                <h4 id = "balance">Cash balance: $50</h4>
+                <h4 id = "total-value">Total portfolio value: $100</h4>
+            </div>
+          
+
+            <h2>Stocks Owned</h2>
+            <table>
+                <th>Symbol</th>
+                <th>Name</th>
+                <th>Shares Owned</th>
+                <th>AVG price paid</th>
+                <th>Current value</th>
+                <tr>
+                    <td>TES</td>
+                    <td>Tesla</td>
+                    <td>5</td>
+                    <td>$40</td>
+                    <td>$10</td>
+                </tr>
+            </table>
+        </div>
+
+
+        <div id = "unprocessed-order" class = "view">
+            <h2>Unprocessed Orders</h2>
+            <table>
+                <th>Symbol</th>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Price per share</th>
+                <th>Outstanding</th>
+                <th>Fulfilled</th>
+                <tr>
+                    <td>AAPL</td>
+                    <td>Apple</td>
+                    <td>Buy</td>
+                    <td>$10</td>
+                    <td>5</td>
+                    <td>3</td>
+                </tr>
+            </table>
+            
+
+        </div>
+
+
+        <div id = "watchlist" class = "view">
+            <h2>Watchlist</h2>
+            <table>
+                <th>Symbol</th>
+                <th>Name</th>
+                <th>Price per share</th>
+                <th>AVG price paid</th>
+                <th>Current value</th>
+                <tr>
+                    <td>AAPL</td>
+                    <td>Apple</td>
+                    <td>$10</td>
+                    <td>$40</td>
+                    <td>$100</td>
+                </tr>
+            </table>
+
+        </div>
+            
+
+
+        <div id = "event-subscriptions" class = "view">
+            <h2>Event Subscriptions</h2>
+            <table>
+                <th>Symbol</th>
+                <th>Name</th>
+                <th>Price per share</th>
+                <th>AVG price paid</th>
+                <th>Current value</th>
+                <th>Trigger</th>
+                <tr>
+                    <td>AAPL</td>
+                    <td>Apple</td>
+                    <td>$10</td>
+                    <td>$40</td>
+                    <td>+5% </td>
+                </tr>
+            </table>
+
+
+
+
+        </div>
+
+
+    </div>
+
+
+
+
+
+
+
+</body>
+
+<script src = "script.js"></script>
+</html>
