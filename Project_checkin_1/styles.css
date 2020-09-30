@@ -2,40 +2,87 @@
 
 
 .dashboard{
-    display: flex;
-    justify-content: space-evenly;
-    margin: 30px;
+
+
+    position: relative;
+    margin-left: auto;
+    margin-top: 3em;
+    
+    width: 85%;
+    height: 90%;
+    border: 3px solid #73AD21;
+    padding: 10px;
+
+
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(0px, 1fr));
+    grid-template-rows: repeat(auto-fit, minmax(0px, 1fr));
+    grid-gap: 1em;
+    align-items: top; 
+
+}
+ 
 
 
 
+.dashboard > div{
+  background: rgba(161,185,183,0.3);
+  padding: 1em;
+  border-radius: 1em;
+  border: 2px solid black;
+ 
 }
 
 
-.view{
 
-    margin-right: 10px;
-    border: 5px solid black;
-    height: 500;
-    width: auto;
 
+#portfolio{
+  grid-column: 1/2;
+  grid-row: 1/1;
+  
 
 }
+
+#unprocessed-orders{
+  grid-column: 1/2;
+  grid-row: 2/3;
+}
+
+
+#watchlist, #event-subscriptions{
+
+  grid-row: 1/3;
+}
+
+
+
 
 h2{
-
+    position: relative;
     text-align: center;
 }
 
+
+
   table {
     font-family: arial, sans-serif;
-    border-collapse: collapse;
+    table-layout: fixed;
+    width: 100%;
+    
+    /* border-collapse: collapse; */
     
   }
   
-  td, th {
+  th {
     border: 1px solid #dddddd;
+    font-size: 12;
+    padding-bottom: 5px;
+    width: auto;
+    /* word-wrap: break-word; */
   }
+
   
   tr:nth-child(even) {
     background-color: #dddddd;
   }  
+

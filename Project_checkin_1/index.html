@@ -10,34 +10,42 @@
     <nav></nav>
 
     <div id = "dashboard-body" class = "dashboard">
-
         <div id = "portfolio" class = "view">
-            <div>
+            <div id = "user-funds">
                 <h2>User Funds</h2>
                 <h4 id = "balance">Cash balance: $50</h4>
                 <h4 id = "total-value">Total portfolio value: $100</h4>
+                <label for="">Deposit Funds</label><br>
+                <input type="text" name="" id="">
+                <button>Deposit</button><br><br>
+                
+                <label for="">Widthdraw Funds</label><br>
+                <input type="text" name="" id="">
+                <button>Withdraw</button>
             </div>
           
+            <div id = "stock-owned">
+                <h2>Stocks Owned</h2>
+                <table>
+                    <th>Symbol</th>
+                    <th>Name</th>
+                    <th>Shares Owned</th>
+                    <th>AVG price paid</th>
+                    <th>Current value</th>
+                    <tr>
+                        <td>TES</td>
+                        <td>Tesla</td>
+                        <td>5</td>
+                        <td>$40</td>
+                        <td>$10</td>
+                    </tr>
+                </table>
 
-            <h2>Stocks Owned</h2>
-            <table>
-                <th>Symbol</th>
-                <th>Name</th>
-                <th>Shares Owned</th>
-                <th>AVG price paid</th>
-                <th>Current value</th>
-                <tr>
-                    <td>TES</td>
-                    <td>Tesla</td>
-                    <td>5</td>
-                    <td>$40</td>
-                    <td>$10</td>
-                </tr>
-            </table>
+            </div>
         </div>
 
 
-        <div id = "unprocessed-order" class = "view">
+        <div id = "unprocessed-orders" class = "view">
             <h2>Unprocessed Orders</h2>
             <table>
                 <th>Symbol</th>
@@ -65,8 +73,8 @@
             <table>
                 <th>Symbol</th>
                 <th>Name</th>
-                <th>Price per share</th>
-                <th>AVG price paid</th>
+                <th>$ / Share</th>
+                <th>Avg $ paid</th>
                 <th>Current value</th>
                 <tr>
                     <td>AAPL</td>
@@ -86,7 +94,7 @@
             <table>
                 <th>Symbol</th>
                 <th>Name</th>
-                <th>Price per share</th>
+                <th>$ / Share</th>
                 <th>AVG price paid</th>
                 <th>Current value</th>
                 <th>Trigger</th>
@@ -95,14 +103,18 @@
                     <td>Apple</td>
                     <td>$10</td>
                     <td>$40</td>
+                    <td>$60</td>
                     <td>+5% </td>
                 </tr>
+              
             </table>
 
 
 
 
         </div>
+          
+    
 
 
     </div>
