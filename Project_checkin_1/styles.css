@@ -1,5 +1,8 @@
 
-body {font-family: Arial, Helvetica, sans-serif;}
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-image: url("https://i.kym-cdn.com/entries/icons/facebook/000/029/959/Screen_Shot_2019-06-05_at_1.26.32_PM.jpg");
+}
 
 .dashboard{
 
@@ -7,7 +10,6 @@ body {font-family: Arial, Helvetica, sans-serif;}
     position: relative;
     margin-left: auto;
     margin-top: 3em;
-    
     width: 85%;
     height: 90%;
     border: 3px solid #73AD21;
