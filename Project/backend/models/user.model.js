@@ -8,7 +8,14 @@ const userSchema = new Schema({
     password: {type: String, required: true },
     userFunds: {type: Number, required: true },
      //we need to design a function that allows user/remove funds from their account
-    watchlist: [ {
+    
+    stockPortfolio: [ {
+        stockID: { type: String, required: true },
+        stockName: {type: String, required: true },
+        numberOfShares: {type: Number, required: true}
+
+    }],
+     watchlist: [ {
         stockID: { type: String, required: true }
     }],
 
@@ -22,21 +29,37 @@ const userSchema = new Schema({
         triggerOrder: {type: Boolean, required: true} //automated trading thing, unstructured
     }], 
 
-    buyOrders: [{  //so users can view/edit(?) their own buy/sell orders
+    unpBuyOrders: [{  //so users can view/edit(?) their own buy/sell orders
         stockID: {type: String, required: true},
         shares: {type: Number, required: true},
         price: {type: Number, required: true} //users bid
     }], 
 
-    sellOrders: [{
+    unpSellOrders: [{
+        stockID: {type: String, required: true},
+        shares: {type: Number, required: true},
+        price: {type: Number, required: true} //users price to sell
+    }],
+
+    pBuyOrders: [{  
+        stockID: {type: String, required: true},
+        shares: {type: Number, required: true},
+        price: {type: Number, required: true} //users bid
+    }], 
+
+    pSellOrders: [{
         stockID: {type: String, required: true},
         shares: {type: Number, required: true},
         price: {type: Number, required: true} //users price to sell
     }]
+    
 },{
     timestamps: true, //idk what this does ngl>???
 });
 
 const User = mongoose.model('User', userSchema);
+
+User.init().then(() => {
+});
 
 module.exports = User;

@@ -4,7 +4,7 @@ import './App.css';
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css"
 
 import Navbar from "./components/navbar.component";
-import RegisterUser from "./components/register-user.component";
+import Register from "./components/register-user.component";
 import LoginUser from "./components/login-user.component";
 
 
@@ -15,7 +15,7 @@ function App() {
     <div className="container">
       <Navbar />
       <br/>
-      <Route path="/register" component={RegisterUser} />
+      <Route path="/register" component={Register} />
       <Route path="/login" component={LoginUser} />
     </div>
     </Router>
