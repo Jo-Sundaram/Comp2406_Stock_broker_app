@@ -36,3 +36,40 @@
     transform: rotate(360deg);
   }
 }
+
+/* all the login/logout css */
+
+.userinputform{
+
+  position: relative;
+  background-color: #d3dee6;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 3em;
+  
+  width: 40%;
+  height: auto;
+  padding: 30px;
+}
+
+.logregfield{
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+.submitform{
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+.submitform:hover{
+  opacity: 0.8;
+}
