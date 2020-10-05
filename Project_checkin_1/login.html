@@ -2,36 +2,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel = "stylesheet" href = "static/css/styles.css">
+    <link rel = "stylesheet" href = "static/css/logreg.css">
 
     <title>Stock Broker App - Login</title>
 </head>
 <body>
     <div class="userinputform">
-        <h2>Sign In</h2>
+        <h2 class="text">Sign In</h2>
         <div className="formgroup">
-            <label><b>Email</b></label></br>
+            <label class="text"><b>Email</b></label></br>
             <input type="text" class="logregfield" placeholder="Enter Email">
         </div>
 
         <div className="formgroup">
-            <label><b>Password</b></label></br>
+            <label class="text"><b>Password</b></label></br>
             <input type="text" class="logregfield" placeholder="Enter Password">
         </div>
 
         <label>
-            <small><input type="checkbox" checked="checked" name="remember"> Remember Me</small>
+            <small class="text"><input type="checkbox" checked="checked" name="remember" > Remember Me</small>
         </label></br>
 
         <input type=button class="submitform" onClick="location.href='index.html'" value='Login'></br>
         
-        <div style="background-color:#f1f1f1; padding: 16px">
-            <small>
-                Forgot <a href="#">Password?</a>
+        <div style="background-color:#2f2f3b; padding: 16px">
+            <small class="text">
+                Forgot <a href="#" class="text">Password?</a>
             </small>
     
-            <small style="float: right">
-                Don't have an account? <a href="register.html">Sign Up!</a>
+            <small style="float: right" class="text">
+                Don't have an account? <a href="register.html" class="text">Sign Up!</a>
             </small>
         </div>
 
