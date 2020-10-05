@@ -2,29 +2,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel = "stylesheet" href = "styles.css">
-
+    <link rel = "stylesheet" href = "static/css/index.css">
+    <script src="https://use.fontawesome.com/ba929a582c.js"></script>
+    <script src="https://kit.fontawesome.com/3a02ed1b73.js" crossorigin="anonymous"></script>
     <title>Stock Broker App</title>
 </head>
 <body>
-    <nav></nav>
+    <!--  -->
+    <nav class="navbar">
+        <ul class="navbar-nav">
+          <li class="logo">
+            <a href="#" class="nav-link">
+              <span class="logo-text">Best Trade</span>
+              <i class="fas fa-angle-double-right"></i>
+            </a>
+          </li>
+    
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              
+              <span class="link-text">Search <br> Stocks</span>
+              <i class="fas fa-search"></i>
+            </a>
+          </li>
+          <li class="nav-item">
+                <a href="#" class="nav-link">
+                <span class="link-text">Your <br> Stocks</span>
+                <i class="fas fa-chart-line"></i>
+                </a>
+          </li>
 
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+             
+              <span class="link-text">Edit <br> Watchlist</span>
+              <i class="fas fa-eye"></i>
+            </a>
+          </li>
+    
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <span class="link-text">Edit <br> Subscriptions</span>
+              <i class="fas fa-bell"></i>
+            </a>
+          </li>
+    
+        
+    
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              
+              <span class="link-text">Account</span>
+              <i class="fas fa-user"></i>
+            </a>
+          </li>
+        </ul>
+      </nav>
+<!--  -->
+    <div id = "top-nav" class = "view">Welcome User</div>
     <div id = "dashboard-body" class = "dashboard">
-        <div id = "portfolio" class = "view">
-            <div id = "user-funds">
+            <div id = "user-funds" class = "view">
                 <h2>User Funds</h2>
                 <h4 id = "balance">Cash balance: $50</h4>
                 <h4 id = "total-value">Total portfolio value: $100</h4>
+
+                <div>
                 <label for="">Deposit Funds</label><br>
-                <input type="text" name="" id="">
-                <button>Deposit</button><br><br>
-                
+                <input type="text" name="" id="deposit-input">
+                <button id = "deposit">Deposit</button><br><br>
+                </div>
+                <div>
                 <label for="">Widthdraw Funds</label><br>
-                <input type="text" name="" id="">
-                <button>Withdraw</button>
+                <input type="text" name="" id="widthdraw-input">
+                <button> id = Withdraw</button>
+              </div>
             </div>
           
-            <div id = "stock-owned">
+         <div id = "stocks-owned" class = "view">
                 <h2>Stocks Owned</h2>
                 <table>
                     <th>Symbol</th>
@@ -42,7 +96,7 @@
                 </table>
 
             </div>
-        </div>
+    
 
 
         <div id = "unprocessed-orders" class = "view">
@@ -112,7 +166,7 @@
 
 
 
-        </div>
+        </div> 
           
     
 
@@ -127,5 +181,5 @@
 
 </body>
 
-<script src = "script.js"></script>
+<script src = "static/js/script.js"></script>
 </html>
