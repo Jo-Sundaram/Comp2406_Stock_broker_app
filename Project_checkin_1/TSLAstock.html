@@ -9,6 +9,7 @@
     <title>Stock Broker App - Search Stocks</title>
 </head>
 <body>
+    <!--  -->
     <nav class="navbar">
         <ul class="navbar-nav">
           <li class="logo">
@@ -19,14 +20,14 @@
           </li>
     
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="./TSLAstock.html" class="nav-link">
               
               <span class="link-text">Search <br> Stocks</span>
               <i class="fas fa-search"></i>
             </a>
           </li>
           <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="./index.html" class="nav-link">
                 <span class="link-text">Your <br> Stocks</span>
                 <i class="fas fa-chart-line"></i>
                 </a>
@@ -58,6 +59,110 @@
           </li>
         </ul>
       </nav>
+
+<!--  -->
+
+
+
+<div id = top-nav >
+    <div>
+    <label for="searchbar"> Search for stocks</label>
+    
+        <input type="text" name="" id="searchbar">
+        <button>Enter</button>
+    </div>
+
+    <div id = stock-name>
+        Stock name
+    </div>
+
+</div>
+
+<div id = "mainb-body" class = "main">
+
+    <div id = recent-asks>
+
+        <span>highest bid: </span>
+
+        <span> ask: </span> 
+
+    </div>
+
+    <div id = stock-processed-history>
+       <b> History of Processed Orders</b>
+
+        <table>
+            <th>Sell Price</th>
+            <th>Bidder Username</th>
+            <th>Seller Username</th>
+            <tr>
+                <td>$5</td>
+                <td>Joe</td>
+                <td>Bob</td>
+              
+            </tr>
+            <tr>
+                <td>$5</td>
+                <td>Joe</td>
+                <td>Bob</td>
+              
+            </tr>
+            <tr>
+                <td>$5</td>
+                <td>Joe</td>
+                <td>Bob</td>
+              
+            </tr>
+            <tr>
+                <td>$5</td>
+                <td>Joe</td>
+                <td>Bob</td>
+              
+            </tr>
+            <tr>
+                <td>$5</td>
+                <td>Joe</td>
+                <td>Bob</td>
+              
+            </tr>
+        </table>
+
+    </div>
+
+
+    <div id = place-buy>
+        <div className="formgroup">
+            <b>Place Buy Order</b></br>
+            <label>Enter amount</label>
+            <input type="text" class="logregfield" placeholder="$50">
+        </div>
+
+    </div>
+    
+    
+    <div id = create-event>
+        <div className="formgroup">
+            <b>Create an Event Subscription</b></br>
+            <label>Select Parameter</label>
+            <select name="select" id = select-params>
+                <option value="incPrcnt">+ %</option>
+                <option value="decPrcnt">- %</option>
+                <option value="incDollar">+ $</option>
+                <option value="decDollar">- $</option>
+            </select> <br>
+
+            <label>Enter amount</label>
+            <input type="text" class="logregfield" placeholder="%10">
+        </div>
+
+    </div>
+
+
+
+
+
+
+</div>
 
 
 
