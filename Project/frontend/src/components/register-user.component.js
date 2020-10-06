@@ -71,10 +71,10 @@ export default class Register extends Component{
     render() {
         return (
         <div class="userinputform">
-            <h2>Register</h2>
+            <h2 className="text">Register</h2>
             <form onSubmit={this.onSubmit}>
                 <div className="formgroup">
-                    <label><b>Email</b></label>
+                    <label className="text"><b>Email</b></label>
                     <input type="text" 
                         required class="logregfield"
                         value={this.state.email}
@@ -84,7 +84,7 @@ export default class Register extends Component{
                 </div>
         
                 <div className="formgroup">
-                    <label><b>Username</b></label>
+                    <label className="text"><b>Username</b></label>
                     <input type="text" 
                         required class="logregfield"
                         value={this.state.username}
@@ -94,7 +94,7 @@ export default class Register extends Component{
                 </div>
         
                 <div className="formgroup">
-                    <label><b>Password</b></label>
+                    <label className="text"><b>Password</b></label>
                     <input type="text" 
                         required class="logregfield"
                         value={this.state.password}
@@ -108,10 +108,10 @@ export default class Register extends Component{
                 </div>
             </form>
     
-            <div style={{backgroundColor:"#f1f1f1", padding: "16px"}}>
+            <div style={{backgroundColor:"#2f2f3b", padding: "16px"}}>
     
-                <small style={{float: "right"}}>
-                    Have an account? <Link to="/login">Sign In!</Link>
+                <small style={{float: "right"}} className="text">
+                    Have an account? <Link to="/login" className="text">Sign In!</Link>
                 </small>
             <br></br>
             </div>

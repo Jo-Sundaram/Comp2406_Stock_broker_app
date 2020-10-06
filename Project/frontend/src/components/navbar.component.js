@@ -5,22 +5,54 @@ export default class Navbar extends Component {
 
   render() {
     return (
-      <nav className="navbar navbar-dark bg-dark navbar-expand-lg">
-        <Link to="/" className="navbar-brand">Home</Link>
-        <div className="collpase navbar-collapse">
-        <ul className="navbar-nav mr-auto">
-          <li className="navbar-item">
-          <Link to="/" className="nav-link">Home</Link>
+      <nav class="navbar">
+        <ul class="navbar-nav">
+          <li class="logo">
+            <a href="#" class="nav-link">
+              <span class="logo-text">Best Trade</span>
+              <i class="fas fa-angle-double-right"></i>
+            </a>
           </li>
-          <li className="navbar-item">
-          <Link to="/register" className="nav-link">Register</Link>
+    
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              
+              <span class="link-text">Search <br/> Stocks</span>
+              <i class="fas fa-search"></i>
+            </a>
           </li>
-          <li className="navbar-item">
-          <Link to="/login" className="nav-link">Login</Link>
+          <li class="nav-item">
+                <a href="#" class="nav-link">
+                <span class="link-text">Your <br/> Stocks</span>
+                <i class="fas fa-chart-line"></i>
+                </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+             
+              <span class="link-text">Edit <br/> Watchlist</span>
+              <i class="fas fa-eye"></i>
+            </a>
+          </li>
+    
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <span class="link-text">Edit <br/> Subscriptions</span>
+              <i class="fas fa-bell"></i>
+            </a>
+          </li>
+    
+        
+    
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              
+              <span class="link-text">Account</span>
+              <i class="fas fa-user"></i>
+            </a>
           </li>
         </ul>
-        </div>
-      
       </nav>
     );
   }
