@@ -8,7 +8,7 @@
     <script src="https://kit.fontawesome.com/3a02ed1b73.js" crossorigin="anonymous"></script>
     <title>Stock Broker App - Search Stocks</title>
 </head>
-<body>
+<body onload="init()">
     <!--  -->
     <nav class="navbar">
         <ul class="navbar-nav">
@@ -34,7 +34,7 @@
           </li>
 
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="" class="nav-link">
              
               <span class="link-text">Edit <br> Watchlist</span>
               <i class="fas fa-eye"></i>
@@ -42,7 +42,7 @@
           </li>
     
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="" class="nav-link">
               <span class="link-text">Edit <br> Subscriptions</span>
               <i class="fas fa-bell"></i>
             </a>
@@ -69,7 +69,7 @@
     <label for="searchbar"> Search for stocks</label>
     
         <input type="text" name="" id="searchbar">
-        <button>Enter</button>
+        <button id = "search-enter">Enter</button>
     </div>
 
     <div id = stock-name>
@@ -91,7 +91,7 @@
     <div id = stock-processed-history>
        <b> History of Processed Orders</b>
 
-        <table>
+        <table id = stock-history>
             <th>Sell Price</th>
             <th>Bidder Username</th>
             <th>Seller Username</th>
@@ -167,5 +167,5 @@
 
 
 </body>
-<script src = "script.js"></script>
+<script src = "static/js/stocks.js"></script>
 </html>
