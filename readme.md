@@ -1,5 +1,3 @@
-i do not know how to format a readme file
-
 Jothika Sundaram 101147833
 Samee Shahood 101143479
 
@@ -48,17 +46,18 @@ This contains a functioning backend (in the backend folder), which runs on Expre
 
 In order to start the application the user will need to install packages first.
 
-1. cd backend
-2. npm install(?)
-3. node server
+1. Make sure your command line is in the backend (cd backend)
+2. Install all required libraries (npm install in the command line)
+3. Start the backend server, using node server
 
-After starting the server is started, localhost:5000 should go live.
+After starting the server is started, http://localhost:5000 should go live.
 
 Next start the frontend
-1. cd frontend
-2. Install all required libraries using npm install
-3. Start the frontend, npm install
-4. Navigate to localhost:3000
+1.  Make sure your command line is in the frontend (cd frontend)
+2. Install all required libraries (npm install in the command line)
+3. Start the react server
+4. Navigate to http://localhost:3000/login
+
 
 Backend Code:
 server.js
@@ -105,5 +104,40 @@ item you just POSTed to the database will appear.
 
 If you try adding an item with an email/username that already exists to the database through this route, an error will appear as duplicate users are not permitted.
 
-For stocks, follow the same instructions for the users, but instead use http://localhost:5000/stocks/add and http://localhost:5000/users. 
+For stocks, follow the same instructions for the users, but instead use http://localhost:5000/stocks/add and http://localhost:5000/stocks. 
+In the textbox when sending a POST request to stocks/add, use:
+{
+	"stockFullName": "CIENA",
+    "stockAbbreviation": "$CIEN",
+    "eventSubscriptions" : [],
+    "sellOrders" : [],
+    "buyOrders": []
+}
+You can test the POST request by create stock objects of your own! The server should not accept stocks with duplicate names or abbreviations.
+
+If you'd like to input objects into the array objects (such as watchlist, sellOrders, etc.), they would need to follow the same structure provided in the schema.
+----
+Frontend Code:
+
+src/App.js
+All the websites routes and components are imported into the application here. The /register path would lead the user to the registration page,
+the /login path would lead the user to the login page, and the /home page would lead the user to the landing page after login.
+
+src/components/login-user.component.js (based off login.html in the Project_checkin_1 folder)
+This is the component that allows for the user to login on the website. Currently this component has no user authentication system, but this will be implemented in the future. Upon logging in, the user will be re-directed to the home page.
+
+src/register-user.component.js (based off register.html in the Project_checkin_1 folder)
+This is the component for users to register their accounts on. Currently, users can actually be created here as there is functionality implemented in order to take in user input in the form provided, and send the data to the backend and add the user to the database (through a POST request sent to http://localhost:5000/users/add). There is no validation here that will prevent the user from sending a POST request with invalid entires, however if a duplicate is sent through the POST request, the user will not be created on the mongoDB. (The user will not be notified, but this will be fixed in the future).
+
+src/home-page.comnent.js (based off index.html in the Project_checkin_1 folder)
+This is the landing page for the user upon logging in. Here the user will be able to view their account information.
+
+src/components/navbar.component.js (based off the navigation 
+This is the component that features the HTML for the navigation bar. It can be seen by the user on pages that logged in users can only see. This component is used as an extension to other components in the application. 
+
+In order to use the frontend:
+1. Make sure the application is running (npm start after cd frontend)
+2. Navigate to http://localhost:3000/login in your browser once the react application is running
+3. Since the register function can add users, create an account by clicking the "Sign Up" re-direct, or navigating to http://localhost:3000/register. There is no validation in place, however if you go to postman and do a GET request for users, you will see your account added to the database (unless it has a duplicate email or username!)
+4. You can navigate to the home page by either clicking the login button on the login page (there is no login functionality yet), or by navigating to http://localhost:3000/home.
 
