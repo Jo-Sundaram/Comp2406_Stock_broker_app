@@ -68,12 +68,12 @@
     <div>
     <label for="searchbar"> Search for stocks</label>
     
-        <input type="text" name="" id="searchbar">
+        <input type="text" name="" id="searchbar", placeholder="TSLA">
         <button id = "search-enter">Enter</button>
     </div>
 
     <div id = stock-name>
-        Stock name
+        Stock name: 
     </div>
 
 </div>
@@ -82,9 +82,9 @@
 
     <div id = recent-asks>
 
-        <span>highest bid: </span>
+        <h4><span id = bid> Highest Bid: $</span></h4>
 
-        <span> ask: </span> 
+        <h4><span id = ask> Ask: $</span> </h4>
 
     </div>
 
@@ -93,38 +93,10 @@
 
         <table id = stock-history>
             <th>Sell Price</th>
-            <th>Bidder Username</th>
+            <th>Shares</th>
+            <th>BidderUsername</th>
             <th>Seller Username</th>
-            <tr>
-                <td>$5</td>
-                <td>Joe</td>
-                <td>Bob</td>
-              
-            </tr>
-            <tr>
-                <td>$5</td>
-                <td>Joe</td>
-                <td>Bob</td>
-              
-            </tr>
-            <tr>
-                <td>$5</td>
-                <td>Joe</td>
-                <td>Bob</td>
-              
-            </tr>
-            <tr>
-                <td>$5</td>
-                <td>Joe</td>
-                <td>Bob</td>
-              
-            </tr>
-            <tr>
-                <td>$5</td>
-                <td>Joe</td>
-                <td>Bob</td>
-              
-            </tr>
+       
         </table>
 
     </div>
@@ -133,10 +105,13 @@
     <div id = place-buy>
         <div className="formgroup">
             <b>Place Buy Order</b></br>
-            <label>Enter amount</label>
-            <input type="text" class="logregfield" placeholder="$50">
+            <label>Enter number of shares: </label>
+            <input type="text" class="logregfield" placeholder="50">
+            <label>Enter amount:  $</label>
+            <input type="text" class="logregfield" placeholder="100">
+            
         </div>
-
+      <button id=place-order>Place Order</button>
     </div>
     
     
@@ -153,8 +128,10 @@
 
             <label>Enter amount</label>
             <input type="text" class="logregfield" placeholder="%10">
-        </div>
+           
 
+        </div>
+       <button id=place-order>Add Subscription</button>
     </div>
 
 

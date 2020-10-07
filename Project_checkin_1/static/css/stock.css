@@ -19,7 +19,7 @@
     /* margin-top: 3em; */
     width: auto;
     height: auto;
-    border: 3px solid #114411;
+    /* border: 3px solid #114411; */
     padding: 10px;
 
 
@@ -75,8 +75,15 @@
     grid-row: 2/3;
 }
 
+#place-buy,#create-event{
+  flex-direction: column;
+}
 
 
+
+h4{
+  margin: 0.5rem;
+}
 
 table {
     font-family: arial, sans-serif;

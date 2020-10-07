@@ -1,22 +1,19 @@
 
 
-
-
-
-
 let stocks = {
     AXP:{
             id: 0,
             symbol: "AXP",
             name: "AMERICAN EXPRESS",
             buyOrders:{			
-                userID:[],
-                shares:[],
-                price:[]
+                userID:["Jim"],
+                shares:[5],
+                price:[30]
             },
             sellOrders:{	
-                shares:[],
-                price:[]
+                userID:["Bill"],
+                shares:[6],
+                price:[60]
             },
             eventSubscriptions:{		
                 userID:[],
@@ -26,17 +23,18 @@ let stocks = {
 
         },
     AAPL:{
-            id: 0,
+            id: 1,
             symbol: "AAPL",
             name: "APPLE",
             buyOrders:{			
-                userID:[],
-                shares:[],
-                price:[]
+                userID:["Bill"],
+                shares:[6],
+                price:[45]
             },
             sellOrders:{	
-                shares:[],
-                price:[]
+                userID:["Joe"],
+                shares:[7],
+                price:[40]
             },
             eventSubscriptions:{		
                 userID:[],
@@ -46,17 +44,18 @@ let stocks = {
 
         },
     IBM:{
-            id: 0,
+            id: 2,
             symbol: "IBM",
             name: "IBM",
             buyOrders:{			
-                userID:[],
-                shares:[],
-                price:[]
+                userID:["Joanne"],
+                shares:[4],
+                price:[34]
             },
             sellOrders:{	
-                shares:[],
-                price:[]
+                userID:["Ryan"],
+                shares:[8],
+                price:[40]
             },
             eventSubscriptions:{		
                 userID:[],
@@ -66,17 +65,18 @@ let stocks = {
 
         },
     MSFT:{
-            id: 0,
+            id: 3,
             symbol: "MSFT",
             name: "MICROSOFT",
             buyOrders:{			
-                userID:[],
-                shares:[],
-                price:[]
+                userID:["Lisa"],
+                shares:[3],
+                price:[58]
             },
-            sellOrders:{	
-                shares:[],
-                price:[]
+            sellOrders:{
+                userID:["Bill"],	
+                shares:[7],
+                price:[45]
             },
             eventSubscriptions:{		
                 userID:[],
@@ -86,17 +86,18 @@ let stocks = {
 
         },
     NKE:{
-            id: 0,
+            id: 4,
             symbol: "NKE",
             name: "NIKE",
             buyOrders:{			
-                userID:[],
-                shares:[],
-                price:[]
+                userID:["Neil"],
+                shares:[5],
+                price:[45]
             },
-            sellOrders:{	
-                shares:[],
-                price:[]
+            sellOrders:{
+                userID:["Tracy"],	
+                shares:[9],
+                price:[25]
             },
             eventSubscriptions:{		
                 userID:[],
@@ -106,17 +107,18 @@ let stocks = {
 
         },
     TSLA:{
-            id: 0,
+            id: 5,
             symbol: "TSLA",
             name: "TESLA",
             buyOrders:{			
-                userID:[],
-                shares:[],
-                price:[]
+                userID:["Elon"],
+                shares:[100],
+                price:[500]
             },
-            sellOrders:{	
-                shares:[],
-                price:[]
+            sellOrders:{
+                userID:["Bezos"],	
+                shares:[100],
+                price:[1000000]
             },
             eventSubscriptions:{		
                 userID:[],
@@ -126,17 +128,18 @@ let stocks = {
 
         },
     DOW:{
-            id: 0,
+            id: 6,
             symbol:"DOW",
             name: "DOW",
             buyOrders:{			
-                userID:[],
-                shares:[],
-                price:[]
+                userID:["Peter"],
+                shares:[3],
+                price:[56]
             },
-            sellOrders:{	
-                shares:[],
-                price:[]
+            sellOrders:{
+                userID:["Wendy"],	
+                shares:[6],
+                price:[66]
             },
             eventSubscriptions:{		
                 userID:[],
@@ -146,6 +149,10 @@ let stocks = {
 
         }
 }
+
+let nextID =7;
+
+
 
 function init(){
   
@@ -158,8 +165,24 @@ function init(){
 
 
 
+document.getElementById("search-enter").addEventListener('click',()=>{
+    let input = document.getElementById("searchbar");
 
-document.getElementById("search-enter").addEventListener('click', ()=>{
+    let stock = input.value;
+
+    // console.log(searchStock(stock));
+
+    extractData(searchStock(stock));
+    
+
+
+
+});
+
+
+
+
+/* document.getElementById("search-enter").addEventListener('click', ()=>{
 
     let table = document.getElementById("stock-history");
 
@@ -174,4 +197,66 @@ document.getElementById("search-enter").addEventListener('click', ()=>{
     console.log("helo")
 
 
-});
+}); */
+
+
+
+function searchStock(query){
+    console.log(stocks[(query.toUpperCase())]);
+
+    let queriedStock = stocks[(query.toUpperCase())];
+    try{
+       
+        if(queriedStock == undefined) throw "Stock not found"
+            
+        
+        
+    }catch(err){
+        alert(err);
+        return -1;
+    }   
+
+    
+
+    return queriedStock;
+
+}
+
+
+function extractData(queriedStock){
+
+    if (queriedStock==-1){
+        return;
+    }
+
+
+    let table = document.getElementById("stock-history");
+    let highestBid = document.getElementById("bid")
+    let ask = document.getElementById("ask")
+
+    let sellOrders = queriedStock.sellOrders;
+    let buyOrders = queriedStock.buyOrders;
+    console.log(table.rows.length )
+
+    if(table.rows.length >1){
+        table.deleteRow(1)
+    }
+
+    var row = table.insertRow(1);
+    var cell1 = row.insertCell(0);
+    var cell2 = row.insertCell(1);
+    var cell3 = row.insertCell(2);
+    var cell4 = row.insertCell(3);
+
+    cell1.innerHTML = sellOrders.price[0];
+    cell2.innerHTML = sellOrders.shares[0];
+    cell3.innerHTML = buyOrders.userID[0];
+    cell4.innerHTML = sellOrders.userID[0];
+
+  
+    highestBid.innerHTML = "Highest Bid: $"+buyOrders.price[0];
+    ask.innerHTML = "Ask: $"+sellOrders.price[0];
+
+    
+
+}

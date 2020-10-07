@@ -20,10 +20,10 @@
   /* START OF NAVBAR CSS */
   
   body::-webkit-scrollbar{
-    width: 0.55rem;
+    width: 0.45rem;
   }
   body::-webkit-scrollbar-track{
-    background: #1e1e24;
+    background: #1e1e2400;
   }
   body::-webkit-scrollbar-thumb{
     background: #b6b6b6;
