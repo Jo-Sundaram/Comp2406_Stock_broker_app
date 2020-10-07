@@ -3,7 +3,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel = "stylesheet" href = "static/css/navbar.css">
-    <link rel = "stylesheet" href = "static/css/stock.css">
+    <link rel = "stylesheet" href = "static/css/stocksearch.css">
     <script src="https://use.fontawesome.com/ba929a582c.js"></script>
     <script src="https://kit.fontawesome.com/3a02ed1b73.js" crossorigin="anonymous"></script>
     <title>Stock Broker App - Search Stocks</title>
@@ -20,7 +20,7 @@
           </li>
     
           <li class="nav-item">
-            <a href="./TSLAstock.html" class="nav-link">
+            <a href="./search.html" class="nav-link">
               
               <span class="link-text">Search <br> Stocks</span>
               <i class="fas fa-search"></i>
@@ -72,12 +72,16 @@
         <button id = "search-enter">Enter</button>
     </div>
 
+   
+
 </div>
 
-<div id = "mainb-body" class = "main">
+<div id = "main-body" class = "main">
 
     <div id = recent-asks>
-
+      <div id = stock-name>
+        Stock Name: 
+      </div>
         <h4><span id = bid> Highest Bid: $</span></h4>
 
         <h4><span id = ask> Ask: $</span> </h4>
@@ -107,7 +111,10 @@
             <input type="text" class="logregfield" placeholder="100">
             
         </div>
-      <button id=place-order>Place Order</button>
+        <div>
+          <button id=place-order>Place Order</button>
+        </div>
+      
     </div>
     
     
@@ -124,16 +131,13 @@
 
             <label>Enter amount</label>
             <input type="text" class="logregfield" placeholder="%10">
-           
 
         </div>
-       <button id=place-order>Add Subscription</button>
+        <div>
+           <button id=place-order>Add Subscription</button>
+        </div>
+      
     </div>
-
-
-
-
-
 
 </div>
 
