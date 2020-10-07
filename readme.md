@@ -1,6 +1,6 @@
 i do not know how to format a readme file
 
-Jothika Sundaram [your number xd]
+Jothika Sundaram 101147833
 Samee Shahood 101143479
 
 Project selected: Stock Broker Application
@@ -49,7 +49,7 @@ This contains a functioning backend (in the backend folder), which runs on Expre
 In order to start the application the user will need to install packages first.
 
 1. cd backend
-2. node install(?)
+2. npm install(?)
 3. node server
 
 After starting the server is started, localhost:5000 should go live.
@@ -60,5 +60,50 @@ Next start the frontend
 3. Start the frontend, npm install
 4. Navigate to localhost:3000
 
-Backend
+Backend Code:
+server.js
+In server.js, a local server is opened on port 5000 in order to allow for communication with MongoDB, using mongoose, cors, expressJS and nodeJS. A "users" route, where all user infromation would be accessed, and a "stock" route, where stock information would be accessed, are initialized in the server here.
+
+models/user.model.js
+The model, or schema, for a user object in mongoDB in posted here. The purpose of this schema is to serve as a required format/template for all user objects in the database to follow.
+The structure details of the user schema is on the rough outline provided.
+
+
+models/stocks.model.js
+The model, or schema, for a stock  object in mongoDB in posted here. The purpose of this schema is to serve as a required format/template for all stock  objects in the database to follow. The structure details of the stock schema is on the rough outline provided. 
+
+routes/users.js
+Here, both GET and POST requests are stored for the user collection in the database. When creating a POST request, the user would have to follow the users/add address and follow the user schema model in order to create a user. Otherwise, when creating GET request, the program would follow the user schema model in order to get each user in the database.(users route)
+
+routes/stocks.js
+Here, both GET and POST requests are stored for the stock collection in the database. When creating a POST request, the user would have to follow the stocks/add address and follow the user schema model in order to create a stock. Otherwise, when creating GET request, the program would follow the user schema model in order to get each stock in the database.(users route)
+
+For creating both stocks and users through POST requests, the program requires for both that the model schema be followed. There are parameters within both models stock and user stock to prevent duplicate users or stocks.
+
+In order to test the backend, an application such as Postman (or other API development tools) would be required.
+If the backend is correctly running, follow the following instructions
+1. Open Postman/your API development tool, and enter the request URL to "http://localhost:5000/users/add", and set the request type to POST.
+2. Go to the "Body" tab, and ensure you're set to raw, JSON test.
+3. Enter the following into the text box:
+{
+    "username": "SameeShahood",
+    "email": "sameeshahood@test.com",
+    "password": "password",
+    "userFunds": 0,
+    "watchlist": [],
+    "notifications": [],
+    "eventSubscriptions": [],
+    "stockPortfolio": [],
+    "unpBuyOrders": [],
+    "unpSellOrders": [],
+    "pBuyOrders": [],
+    "pSellOrders": []
+}
+4. Send the request.
+5. Enter the request URL to "http://localhost:5000/users", and set the request type to GET, and send the request. The 
+item you just POSTed to the database will appear.
+
+If you try adding an item with an email/username that already exists to the database through this route, an error will appear as duplicate users are not permitted.
+
+For stocks, follow the same instructions for the users, but instead use http://localhost:5000/stocks/add and http://localhost:5000/users. 
 
