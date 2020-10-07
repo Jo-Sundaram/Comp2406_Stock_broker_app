@@ -231,16 +231,18 @@ function extractData(queriedStock){
 
 
     let table = document.getElementById("stock-history");
-    let highestBid = document.getElementById("bid")
-    let ask = document.getElementById("ask")
+    let highestBid = document.getElementById("bid");
+    let ask = document.getElementById("ask");
+    let name = document.getElementById("stock-name");
 
     let sellOrders = queriedStock.sellOrders;
     let buyOrders = queriedStock.buyOrders;
-    console.log(table.rows.length )
+    console.log(table.rows.length );
 
     if(table.rows.length >1){
-        table.deleteRow(1)
+        table.deleteRow(1);
     }
+
 
     var row = table.insertRow(1);
     var cell1 = row.insertCell(0);
@@ -257,6 +259,7 @@ function extractData(queriedStock){
     highestBid.innerHTML = "Highest Bid: $"+buyOrders.price[0];
     ask.innerHTML = "Ask: $"+sellOrders.price[0];
 
+    name.innerHTML = "Stock Name: " + queriedStock.name;
     
 
 }
