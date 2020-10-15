@@ -1,0 +1,44 @@
+
+
+.list-container{
+    margin-left: 5em ;
+    border: 2px solid black;
+    display: flex;
+    /* flex-direction: row; */
+    width: auto;
+    justify-content: space-between;
+
+}
+
+
+
+.watchlist{
+    border: 1px solid black;
+    width: auto;
+    height:50%;
+
+}
+
+
+
+table {
+    font-family: arial, sans-serif;
+    table-layout: fixed;
+    width: 100%;
+    
+    /* border-collapse: collapse; */
+    
+  }
+  
+th {
+border: 1px solid #dddddd;
+font-size: 12;
+padding-bottom: 5px;
+width: 100%;
+word-wrap: break-word;
+}
+
+
+tr:nth-child(even) {
+background-color: #dddddd;
+}  

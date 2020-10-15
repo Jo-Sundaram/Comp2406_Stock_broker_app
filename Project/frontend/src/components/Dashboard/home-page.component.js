@@ -1,10 +1,16 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
+import Navbar from "../NavBar/navbar.component";
+import "./home-page.css"
+
     
 export default class Home extends Component{
     render() {
         return(
+           <div>
+            <div id = "top-nav" class = "view">Welcome User</div>
+            <Navbar/>
             <div id = "dashboard-body" class = "dashboard">
                 <div id = "user-funds" class = "view">
                     <h2>User Funds</h2>
@@ -19,7 +25,7 @@ export default class Home extends Component{
                     <div>
                     <label for="">Widthdraw Funds</label><br/>
                     <input type="text" name="" id="widthdraw-input" />
-                    <button> id = Withdraw</button>
+                    <button id = "withdraw">Withdraw</button>
                 </div>
                 </div>
                 
@@ -100,6 +106,7 @@ export default class Home extends Component{
                     </table>
                 </div>           
             </div>
+        </div>
         )
     }
 

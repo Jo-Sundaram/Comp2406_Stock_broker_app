@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
+import './NavBar.css'
+
 
 export default class Navbar extends Component {
 
@@ -15,25 +17,32 @@ export default class Navbar extends Component {
           </li>
     
           <li class="nav-item">
-            <a href="#" class="nav-link">
-              
+
+            <Link to = "/search">
+            <a  class="nav-link">
               <span class="link-text">Search <br/> Stocks</span>
               <i class="fas fa-search"></i>
             </a>
+            </Link>
           </li>
           <li class="nav-item">
-                <a href="#" class="nav-link">
+              <Link to ="/home">
+                <a class="nav-link">
                 <span class="link-text">Your <br/> Stocks</span>
                 <i class="fas fa-chart-line"></i>
                 </a>
+              </Link>
           </li>
 
           <li class="nav-item">
-            <a href="#" class="nav-link">
-             
-              <span class="link-text">Edit <br/> Watchlist</span>
-              <i class="fas fa-eye"></i>
-            </a>
+            <Link to = "/watchlist">
+              <a class="nav-link">
+              
+                <span class="link-text">Edit <br/> Watchlist</span>
+                <i class="fas fa-eye"></i>
+              </a>
+            </Link>
+
           </li>
     
           <li class="nav-item">
@@ -46,11 +55,15 @@ export default class Navbar extends Component {
         
     
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <Link to ="/account">
+             <a class="nav-link">
+                
+                <span class="link-text">Account</span>
+                <i class="fas fa-user"></i>
+              </a>
               
-              <span class="link-text">Account</span>
-              <i class="fas fa-user"></i>
-            </a>
+            </Link>
+           
           </li>
         </ul>
       </nav>

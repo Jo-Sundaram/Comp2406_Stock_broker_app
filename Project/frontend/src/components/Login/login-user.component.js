@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
-import './css/logreg.css';
+import './logreg.css';
 
     
 export default class LoginUser extends Component{
