@@ -122,7 +122,7 @@ export default class Search extends Component{
     onEsSubmit(e){
         e.preventDefault();
         var newEsArray = this.state.eventSubscriptions;
-        if(this.state.esParameter !=null && this.state.esAmount != null && this.state.esAmount != 0)
+        if(this.state.esParameter !=null && this.state.esAmount != null && this.state.esAmount != 0){
             newEsArray.push({
                 stockID: this.state.stockID,
                 parameter: this.state.EsParameter,
@@ -143,8 +143,10 @@ export default class Search extends Component{
             })
             .catch(res => {
                 console.log(res)
-                alert("ES creation failed. Please try again.")
+                alert("ES creation failed. Please try again.");
             })
+        }
+        window.location.reload(false);    
     }
 
     render(){

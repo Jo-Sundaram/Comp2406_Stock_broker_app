@@ -3,9 +3,123 @@ import {Link} from 'react-router-dom';
 import axios from 'axios';
 import Navbar from "../NavBar/navbar.component";
 import "./home-page.css"
+import requests from './requests.js';
 
     
 export default class Home extends Component{
+
+    constructor(props){
+        super(props);
+
+        this.onChangeOrderStock = this.onChangeOrderStock.bind(this);
+        this.onChangeOrderShares = this.onChangeOrderShares.bind(this);
+        this.onChangeOrderPrice = this.onChangeOrderPrice.bind(this);
+        this.onOrderSubmit = this.onOrderSubmit.bind(this);
+        
+
+        this.state = {
+            stockPortfolio: [],
+            unpUserSellOrders: [],
+
+            stockID: null,
+            shares: 0,
+            price: 0,
+        }
+    }
+
+    componentDidMount() {
+        console.log('reloaded');
+        axios.get('http://localhost:5000/users/5f890ebbbb89e66e947f5652') //dummy user ID in place
+            .then(response => {
+                this.setState({
+                    stockPortfolio: response.data.stockPortfolio,
+                    unpUserSellOrders: response.data.unpSellOrders
+                })
+                console.log(response.data.unpSellOrders)
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+    }
+
+    onChangeOrderStock(e){
+        this.setState({
+            stockID: e.target.value
+        });
+    }
+
+    onChangeOrderShares(e){
+        this.setState({
+            shares: e.target.value
+        });
+        console.log(this.state.stockID);
+    }
+
+    onChangeOrderPrice(e){
+        this.setState({
+            price: e.target.value
+        });
+    }
+
+    onOrderSubmit(e){
+        e.preventDefault();
+        const stockOrders = requests.getStockSellOrders(this.state.stockID);
+        
+        // if(this.state.stockID != null){
+        //     var newUserStockP = this.state.stockPortfolio;
+        //     var objIndex = newUserStockP.findIndex((obj => obj.stockID == this.state.stockID));
+        //     var newUserSellArray = this.state.unpUserSellOrders;
+        //     if(newUserStockP[objIndex].shares >= Number(this.state.shares)){
+        //         newUserSellArray.push({
+        //             stockID: this.state.stockID,
+        //             shares: Number(this.state.shares),
+        //             price: Number(this.state.price)
+        //         });
+        //         stockOrders.push({
+        //             userID: "jo",
+        //             shares: Number(this.state.shares),
+        //             price: Number(this.state.price)
+        //         });
+
+        //         newUserStockP[objIndex].shares = newUserStockP[objIndex].shares - Number(this.state.shares);
+        //         axios.all([    
+        //             axios({
+        //                 method: 'post',
+        //                 url: 'http://localhost:5000/users/update/5f890ebbbb89e66e947f5652', //dummy user
+        //                 data: {
+        //                     stockPortfolio: newUserStockP,
+        //                     unpSellOrders: newUserSellArray
+        //                 }
+        //             }),
+        //             axios({
+        //                 method: 'post',
+        //                 url: 'http://localhost:5000/stocks/update/'+this.state.stockID ,
+        //                 data: {
+        //                     sellOrders: stockOrders
+        //                 }
+        //             })
+        //         ])
+        //         .then(res => {
+        //             console.log(res.data)                            
+        //             alert("Successfully created sell order")
+        //             window.location.reload(false)
+                    
+        //         })
+        //         .catch(res => {
+        //             console.log(res)
+        //             alert("Sell Order creation failed. Please try again.")
+        //             window.location.reload(false)
+        //         })
+        //     }
+        //     else{
+        //         alert("Insufficient number of stocks owned.");
+        //     }
+        // }
+        // else{
+        //     alert("Select a stock to sell.");
+        // }
+    }
+
     render() {
         return(
            <div>
@@ -30,21 +144,62 @@ export default class Home extends Component{
                 </div>
                 
                 <div id = "stocks-owned" class = "view">
-                    <h2>Stocks Owned</h2>
-                    <table>
-                        <th>Symbol</th>
-                        <th>Name</th>
-                        <th>Shares Owned</th>
-                        <th>AVG price paid</th>
-                        <th>Current value</th>
-                        <tr>
-                            <td>TES</td>
-                            <td>Tesla</td>
-                            <td>5</td>
-                            <td>$40</td>
-                            <td>$10</td>
-                        </tr>
-                    </table>
+                    <form onSubmit={this.onOrderSubmit}>
+                        <h2>Stocks Owned</h2>
+                        <table>
+                            <th>Select</th>
+                            <th>Symbol</th>
+                            <th>Name</th>
+                            <th>Shares Owned</th>
+                            <th>AVG price paid</th>
+                            <th>Current value</th>
+                            <tr>
+                                <td><input type="radio" name="Sell" value="TSLA" onChange = {this.onChangeOrderStock}/></td>
+                                <td>TSLA</td>
+                                <td>Tesla</td>
+                                <td>5</td>
+                                <td>$40</td>
+                                <td>$10</td>
+                            </tr>
+
+                            <tr>
+                                <td><input type="radio" name="Sell" value="AAPL" onChange = {this.onChangeOrderStock}/></td>
+                                <td>AAPL</td>
+                                <td>Apple</td>
+                                <td>7</td>
+                                <td>$40</td>
+                                <td>$10</td>
+                            </tr>
+                    
+                            <tr>
+                                <td><input type="radio" name="Sell" value="NKE" onChange = {this.onChangeOrderStock}/></td>
+                                <td>NKE</td>
+                                <td>Nike</td>
+                                <td>2</td>
+                                <td>$20</td>
+                                <td>$25</td>
+                            </tr>
+                        </table>
+
+                        <div>
+                            <label>Enter Sell Price/Share: $</label>
+                            <input type="number" min="0"
+                                id="sellPrice-input"
+                                value={this.state.price}
+                                onChange = {this.onChangeOrderPrice}
+                            /> 
+                            <br/>
+                            <label>Enter # Shares: </label>
+                            <input type="number" min="0"
+                                id="sell-shares"
+                                value={this.state.shares}
+                                onChange = {this.onChangeOrderShares}
+                            />
+                            <br/>
+                            
+                            <input type="submit" value='Place Sell Order'></input>
+                        </div>
+                    </form>
                 </div>
 
                 <div id = "unprocessed-orders" class = "view">
