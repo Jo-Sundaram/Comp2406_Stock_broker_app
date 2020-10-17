@@ -13,13 +13,11 @@ const stockSchema = new Schema({
      }], 
     sellOrders: [{
         userID: { type: String, required: true },
-        stockID: {type: String, required: true},
         shares: {type: Number, required: true},
         price: {type: Number, required: true}
     }],
     buyOrders: [{
         userID: { type: String, required: true },
-        stockID: {type: String, required: true},
         shares: {type: Number, required: true},
         price: {type: Number, required: true}
     }]

@@ -12,7 +12,7 @@ const userSchema = new Schema({
     stockPortfolio: [ {
         stockID: { type: String, required: true },
         stockName: {type: String, required: true },
-        numberOfShares: {type: Number, required: true}
+        shares: {type: Number, required: true}
 
     }],
      watchlist: [ {
