@@ -25,7 +25,8 @@ const userSchema = new Schema({
 
     eventSubscriptions: [{ //so users can edit their own subscriptions/view their own subscriptions
         stockID: { type: String, required: true },
-        parameters: {type: String, required: true }, //we have to figure out the structure for eventSubscription parameters
+        parameter: {type: String, required: true },
+        value: {type: Number, required: true}, //we have to figure out the structure for eventSubscription parameters
         triggerOrder: {type: Boolean, required: true} //automated trading thing, unstructured
     }], 
 

@@ -7,6 +7,12 @@ router.route('/').get((req, res) => {
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
+router.route('/:id').get((req, res) => {
+    User.findById(req.params.id)
+        .then(users => res.json(users))
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+
 router.route('/add').post((req, res) => {
     const username = req.body.username;
     const email = req.body.email;
@@ -15,8 +21,10 @@ router.route('/add').post((req, res) => {
     const watchlist = req.body.watchlist; 
     const notifications = req.body.notifications;
     const eventSubscriptions = req.body.eventSubscriptions;
-    const buyOrders = req.body.buyOrders;
-    const sellOrders = req.body.sellOrders;
+    const unpBuyOrders = req.body.unpBuyOrders;
+    const unpSellOrders = req.body.unpSellOrders;
+    const pBuyOrders = req.body.unpBuyOrders;
+    const pSellOrders = req.body.pSellOrders;
 
     const newUser = new User({
         username,
@@ -26,8 +34,11 @@ router.route('/add').post((req, res) => {
         watchlist,
         notifications,
         eventSubscriptions,
-        buyOrders,
-        sellOrders
+        stockPortfolio,
+        unpBuyOrders,
+        pSellOrders,
+        unpBuyOrders,
+        pSellOrders
     });
 
     newUser.save()
@@ -35,30 +46,15 @@ router.route('/add').post((req, res) => {
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
-router.route('/:id').post((req, res) => {
-    User.findById(req.params.id)
-        .then(user => res.json(user))
-        .catch(err => res.status(400).json('Error:  ' + err));
-});
-
 router.route('/update/:id').post((req, res) => {
-    User.findById(req.params.id)
-        .then(user => {
-            username = req.body.username;
-            email = req.body.email;
-            password = req.body.password;
-            userFunds = Number(req.body.userFunds);
-            watchlist = req.body.watchlist; //im not sure this is how im supposed to delcare an array constant ngl
-            notifications = req.body.notifications;
-            eventSubscriptions = req.body.eventSubscriptions;
-            buyOrders = req.body.buyOrders;
-            sellOrders = req.body.sellOrders;
-
-            user.save()
-                .then(() => res.json('User updated!'))
-                .catch(err => res.status(400).json('Error: ' + err));
-        })
-        .catch(err => res.status(400).json('Error:  ' + err));
+    User.findByIdAndUpdate(req.params.id,{$set:req.body},{new:true},  function(err, result){
+        if(err || result == null){
+            console.log("there is an error");
+            console.log(err);
+        }
+        console.log("RESULT: " + result);
+        res.send('Done')
+    });
 });
 
 module.exports = router;
