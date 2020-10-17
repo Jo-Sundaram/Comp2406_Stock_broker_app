@@ -6,70 +6,214 @@ import Navbar from "../NavBar/navbar.component";
 
 export default class Search extends Component{
 
-        render(){
-            return(
+    constructor(props){
+        super(props);
 
-                    <div>
-                        <Navbar/>
-                        <div id = "top-nav" >
-                            <div>
-                            <label for="searchbar"> Search for stocks</label>
-                            
-                                <input type="text" name="" id="searchbar" placeholder="TSLA"/>
-                                <button id = "search-enter">Enter</button>
-                            </div>
+        this.onChangeOrderShares = this.onChangeOrderShares.bind(this);
+        this.onChangeOrderOffer = this.onChangeOrderOffer.bind(this);
+        this.onOrderSubmit = this.onOrderSubmit.bind(this);
+        
+        this.onChangeEsAmount = this.onChangeEsAmount.bind(this);
+        this.onChangeEsParameter = this.onChangeEsParameter.bind(this);
+        this.onEsSubmit = this.onEsSubmit.bind(this);
 
-                        </div>
+        this.state = {
+            userFunds: 0,
+            stockID: 'TSLA',
+            unpBuyOrders: [],
+            eventSubscriptions: [],
 
-                        <div id = "main-body" class = "main">
+            shares: 0,
+            price: 0,
 
-                            <div id = "recent-asks">
-                                <div id =" stock-name">
-                                Stock Name: 
-                                </div>
+            esParameter: '',
+            esAmount: 0
+        }
+    }
 
-                                <h4><span id = "bid"> Highest Bid: $</span></h4>
+    componentDidMount() {
+        console.log('reloaded');
+        axios.get('http://localhost:5000/users/5f890ebbbb89e66e947f5652') //dummy user ID in place
+            .then(response => {
+                this.setState({
+                    userFunds: response.data.userFunds,
+                    unpBuyOrders: response.data.unpBuyOrders,
+                    eventSubscriptions: response.data.eventSubscriptions
+                })
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+    }
 
-                                <h4><span id = "ask"> Ask: $</span> </h4>
+    onChangeOrderShares(e){
+        this.setState({
+            shares: e.target.value
+        });
+        console.log(this.state.id);
+    }
 
-                            </div>
+    onChangeOrderOffer(e){
+        this.setState({
+            price: e.target.value        
+        });
+    }
+    //creating buy order
+    //need to add axios post sending the order to the stock
+    //need to delete order from both in case of failure (we should make a function for that..?)
+    //no pop up programmed confirming to the user that a buy order has been, or displaying order
+    onOrderSubmit(e){
+        e.preventDefault();
+        
+        var orderTotal = Number(this.state.price)*Number(this.state.shares);
+        if (this.state.userFunds >= orderTotal && this.state.price > 0 && this.state.shares > 0){
 
-                            <div id = "stock-processed-history">
-                            <b> History of Processed Orders</b>
+            var newArray = this.state.unpBuyOrders;
+            var newUserFunds = Number(this.state.userFunds) - orderTotal;
+            newArray.push({
+                stockID: this.state.stockID,
+                shares: Number(this.state.shares),
+                price: Number(this.state.price)
+            });
+            axios({
+                method: 'post',
+                url: 'http://localhost:5000/users/update/5f890ebbbb89e66e947f5652', //dummy user
+                data: {
+                    userFunds: newUserFunds,
+                    unpBuyOrders: newArray
+                }
+            })
+            .then(res => {
+                console.log(res.data)
+                //i want a function for this.
+                alert('ORDER: \n' +
+                this.state.stockID + ' \n' + 
+                '$' + this.state.price +'/Share \n' +
+                'Shares: ' + this.state.shares + '\n' +
+                'Placed Successfully!')
 
-                                <table id = "stock-history">
-                                    <th>Sell Price</th>
-                                    <th>Shares</th>
-                                    <th>BidderUsername</th>
-                                    <th>Seller Username</th>
-                            
-                                </table>
+                //window.location.reload(false);
+            })
+            .catch(res => {
+                console.log(res)
+                alert('Something went wrong! Please try again later.')
+            });
 
-                            </div>
+        }
+        else{
+            if(this.state.userFunds < orderTotal){
+                alert("you broke. go home");
+            }
+        }
+    }
 
+    onChangeEsParameter(e){
+        this.setState({
+            esParameter: e.target.value        
+        });
+    }
 
-                        <div id = "place-buy">
-                            <div className="formgroup">
-                            <b>Place Buy Order</b><br/><br/>
-                                <label>Enter number of shares: </label>
-                                <input type="text" class="logregfield" placeholder="50"/>
-                                <label>Enter amount:  $</label>
-                                <input type="text" class="logregfield" placeholder="100"/>
-                                
-                            </div>
+    onChangeEsAmount(e){
+        this.setState({
+            esAmount: e.target.value        
+        });
+    }
 
-                            <div>
-                                <button id="place-order">Place Order</button>
-                            </div>
+    onEsSubmit(e){
+        e.preventDefault();
+        var newEsArray = this.state.eventSubscriptions;
+        if(this.state.esParameter !=null && this.state.esAmount != null && this.state.esAmount != 0)
+            newEsArray.push({
+                stockID: this.state.stockID,
+                parameter: this.state.EsParameter,
+                value: this.state.EsAmount,
+                triggerOrder: 0
+            })
+            axios({
+                method: 'post',
+                url: 'http://localhost:5000/users/update/5f890ebbbb89e66e947f5652', //dummy user
+                data: {
+                    eventSubscriptions: newEsArray
+                }
+            })
+            .then(res => {
+                console.log(res.data)
+                alert("Successfully created ES")
+                window.location.reload(false);
+            })
+            .catch(res => {
+                console.log(res)
+                alert("ES creation failed. Please try again.")
+            })
+    }
+
+    render(){
+        return(
+                <div>
+                    <Navbar/>
+                    <div id = "top-nav" >
+                        <div>
+                        <label for="searchbar"> Search for stocks</label>
                         
+                            <input type="text" name="" id="searchbar" placeholder="TSLA"/>
+                            <button id = "search-enter">Enter</button>
+                        </div>
+                    </div>
+                    <div id = "main-body" class = "main">
+                        <div id = "recent-asks">
+                            <div id =" stock-name">
+                            Stock Name: 
+                            </div>
+
+                            <h4><span id = "bid"> Highest Bid: $</span></h4>
+
+                            <h4><span id = "ask"> Ask: $</span> </h4>
+
                         </div>
 
+                        <div id = "stock-processed-history">
+                        <b> History of Processed Orders</b>
 
-                        <div id = "create-event">
+                            <table id = "stock-history">
+                                <th>Sell Price</th>
+                                <th>Shares</th>
+                                <th>BidderUsername</th>
+                                <th>Seller Username</th>                        
+                            </table>
+                        </div>
+                    <div id = "place-buy">
+                        <form onSubmit={this.onOrderSubmit}>
+                            <div className="formgroup">
+                                <b>Place Buy Order</b><br/><br/>
+                                    <label>Enter number of shares: </label>
+                                    <input type="number" min="0" 
+                                        required class="logregfield"
+                                        value = {this.state.shares}
+                                        onChange = {this.onChangeOrderShares}
+                                        placeholder="50"
+                                    />
+                                    <label>Enter offer per share:  $</label>
+                                    <input type="number" min="0" 
+                                        required class="logregfield" 
+                                        value = {this.state.price}
+                                        onChange = {this.onChangeOrderOffer}
+                                        placeholder="100"/>  
+                            </div>
+
+                            <div>
+                                <input type="submit" value='Place Buy Order'></input>
+                            </div>
+                        </form>
+                    
+                    </div>
+
+
+                    <div id = "create-event">
+                        <form onSubmit={this.onEsSubmit}>
                             <div className="formgroup">
                                 <b>Create an Event Subscription</b><br/>
                                 <label>Select Parameter</label>
-                                <select name="select" id = "select-params">
+                                <select name="select" id = "select-params" value={this.state.parameter} onChange = {this.onChangeEsParameter}>
                                     <option value="incPrcnt">+ %</option>
                                     <option value="decPrcnt">- %</option>
                                     <option value="incDollar">+ $</option>
@@ -77,19 +221,23 @@ export default class Search extends Component{
                                 </select> <br/>
 
                                 <label>Enter amount</label>
-                                <input type="text" class="logregfield" placeholder="%10"/>
-
+                                <input type="number" min="0" 
+                                    required class="logregfield"
+                                    value={this.state.parameter} 
+                                    onChange = {this.onChangeEsAmount}
+                                    placeholder="%10"/>
                             </div>
                             <div>
-                            <button id="place-order">Add Subscription</button>
+                            <input type="submit" value='Place Event Subscription'></input>
                             </div>
-                        
-                        </div>
+                        </form>
+                    
+                    </div>
 
-                     </div>
+                    </div>
 
-                 </div>
-            )
-        }
+                </div>
+        )
+    }
 
 }
