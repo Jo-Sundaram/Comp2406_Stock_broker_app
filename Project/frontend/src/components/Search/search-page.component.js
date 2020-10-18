@@ -22,7 +22,7 @@ export default class Search extends Component{
             stockID: 'TSLA',
             unpBuyOrders: [],
             eventSubscriptions: [],
-            stockAbb: '',
+            stockBuyOrders: [],
 
             shares: 0,
             price: 0,
@@ -42,7 +42,7 @@ export default class Search extends Component{
                 userFunds: responseArr[0].data.userFunds,
                 unpBuyOrders: responseArr[0].data.unpBuyOrders,
                 eventSubscriptions: responseArr[0].data.eventSubscriptions,
-                stockAbb: responseArr[1].data.stockAbbreviation
+                stockBuyOrders: responseArr[1].data.buyOrders
             })
         })
         .catch(function (error) {
@@ -73,20 +73,35 @@ export default class Search extends Component{
         if (this.state.userFunds >= orderTotal && this.state.price > 0 && this.state.shares > 0){
 
             var newArray = this.state.unpBuyOrders;
+            var newStockOrders = this.state.stockBuyOrders;
             var newUserFunds = Number(this.state.userFunds) - orderTotal;
             newArray.push({
                 stockID: this.state.stockID,
                 shares: Number(this.state.shares),
                 price: Number(this.state.price)
             });
-            axios({
-                method: 'post',
-                url: 'http://localhost:5000/users/update/5f890ebbbb89e66e947f5652', //dummy user
-                data: {
-                    userFunds: newUserFunds,
-                    unpBuyOrders: newArray
-                }
+            newStockOrders.push({
+                userID: "jo", //dummy userID
+                shares: Number(this.state.shares),
+                price: Number(this.state.price)
             })
+            axios.all([
+                axios({
+                    method: 'post',
+                    url: 'http://localhost:5000/users/update/5f890ebbbb89e66e947f5652', //dummy user
+                    data: {
+                        userFunds: newUserFunds,
+                        unpBuyOrders: newArray
+                    }
+                }),
+                axios({
+                    method: 'post',
+                    url: 'http://localhost:5000/stocks/update/' + this.state.stockID, //dummy user
+                    data: {
+                        buyOrders: newStockOrders
+                    }
+                }),
+            ])
             .then(res => {
                 console.log(res.data)
                 //i want a function for this.
@@ -96,11 +111,12 @@ export default class Search extends Component{
                 'Shares: ' + this.state.shares + '\n' +
                 'Placed Successfully!')
 
-                //window.location.reload(false);
+                window.location.reload(false);
             })
             .catch(res => {
                 console.log(res)
                 alert('Something went wrong! Please try again later.')
+                window.location.reload(false);
             });
 
         }
