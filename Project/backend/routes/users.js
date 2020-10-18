@@ -52,7 +52,7 @@ router.route('/update/:id').post((req, res) => {
             console.log("there is an error");
             console.log(err);
         }
-        console.log("RESULT: " + result);
+        //console.log("RESULT: " + result);
         res.send('Done')
     });
 });

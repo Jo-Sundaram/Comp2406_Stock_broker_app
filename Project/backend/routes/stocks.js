@@ -38,7 +38,7 @@ router.route('/:stockAbbreviation').get((req, res) => {
 router.route('/update/:stockAbbreviation').post((req, res) => {
     console.log('here');
     Stock.findOneAndUpdate({'stockAbbreviation' : req.params.stockAbbreviation}, {$set:req.body},{new:true})
-        .then(stock => res.json(stock))
+        .then(stock => console.log("RESULT: " + stock))
 });
 
 router.route('/:id').post((req, res) => {
