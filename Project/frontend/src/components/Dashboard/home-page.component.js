@@ -61,63 +61,66 @@ export default class Home extends Component{
         });
     }
 
-    onOrderSubmit(e){
+    async onOrderSubmit(e){
         e.preventDefault();
-        const stockOrders = requests.getStockSellOrders(this.state.stockID);
-        
-        // if(this.state.stockID != null){
-        //     var newUserStockP = this.state.stockPortfolio;
-        //     var objIndex = newUserStockP.findIndex((obj => obj.stockID == this.state.stockID));
-        //     var newUserSellArray = this.state.unpUserSellOrders;
-        //     if(newUserStockP[objIndex].shares >= Number(this.state.shares)){
-        //         newUserSellArray.push({
-        //             stockID: this.state.stockID,
-        //             shares: Number(this.state.shares),
-        //             price: Number(this.state.price)
-        //         });
-        //         stockOrders.push({
-        //             userID: "jo",
-        //             shares: Number(this.state.shares),
-        //             price: Number(this.state.price)
-        //         });
+        if(this.state.stockID != null){
+            var stockOrders = await (requests.getStockSellOrders(this.state.stockID));        
+            var newUserStockP = this.state.stockPortfolio;
+            var objIndex = newUserStockP.findIndex((obj => obj.stockID == this.state.stockID));
+            var newUserSellArray = this.state.unpUserSellOrders;
+            if(newUserStockP[objIndex].shares >= Number(this.state.shares)){
+                newUserSellArray.push({
+                    stockID: this.state.stockID,
+                    shares: Number(this.state.shares),
+                    price: Number(this.state.price)
+                });
+                console.log(stockOrders);
+                
+                stockOrders.push({
+                    userID: "jo",
+                    shares: Number(this.state.shares),
+                    price: Number(this.state.price)
+                });
 
-        //         newUserStockP[objIndex].shares = newUserStockP[objIndex].shares - Number(this.state.shares);
-        //         axios.all([    
-        //             axios({
-        //                 method: 'post',
-        //                 url: 'http://localhost:5000/users/update/5f890ebbbb89e66e947f5652', //dummy user
-        //                 data: {
-        //                     stockPortfolio: newUserStockP,
-        //                     unpSellOrders: newUserSellArray
-        //                 }
-        //             }),
-        //             axios({
-        //                 method: 'post',
-        //                 url: 'http://localhost:5000/stocks/update/'+this.state.stockID ,
-        //                 data: {
-        //                     sellOrders: stockOrders
-        //                 }
-        //             })
-        //         ])
-        //         .then(res => {
-        //             console.log(res.data)                            
-        //             alert("Successfully created sell order")
-        //             window.location.reload(false)
-                    
-        //         })
-        //         .catch(res => {
-        //             console.log(res)
-        //             alert("Sell Order creation failed. Please try again.")
-        //             window.location.reload(false)
-        //         })
-        //     }
-        //     else{
-        //         alert("Insufficient number of stocks owned.");
-        //     }
-        // }
-        // else{
-        //     alert("Select a stock to sell.");
-        // }
+                newUserStockP[objIndex].shares = newUserStockP[objIndex].shares - Number(this.state.shares);
+                axios.all([    
+                    axios({
+                        method: 'post',
+                        url: 'http://localhost:5000/users/update/5f890ebbbb89e66e947f5652', //dummy user
+                        data: {
+                            stockPortfolio: newUserStockP,
+                            unpSellOrders: newUserSellArray
+                        }
+                    }),
+                    axios({
+                        method: 'post',
+                        url: 'http://localhost:5000/stocks/update/'+this.state.stockID ,
+                        data: {
+                            sellOrders: stockOrders
+                        }
+                    })
+                ])
+                .then(axios.spread((...responses) => {
+                    //console.log(responses)                            
+                    //window.location.reload(false)
+                }))
+                .then(
+                    alert("Successfully created sell order"),
+                    window.location.reload(false)
+                )
+                .catch(res => {
+                    console.log(res)
+                    alert("Sell Order creation failed. Please try again.")
+                    window.location.reload(false)
+                });
+            }
+            else{
+                alert("Insufficient number of stocks owned.");
+            }
+        }
+        else{
+            alert("Select a stock to sell.");
+        }
     }
 
     render() {

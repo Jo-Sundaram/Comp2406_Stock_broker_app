@@ -5,10 +5,10 @@ import axios from 'axios';
 
   
 const requests = {
-    getStockSellOrders: function(stockID){
+    getStockSellOrders: async function(stockID){
         const promise = axios.get('http://localhost:5000/stocks/'+stockID) //dummy user ID in place
         
-        const dataPromise = promise.then((response) => response.data.sellOrders)
+        const dataPromise = await promise.then((response) => response.data.sellOrders)
         
         return dataPromise
     }

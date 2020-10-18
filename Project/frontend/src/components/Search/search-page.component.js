@@ -22,6 +22,7 @@ export default class Search extends Component{
             stockID: 'TSLA',
             unpBuyOrders: [],
             eventSubscriptions: [],
+            stockAbb: '',
 
             shares: 0,
             price: 0,
@@ -32,25 +33,28 @@ export default class Search extends Component{
     }
 
     componentDidMount() {
-        console.log('reloaded');
-        axios.get('http://localhost:5000/users/5f890ebbbb89e66e947f5652') //dummy user ID in place
-            .then(response => {
-                this.setState({
-                    userFunds: response.data.userFunds,
-                    unpBuyOrders: response.data.unpBuyOrders,
-                    eventSubscriptions: response.data.eventSubscriptions
-                })
+        axios.all([
+            axios.get('http://localhost:5000/users/5f890ebbbb89e66e947f5652'), //dummy user ID in place
+            axios.get('http://localhost:5000/stocks/' + this.state.stockID)
+        ])
+        .then(responseArr => {
+            this.setState({
+                userFunds: responseArr[0].data.userFunds,
+                unpBuyOrders: responseArr[0].data.unpBuyOrders,
+                eventSubscriptions: responseArr[0].data.eventSubscriptions,
+                stockAbb: responseArr[1].data.stockAbbreviation
             })
-            .catch(function (error) {
-                console.log(error);
-            })
+        })
+        .catch(function (error) {
+            console.log(error);
+        })
     }
 
     onChangeOrderShares(e){
         this.setState({
             shares: e.target.value
         });
-        console.log(this.state.id);
+        console.log(this.state.stockAbb);
     }
 
     onChangeOrderOffer(e){
