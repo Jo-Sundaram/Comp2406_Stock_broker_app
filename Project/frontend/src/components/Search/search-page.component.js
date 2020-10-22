@@ -16,6 +16,7 @@ export default class Search extends Component{
         this.onChangeEsAmount = this.onChangeEsAmount.bind(this);
         this.onChangeEsParameter = this.onChangeEsParameter.bind(this);
         this.onEsSubmit = this.onEsSubmit.bind(this);
+        this.onStockSearch = this.onStockSearch.bind(this);
 
         this.state = {
             userFunds: 0,
@@ -168,6 +169,18 @@ export default class Search extends Component{
         }
         window.location.reload(false);    
     }
+
+    onStockSearch(e){
+        e.preventDefault();
+        axios.get('http://localhost:5000/stocks/:'+ e.data.value)
+        .then(res=>{
+            console.log(res.data);
+        });
+        
+
+
+    }
+
 
     render(){
         return(

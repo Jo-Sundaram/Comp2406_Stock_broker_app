@@ -1,3 +1,325 @@
-{"_id":{"$oid":"5f6a53e2fc1c8703f48d81d0"},"stockFullName":"TESLA","stockAbbreviation":"$TSLA","eventSubscriptions":[],"buyOrders":[],"sellOrders":[],"createdAt":{"$date":{"$numberLong":"1600803810076"}},"updatedAt":{"$date":{"$numberLong":"1600803810076"}},"__v":{"$numberInt":"0"}}
-{"_id":{"$oid":"5f6a541efc1c8703f48d81d1"},"stockFullName":"APPLE","stockAbbreviation":"$AAPL","eventSubscriptions":[],"buyOrders":[],"sellOrders":[],"createdAt":{"$date":{"$numberLong":"1600803870687"}},"updatedAt":{"$date":{"$numberLong":"1600803870687"}},"__v":{"$numberInt":"0"}}
-{"_id":{"$oid":"5f6b9ec43172643cdc2c2306"},"stockFullName":"CIENA","stockAbbreviation":"$CIEN","eventSubscriptions":[],"buyOrders":[],"sellOrders":[],"createdAt":{"$date":{"$numberLong":"1600888516972"}},"updatedAt":{"$date":{"$numberLong":"1600888516972"}},"__v":{"$numberInt":"0"}}
+[{
+  "_id": {
+    "$oid": "5f6a53e2fc1c8703f48d81d0"
+  },
+  "stockFullName": "TESLA",
+  "stockAbbreviation": "$TSLA",
+  "eventSubscriptions": [],
+  "buyOrders": [],
+  "sellOrders": [],
+  "createdAt": {
+    "$date": "2020-09-22T19:43:30.076Z"
+  },
+  "updatedAt": {
+    "$date": "2020-09-22T19:43:30.076Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5f6a541efc1c8703f48d81d1"
+  },
+  "stockFullName": "APPLE",
+  "stockAbbreviation": "$AAPL",
+  "eventSubscriptions": [],
+  "buyOrders": [],
+  "sellOrders": [],
+  "createdAt": {
+    "$date": "2020-09-22T19:44:30.687Z"
+  },
+  "updatedAt": {
+    "$date": "2020-09-22T19:44:30.687Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5f6b9ec43172643cdc2c2306"
+  },
+  "stockFullName": "CIENA",
+  "stockAbbreviation": "$CIEN",
+  "eventSubscriptions": [],
+  "buyOrders": [],
+  "sellOrders": [],
+  "createdAt": {
+    "$date": "2020-09-23T19:15:16.972Z"
+  },
+  "updatedAt": {
+    "$date": "2020-09-23T19:15:16.972Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5f84e832df31056a9c470d37"
+  },
+  "stockFullName": "AMERICAN EXPRESS",
+  "stockAbbreviation": "$AXP",
+  "eventSubscriptions": [],
+  "buyOrders": [],
+  "sellOrders": [],
+  "createdAt": {
+    "$date": "2020-10-12T23:35:14.046Z"
+  },
+  "updatedAt": {
+    "$date": "2020-10-12T23:35:14.046Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5f84e899df31056a9c470d38"
+  },
+  "stockFullName": "BOEING",
+  "stockAbbreviation": "$BA",
+  "eventSubscriptions": [],
+  "buyOrders": [],
+  "sellOrders": [],
+  "createdAt": {
+    "$date": "2020-10-12T23:36:57.503Z"
+  },
+  "updatedAt": {
+    "$date": "2020-10-12T23:36:57.503Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5f84e8eadf31056a9c470d39"
+  },
+  "stockFullName": "CATERPILLAR",
+  "stockAbbreviation": "$CAT",
+  "eventSubscriptions": [],
+  "buyOrders": [],
+  "sellOrders": [],
+  "createdAt": {
+    "$date": "2020-10-12T23:38:18.454Z"
+  },
+  "updatedAt": {
+    "$date": "2020-10-12T23:38:18.454Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5f84eae2df31056a9c470d3a"
+  },
+  "stockFullName": "CHEVRON CORPORATION",
+  "stockAbbreviation": "$CVX",
+  "eventSubscriptions": [],
+  "buyOrders": [],
+  "sellOrders": [],
+  "createdAt": {
+    "$date": "2020-10-12T23:46:42.429Z"
+  },
+  "updatedAt": {
+    "$date": "2020-10-12T23:46:42.429Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5f84eb01df31056a9c470d3b"
+  },
+  "stockFullName": "GOLDMAN SACHS",
+  "stockAbbreviation": "$GS",
+  "eventSubscriptions": [],
+  "buyOrders": [],
+  "sellOrders": [],
+  "createdAt": {
+    "$date": "2020-10-12T23:47:13.257Z"
+  },
+  "updatedAt": {
+    "$date": "2020-10-12T23:47:13.257Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5f84eb17df31056a9c470d3c"
+  },
+  "stockFullName": "HOME DEPOT",
+  "stockAbbreviation": "$HD",
+  "eventSubscriptions": [],
+  "buyOrders": [],
+  "sellOrders": [],
+  "createdAt": {
+    "$date": "2020-10-12T23:47:35.477Z"
+  },
+  "updatedAt": {
+    "$date": "2020-10-12T23:47:35.477Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5f84eddb39d7a56cb83e1dc8"
+  },
+  "stockFullName": "HONEYWELL INTERNATIONAL",
+  "stockAbbreviation": "$HON",
+  "eventSubscriptions": [],
+  "sellOrders": [],
+  "buyOrders": []
+},{
+  "_id": {
+    "$oid": "5f84f05439d7a56cb83e1dc9"
+  },
+  "stockFullName": "IBM",
+  "stockAbbreviation": "$IBM",
+  "eventSubscriptions": [],
+  "sellOrders": [],
+  "buyOrders": []
+},{
+  "_id": {
+    "$oid": "5f84f09939d7a56cb83e1dca"
+  },
+  "stockFullName": "INTEL",
+  "stockAbbreviation": "$INTC",
+  "eventSubscriptions": [],
+  "sellOrders": [],
+  "buyOrders": []
+},{
+  "_id": {
+    "$oid": "5f84f1d539d7a56cb83e1dcb"
+  },
+  "stockFullName": "DOW JONES INDUSTRIAL AVERAGE",
+  "stockAbbreviation": "$DOW",
+  "eventSubscriptions": [],
+  "sellOrders": [],
+  "buyOrders": []
+},{
+  "_id": {
+    "$oid": "5f84f1e039d7a56cb83e1dcc"
+  },
+  "stockFullName": "WALT DISNEY COMPANY",
+  "stockAbbreviation": "$DIS",
+  "eventSubscriptions": [],
+  "sellOrders": [],
+  "buyOrders": []
+},{
+  "_id": {
+    "$oid": "5f84f1ea39d7a56cb83e1dcd"
+  },
+  "stockFullName": "WALMART",
+  "stockAbbreviation": "$WMT",
+  "eventSubscriptions": [],
+  "sellOrders": [],
+  "buyOrders": []
+},{
+  "_id": {
+    "$oid": "5f84f1f239d7a56cb83e1dce"
+  },
+  "stockFullName": "WALGREENS BOOTS ALLIANCE INC",
+  "stockAbbreviation": "$WBA",
+  "eventSubscriptions": [],
+  "sellOrders": [],
+  "buyOrders": []
+},{
+  "_id": {
+    "$oid": "5f84f1fb39d7a56cb83e1dcf"
+  },
+  "stockFullName": "VISA",
+  "stockAbbreviation": "$V",
+  "eventSubscriptions": [],
+  "sellOrders": [],
+  "buyOrders": []
+},{
+  "_id": {
+    "$oid": "5f84f20439d7a56cb83e1dd0"
+  },
+  "stockFullName": "VERIZON COMMUNICATIONS INC",
+  "stockAbbreviation": "$VZ",
+  "eventSubscriptions": [],
+  "sellOrders": [],
+  "buyOrders": []
+},{
+  "_id": {
+    "$oid": "5f84f20e39d7a56cb83e1dd1"
+  },
+  "stockFullName": "SALESFORCE",
+  "stockAbbreviation": "$CRM",
+  "eventSubscriptions": [],
+  "sellOrders": [],
+  "buyOrders": []
+},{
+  "_id": {
+    "$oid": "5f84f21939d7a56cb83e1dd2"
+  },
+  "stockFullName": "UNITED HEALTH GROUP",
+  "stockAbbreviation": "$UNH",
+  "eventSubscriptions": [],
+  "sellOrders": [],
+  "buyOrders": []
+},{
+  "_id": {
+    "$oid": "5f84f22139d7a56cb83e1dd3"
+  },
+  "stockFullName": "THE TRAVELERS COMPANIES",
+  "stockAbbreviation": "$TRV",
+  "eventSubscriptions": [],
+  "sellOrders": [],
+  "buyOrders": []
+},{
+  "_id": {
+    "$oid": "5f84f22b39d7a56cb83e1dd4"
+  },
+  "stockFullName": "PROCTER AND GAMBLE",
+  "stockAbbreviation": "$PG",
+  "eventSubscriptions": [],
+  "sellOrders": [],
+  "buyOrders": []
+},{
+  "_id": {
+    "$oid": "5f84f23f39d7a56cb83e1dd5"
+  },
+  "stockFullName": "NIKE",
+  "stockAbbreviation": "$NKE",
+  "eventSubscriptions": [],
+  "sellOrders": [],
+  "buyOrders": []
+},{
+  "_id": {
+    "$oid": "5f84f24639d7a56cb83e1dd6"
+  },
+  "stockFullName": "MICROSOFT",
+  "stockAbbreviation": "$MSFT",
+  "eventSubscriptions": [],
+  "sellOrders": [],
+  "buyOrders": []
+},{
+  "_id": {
+    "$oid": "5f84f24e39d7a56cb83e1dd7"
+  },
+  "stockFullName": "3M",
+  "stockAbbreviation": "$MMM",
+  "eventSubscriptions": [],
+  "sellOrders": [],
+  "buyOrders": []
+},{
+  "_id": {
+    "$oid": "5f84f25639d7a56cb83e1dd8"
+  },
+  "stockFullName": "MCDONALD'S",
+  "stockAbbreviation": "$MCD",
+  "eventSubscriptions": [],
+  "sellOrders": [],
+  "buyOrders": []
+},{
+  "_id": {
+    "$oid": "5f84f26039d7a56cb83e1dd9"
+  },
+  "stockFullName": "JPMORGAN CHASE",
+  "stockAbbreviation": "$JPM",
+  "eventSubscriptions": [],
+  "sellOrders": [],
+  "buyOrders": []
+},{
+  "_id": {
+    "$oid": "5f84f26a39d7a56cb83e1dda"
+  },
+  "stockFullName": "COCA COLA",
+  "stockAbbreviation": "$KO",
+  "eventSubscriptions": [],
+  "sellOrders": [],
+  "buyOrders": []
+},{
+  "_id": {
+    "$oid": "5f84f27239d7a56cb83e1ddb"
+  },
+  "stockFullName": "JOHNSON AND JOHNSON",
+  "stockAbbreviation": "$JNJ",
+  "eventSubscriptions": [],
+  "sellOrders": [],
+  "buyOrders": []
+}]

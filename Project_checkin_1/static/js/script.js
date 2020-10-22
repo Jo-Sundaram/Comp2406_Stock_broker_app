@@ -72,7 +72,7 @@ document.getElementById("withdraw").addEventListener('click', ()=>{
     try{
           
         if (isNaN(val) || val <1) throw "Please enter a valid number";
-        if(val > currentBalance) throw "You cannot withdraw more than your current"
+        if(val > currentBalance) throw "You cannot withdraw more than your current balance"
         
 
     }catch (err){

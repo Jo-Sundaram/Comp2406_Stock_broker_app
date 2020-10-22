@@ -7,25 +7,30 @@ export default class Watchlist extends Component{
     constructor(props){
         super(props);
         this.onAdd = this.onAdd.bind(this);
+        this.onRemove = this.onRemove.bind(this);
 
     
         this.state = {
-            stockID: 'TSLA',
+            stockID: 'DOW',
             watchlist: [],
         }
     }
     componentDidMount(){ // React life-cycle method - called befored anything displayed on page
         axios.get('http://localhost:5000/users/5f890ebbbb89e66e947f5652')
         .then(response => {
-          if (response.data.length > 0) {
-            this.setState({
-              users: response.data.map(user => user.username),
-              username: response.data.username,
-              watchlist: response.data.watchlist
+        //   if (response.data.length > 0) {
+            // this.setState({
+            //   users: response.data.map(user => user.username),
+            //   username: response.data.username,
+            //   watchlist: response.data.watchlist
               
-            })
+            // })
+
              
-          }
+        //   }
+
+            console.log(response.data.watchlist);
+
         })
         .catch((error) => {
           console.log(error);
@@ -38,11 +43,14 @@ export default class Watchlist extends Component{
          
 
         var newArray = this.state.watchlist;
+        // console.log(newArray);
     
         newArray.push({
             stockID: this.state.stockID,
-
+            
         });
+
+        // console.log(newArray);
         axios({
             method: 'post',
             url: 'http://localhost:5000/users/update/5f890ebbbb89e66e947f5652', //dummy user
@@ -64,7 +72,9 @@ export default class Watchlist extends Component{
 
     }
      
-    
+    onRemove(e){
+
+    }    
 
 
 
@@ -75,8 +85,7 @@ export default class Watchlist extends Component{
 
             <div className>
                 <div className = "watchlist">
-                                           
-                <h2>Stocks Owned</h2>
+                    <h2></h2>                    
                     <table>
                         <th>button</th>
                         <th>Symbol</th>
@@ -91,7 +100,8 @@ export default class Watchlist extends Component{
                             <td>5</td>
                             <td>$40</td>
                             <td>$10</td>
-                        </tr>    <tr>
+                        </tr>
+                        <tr>
                             <td>TES</td>
                             <td>Tesla</td>
                             <td>5</td>
