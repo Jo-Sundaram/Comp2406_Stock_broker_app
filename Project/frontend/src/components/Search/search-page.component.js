@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom';
 import axios from 'axios';
 import "./search.css"
 import Navbar from "../NavBar/navbar.component";
+import requests from '../functions/requests.js';
 
 export default class Search extends Component{
 
@@ -18,13 +19,9 @@ export default class Search extends Component{
         this.onEsSubmit = this.onEsSubmit.bind(this);
 
         this.state = {
+            userID: "5f890ebbbb89e66e947f5652",
             userFunds: 0,
             stockID: 'TSLA',
-            unpBuyOrders: [],
-            eventSubscriptions: [],
-
-            stockES: [],
-            stockBuyOrders: [],
 
             shares: 0,
             price: 0,
@@ -36,16 +33,14 @@ export default class Search extends Component{
 
     componentDidMount() {
         axios.all([
-            axios.get('http://localhost:5000/users/5f890ebbbb89e66e947f5652'), //dummy user ID in place
+            axios.get('http://localhost:5000/users/' + this.state.userID), //dummy user ID in place
             axios.get('http://localhost:5000/stocks/' + this.state.stockID)
         ])
         .then(responseArr => {
             this.setState({
                 userFunds: responseArr[0].data.userFunds,
                 unpBuyOrders: responseArr[0].data.unpBuyOrders,
-                eventSubscriptions: responseArr[0].data.eventSubscriptions,
                 stockBuyOrders: responseArr[1].data.buyOrders,
-                stockES: responseArr[1].data.eventSubscriptions
             })
         })
         .catch(function (error) {
@@ -69,38 +64,42 @@ export default class Search extends Component{
     //need to add axios post sending the order to the stock
     //need to delete order from both in case of failure (we should make a function for that..?)
     //no pop up programmed confirming to the user that a buy order has been, or displaying order
-    onOrderSubmit(e){
+    async onOrderSubmit(e){
         e.preventDefault();
         
         var orderTotal = Number(this.state.price)*Number(this.state.shares);
+        
         if (this.state.userFunds >= orderTotal && this.state.price > 0 && this.state.shares > 0){
-            var newArray = this.state.unpBuyOrders;
-            var newStockOrders = this.state.stockBuyOrders;
             var newUserFunds = Number(this.state.userFunds) - orderTotal;
-            newArray.push({
-                stockID: this.state.stockID,
-                shares: Number(this.state.shares),
-                price: Number(this.state.price)
-            });
-            newStockOrders.push({
-                userID: "jo", //dummy userID
-                shares: Number(this.state.shares),
-                price: Number(this.state.price)
-            })
+            
+            var ID = await (requests.generateBuyID(this.state.stockID, this.state.userID));
+
             axios.all([
                 axios({
                     method: 'post',
-                    url: 'http://localhost:5000/users/update/5f890ebbbb89e66e947f5652', //dummy user
+                    url: 'http://localhost:5000/users/update/' + this.state.userID, 
                     data: {
                         userFunds: newUserFunds,
-                        unpBuyOrders: newArray
                     }
                 }),
                 axios({
                     method: 'post',
-                    url: 'http://localhost:5000/stocks/update/' + this.state.stockID, //dummy user
+                    url: 'http://localhost:5000/users/update/buyorder/' + this.state.userID, //dummy user
                     data: {
-                        buyOrders: newStockOrders
+                        orderID: ID,
+                        stockID: this.state.stockID,
+                        shares: Number(this.state.shares),
+                        price: Number(this.state.price)
+                    }
+                }),
+                axios({
+                    method: 'post',
+                    url: 'http://localhost:5000/stocks/update/buyorder/' + this.state.stockID, //dummy user
+                    data: {
+                        orderID: ID,
+                        userID: "jo", //dummy userID
+                        shares: Number(this.state.shares),
+                        price: Number(this.state.price)
                     }
                 })
             ])
@@ -141,36 +140,33 @@ export default class Search extends Component{
         });
     }
 
-    onEsSubmit(e){
+    async onEsSubmit(e){
         e.preventDefault();
-        var newEsArray = this.state.eventSubscriptions;
-        var newStockES = this.state.stockES;
         if(this.state.esParameter !=null && this.state.esAmount != null && this.state.esAmount != 0){
-            newEsArray.push({
-                stockID: this.state.stockID,
-                parameter: this.state.esParameter,
-                value: this.state.EsAmount,
-                triggerOrder: 0
-            });
-            newStockES.push({
-                stockID: this.state.stockID,
-                parameter: this.state.esParameter,
-                value: this.state.EsAmount,
-                triggerOrder: 0
-            });
+            
+            var ID = await (requests.generateESID(this.state.stockID, this.state.userID));
+
             axios.all([
                 axios({
                     method: 'post',
-                    url: 'http://localhost:5000/users/update/5f890ebbbb89e66e947f5652', //dummy user
+                    url: 'http://localhost:5000/users/update/ES/'+this.state.userID, //dummy user
                     data: {
-                        eventSubscriptions: newEsArray
+                        subscription: ID,
+                        stockID: this.state.stockID,
+                        parameter: this.state.esParameter,
+                        value: this.state.esAmount,
+                        triggerOrder: 0
                     }
                 }),
                 axios({
                     method: 'post',
-                    url: 'http://localhost:5000/stocks/update/' + this.state.stockID, //dummy user
+                    url: 'http://localhost:5000/stocks/update/ES/' + this.state.stockID, //dummy user
                     data: {
-                        eventSubscriptions: newStockES
+                        subscription: ID,
+                        userID: this.state.stockID,
+                        parameter: this.state.esParameter,
+                        value: Number(this.state.esAmount),
+                        triggerOrder: 0
                     }
                 }),
             ])

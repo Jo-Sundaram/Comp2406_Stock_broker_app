@@ -34,14 +34,12 @@ export default class Watchlist extends Component{
 
 
     onAdd(e){
-        e.preventDefault();
-         
+        e.preventDefault();   
 
         var newArray = this.state.watchlist;
     
         newArray.push({
             stockID: this.state.stockID,
-
         });
         axios({
             method: 'post',
@@ -61,12 +59,7 @@ export default class Watchlist extends Component{
             console.log(res)
             alert('Something went wrong! Please try again later.')
         });
-
     }
-     
-    
-
-
 
 
 
