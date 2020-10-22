@@ -16,14 +16,23 @@ export default class Home extends Component{
         this.onChangeOrderPrice = this.onChangeOrderPrice.bind(this);
         this.onOrderSubmit = this.onOrderSubmit.bind(this);
         
+        this.onSelectCancel = this.onSelectCancel.bind(this);
+        this.onCancelOrder = this.onCancelOrder.bind(this);
+        
 
         this.state = {
             userID: "5f890ebbbb89e66e947f5652",
             stockPortfolio: [],
-
+            userSellOrders: [],
+            userBuyOrders: [],
+            
             stockID: null,
             shares: 0,
             price: 0,
+
+            cancelStockID: null,
+            cancelOrderID: null,
+            cancelType: null
         }
     }
 
@@ -33,6 +42,8 @@ export default class Home extends Component{
             .then(response => {
                 this.setState({
                     stockPortfolio: response.data.stockPortfolio,
+                    userSellOrders: response.data.unpSellOrders,
+                    userBuyOrders: response.data.unpBuyOrders
                 })
                 console.log(response.data.unpSellOrders)
             })
@@ -123,6 +134,46 @@ export default class Home extends Component{
         }
     }
 
+    onSelectCancel(e){
+        this.setState({
+            cancelStockID: e.target.value.split(",")[0],
+            cancelOrderID: e.target.value.split(",")[1],
+            cancelType: e.target.value.split(",")[2]
+        });
+        console.log(e.target.value.split(",")[1]);
+    }
+
+    onCancelOrder(e){
+        e.preventDefault();
+        if(this.state.cancelOrderID != null && this.state.cancelStockID !=null){
+            axios.all([
+                axios({
+                    method: 'post',
+                    url: 'http://localhost:5000/users/delete/'+this.state.cancelType+'/' +this.state.userID, //dummy user
+                    data: {
+                        orderID: this.state.cancelOrderID
+                    }
+                }),
+                axios({
+                    method: 'post',
+                    url: 'http://localhost:5000/stocks/delete/'+this.state.cancelType+'/' + this.state.cancelStockID, //dummy user
+                    data: {
+                        orderID: this.state.cancelOrderID
+                    }
+                }),
+            ])
+            .then(res => {
+                console.log(res.data)
+                alert("Successfully cancelled buy order.")
+                window.location.reload(false);
+            })
+            .catch(res => {
+                console.log(res)
+                alert("Cancellation failed. Please try again later.");
+            })
+        }
+    }
+
     render() {
         return(
            <div>
@@ -205,25 +256,55 @@ export default class Home extends Component{
                     </form>
                 </div>
 
-                <div id = "unprocessed-orders" class = "view">
-                    <h2>Unprocessed Orders</h2>
-                    <table>
-                        <th>Symbol</th>
-                        <th>Name</th>
-                        <th>Type</th>
-                        <th>Price per share</th>
-                        <th>Outstanding</th>
-                        <th>Fulfilled</th>
-                        <tr>
-                            <td>AAPL</td>
-                            <td>Apple</td>
-                            <td>Buy</td>
-                            <td>$10</td>
-                            <td>5</td>
-                            <td>3</td>
-                        </tr>
-                    </table>
-                </div>
+                <form onSubmit={this.onCancelOrder}>
+                    <div id = "unprocessed-buy-orders" class = "view">
+                        
+                        <h2>Unprocessed Buy Orders</h2>
+                        <table>
+                            <th>Select</th>	
+                            <th>Symbol</th>
+                            <th>Type</th>
+                            <th>Price per share</th>
+                            <th>Shares</th>
+                            <th>Fulfilled</th>
+                            {this.state.userBuyOrders.map((item =>
+                            <tr>
+                                <td><input type="radio" name="Sell" value={[item.stockID, item.orderID,"buyorder"]} onChange = {this.onSelectCancel}/></td>
+                                <td>{item.stockID}</td>
+                                <td>Buy</td>
+                                <td>{item.price}</td>
+                                <td>{item.shares}</td>
+                                <td>False</td>
+                            </tr>
+                            ))}
+                        </table>
+                        <input type="submit" value='Cancel Order'></input>
+                    </div>
+                    <div id = "processed-buy-orders" class = "view">
+                        
+                        <h2>Unprocessed Buy Orders</h2>
+                        <table>
+                            <th>Select</th>	
+                            <th>Symbol</th>
+                            <th>Type</th>
+                            <th>Price per share</th>
+                            <th>Shares</th>
+                            <th>Fulfilled</th>
+                            {this.state.userSellOrders.map((item =>
+                            <tr>
+                                <td><input type="radio" name="Sell" value={[item.stockID, item.orderID,"sellorder"]} onChange = {this.onSelectCancel}/></td>
+                                <td>{item.stockID}</td>
+                                <td>Sell</td>
+                                <td>{item.price}</td>
+                                <td>{item.shares}</td>
+                                <td>False</td>
+                            </tr>
+                            ))}
+                        </table>
+                        <input type="submit" value='Cancel Order'></input>
+                    </div>
+                </form>
+
 
 
                 <div id = "watchlist" class = "view">
