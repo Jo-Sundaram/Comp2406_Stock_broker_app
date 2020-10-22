@@ -24,6 +24,7 @@ const userSchema = new Schema({
     }],
 
     eventSubscriptions: [{ //so users can edit their own subscriptions/view their own subscriptions
+        subscriptionID: {type: String, required: true},
         stockID: { type: String, required: true },
         parameter: {type: String, required: true },
         value: {type: Number, required: true}, //we have to figure out the structure for eventSubscription parameters
@@ -31,12 +32,14 @@ const userSchema = new Schema({
     }], 
 
     unpBuyOrders: [{  //so users can view/edit(?) their own buy/sell orders
+        orderID: {type: String, required: true},
         stockID: {type: String, required: true},
         shares: {type: Number, required: true},
         price: {type: Number, required: true} //users bid
     }], 
 
     unpSellOrders: [{
+        orderID: {type: String, required: true},
         stockID: {type: String, required: true},
         shares: {type: Number, required: true},
         price: {type: Number, required: true} //users price to sell

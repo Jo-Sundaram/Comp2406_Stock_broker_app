@@ -12,11 +12,13 @@ const stockSchema = new Schema({
         triggerOrder: {type: Boolean, required: true} //automated trading thing, unstructured
      }], 
     sellOrders: [{
+        orderID: {type: String, required: true},
         userID: { type: String, required: true },
         shares: {type: Number, required: true},
         price: {type: Number, required: true}
     }],
     buyOrders: [{
+        orderID: {type: String, required: true},
         userID: { type: String, required: true },
         shares: {type: Number, required: true},
         price: {type: Number, required: true}

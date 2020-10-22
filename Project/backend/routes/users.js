@@ -36,8 +36,8 @@ router.route('/add').post((req, res) => {
         eventSubscriptions,
         stockPortfolio,
         unpBuyOrders,
-        pSellOrders,
-        unpBuyOrders,
+        pBuyOrders,
+        unpSellOrders,
         pSellOrders
     });
 
@@ -63,6 +63,7 @@ router.route('/update/ES/:id').post((req, res) => {
     //console.log('here');
     User.findByIdAndUpdate(req.params.id,{
         $push: {eventSubscriptions: {
+            subscriptionID: req.body.subscriptionID,
             stockID: req.body.stockID,
             parameter: req.body.parameter,
             value: req.body.value,
@@ -83,6 +84,7 @@ router.route('/update/buyorder/:id').post((req, res) => {
     //console.log('here');
     User.findByIdAndUpdate(req.params.id,{
         $push: {unpBuyOrders: {
+            orderID: req.body.orderID,
             stockID: req.body.stockID,
             shares: req.body.shares,
             price: req.body.price
@@ -103,6 +105,7 @@ router.route('/update/sellorder/:id').post((req, res) => {
     //console.log('here');
     User.findByIdAndUpdate(req.params.id,{
         $push: {unpSellOrders: {
+            orderID: req.body.orderID,
             stockID: req.body.stockID,
             shares: req.body.shares,
             price: req.body.price
@@ -117,5 +120,37 @@ router.route('/update/sellorder/:id').post((req, res) => {
     });
 });
 
+//place sell order
+router.route('/delete/sellorder/:id').post((req, res) => {
+    //console.log('here');
+    User.findByIdAndUpdate(req.params.id,{
+        $pull: {unpSellOrders: {
+            orderID: req.body.orderID
+        }}
+    },  function(err, result){
+        if(err || result == null){
+            console.log("there is an error");
+            console.log(err);
+        }
+        //console.log("RESULT: " + result);
+        res.send('Done')
+    });
+});
+
+router.route('/delete/buyorder/:id').post((req, res) => {
+    //console.log('here');
+    User.findByIdAndUpdate(req.params.id,{
+        $pull: {unpBuyOrders: {
+            orderID: req.body.orderID
+        }}
+    },  function(err, result){
+        if(err || result == null){
+            console.log("there is an error");
+            console.log(err);
+        }
+        //console.log("RESULT: " + result);
+        res.send('Done')
+    });
+});
 
 module.exports = router;
