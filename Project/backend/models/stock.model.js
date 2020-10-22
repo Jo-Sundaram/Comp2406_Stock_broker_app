@@ -8,7 +8,7 @@ const stockSchema = new Schema({
     eventSubscriptions: [{
         userID: { type: String, required: true },
         stockID: { type: String, required: true },
-        parameters: {type: String, required: true }, //we have to figure out the structure for eventSubscription parameters
+        parameter: {type: String, required: true }, //we have to figure out the structure for eventSubscription parameters
         triggerOrder: {type: Boolean, required: true} //automated trading thing, unstructured
      }], 
     sellOrders: [{

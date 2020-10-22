@@ -36,9 +36,15 @@ router.route('/:stockAbbreviation').get((req, res) => {
 
 //update stock by abbreviation
 router.route('/update/:stockAbbreviation').post((req, res) => {
-    console.log('here');
-    Stock.findOneAndUpdate({'stockAbbreviation' : req.params.stockAbbreviation}, {$set:req.body},{new:true})
-        .then(stock => console.log("RESULT: " + stock))
+    //console.log('here');
+    Stock.findOneAndUpdate({'stockAbbreviation' : req.params.stockAbbreviation},{$set:req.body},{new:true},  function(err, result){
+        if(err || result == null){
+            console.log("there is an error");
+            console.log(err);
+        }
+        //console.log("RESULT: " + result);
+        res.send('Done')
+    });
 });
 
 router.route('/:id').post((req, res) => {
