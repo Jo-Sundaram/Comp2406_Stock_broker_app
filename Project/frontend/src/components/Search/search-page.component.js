@@ -22,6 +22,8 @@ export default class Search extends Component{
             stockID: 'TSLA',
             unpBuyOrders: [],
             eventSubscriptions: [],
+
+            stockES: [],
             stockBuyOrders: [],
 
             shares: 0,
@@ -42,7 +44,8 @@ export default class Search extends Component{
                 userFunds: responseArr[0].data.userFunds,
                 unpBuyOrders: responseArr[0].data.unpBuyOrders,
                 eventSubscriptions: responseArr[0].data.eventSubscriptions,
-                stockBuyOrders: responseArr[1].data.buyOrders
+                stockBuyOrders: responseArr[1].data.buyOrders,
+                stockES: responseArr[1].data.eventSubscriptions
             })
         })
         .catch(function (error) {
@@ -71,7 +74,6 @@ export default class Search extends Component{
         
         var orderTotal = Number(this.state.price)*Number(this.state.shares);
         if (this.state.userFunds >= orderTotal && this.state.price > 0 && this.state.shares > 0){
-
             var newArray = this.state.unpBuyOrders;
             var newStockOrders = this.state.stockBuyOrders;
             var newUserFunds = Number(this.state.userFunds) - orderTotal;
@@ -100,7 +102,7 @@ export default class Search extends Component{
                     data: {
                         buyOrders: newStockOrders
                     }
-                }),
+                })
             ])
             .then(res => {
                 console.log(res.data)
@@ -142,20 +144,36 @@ export default class Search extends Component{
     onEsSubmit(e){
         e.preventDefault();
         var newEsArray = this.state.eventSubscriptions;
+        var newStockES = this.state.stockES;
         if(this.state.esParameter !=null && this.state.esAmount != null && this.state.esAmount != 0){
             newEsArray.push({
                 stockID: this.state.stockID,
-                parameter: this.state.EsParameter,
+                parameter: this.state.esParameter,
                 value: this.state.EsAmount,
                 triggerOrder: 0
-            })
-            axios({
-                method: 'post',
-                url: 'http://localhost:5000/users/update/5f890ebbbb89e66e947f5652', //dummy user
-                data: {
-                    eventSubscriptions: newEsArray
-                }
-            })
+            });
+            newStockES.push({
+                stockID: this.state.stockID,
+                parameter: this.state.esParameter,
+                value: this.state.EsAmount,
+                triggerOrder: 0
+            });
+            axios.all([
+                axios({
+                    method: 'post',
+                    url: 'http://localhost:5000/users/update/5f890ebbbb89e66e947f5652', //dummy user
+                    data: {
+                        eventSubscriptions: newEsArray
+                    }
+                }),
+                axios({
+                    method: 'post',
+                    url: 'http://localhost:5000/stocks/update/' + this.state.stockID, //dummy user
+                    data: {
+                        eventSubscriptions: newStockES
+                    }
+                }),
+            ])
             .then(res => {
                 console.log(res.data)
                 alert("Successfully created ES")
@@ -166,7 +184,7 @@ export default class Search extends Component{
                 alert("ES creation failed. Please try again.");
             })
         }
-        window.location.reload(false);    
+        //window.location.reload(false);    
     }
 
     render(){
