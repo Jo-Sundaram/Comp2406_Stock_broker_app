@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
-import "./search.css"
+import "./search.css";
+import "./searchbar.css";
 import Navbar from "../NavBar/navbar.component";
 import requests from '../functions/requests.js';
+
+import SelectSearch from 'react-select-search';
 
 export default class Search extends Component{
 
@@ -19,10 +22,19 @@ export default class Search extends Component{
         this.onEsSubmit = this.onEsSubmit.bind(this);
         this.onStockSearch = this.onStockSearch.bind(this);
 
+        //this.onSearchSelect = this.onSearchSelect.bind(this);
+
+
         this.state = {
             userID: "5f890ebbbb89e66e947f5652",
             userFunds: 0,
             stockID: 'TSLA',
+
+            stocks: [
+                {name: ['Tesla', " (TSLA)"], value: "TSLA"},
+                {name: ['CIENA', " (CIEN)"], value: "CIEN"},
+                {name: ['APPLE', " (AAPL)"], value: "AAPL"}
+            ],
 
             shares: 0,
             price: 0,
@@ -35,7 +47,7 @@ export default class Search extends Component{
     componentDidMount() {
         axios.all([
             axios.get('http://localhost:5000/users/' + this.state.userID), //dummy user ID in place
-            axios.get('http://localhost:5000/stocks/' + this.state.stockID)
+            axios.get('http://localhost:5000/stocks/' + this.state.stockID),
         ])
         .then(responseArr => {
             this.setState({
@@ -53,7 +65,6 @@ export default class Search extends Component{
         this.setState({
             shares: e.target.value
         });
-        console.log(this.state.stockAbb);
     }
 
     onChangeOrderOffer(e){
@@ -74,6 +85,8 @@ export default class Search extends Component{
             var newUserFunds = Number(this.state.userFunds) - orderTotal;
             
             var ID = await (requests.generateBuyID(this.state.stockID, this.state.userID));
+
+            console.log(this.state.stockID);
 
             axios.all([
                 axios({
@@ -139,6 +152,7 @@ export default class Search extends Component{
         this.setState({
             esAmount: e.target.value        
         });
+        console.log(this.state.stockID);
     }
 
     async onEsSubmit(e){
@@ -184,17 +198,10 @@ export default class Search extends Component{
         //window.location.reload(false);    
     }
 
-    onStockSearch(e){
-        e.preventDefault();
-        axios.get('http://localhost:5000/stocks/:'+ e.data.value)
-        .then(res=>{
-            console.log(res.data);
-        });
-        
-
-
-    }
-
+    handleChange = (stockID) => {
+        this.setState({ stockID });
+        console.log(stockID);
+      }
 
     render(){
         return(
@@ -202,16 +209,18 @@ export default class Search extends Component{
                     <Navbar/>
                     <div id = "top-nav" >
                         <div>
-                        <label for="searchbar"> Search for stocks</label>
-                        
-                            <input type="text" name="" id="searchbar" placeholder="TSLA"/>
-                            <button id = "search-enter">Enter</button>
+                            <SelectSearch 
+                            options={this.state.stocks} 
+                            search
+                            onChange = {this.handleChange}
+                            name="stocks" 
+                            placeholder="Search for a stock" />
                         </div>
                     </div>
                     <div id = "main-body" class = "main">
                         <div id = "recent-asks">
                             <div id =" stock-name">
-                            Stock Name: 
+                            Stock Name: {this.state.stockID}
                             </div>
 
                             <h4><span id = "bid"> Highest Bid: $</span></h4>
