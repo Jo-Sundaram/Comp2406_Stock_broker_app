@@ -58,4 +58,65 @@ router.route('/update/:id').post((req, res) => {
     });
 });
 
+
+//add event subscription to stock.
+router.route('/update/ES/:id').post((req, res) => {
+    //console.log('here');
+    User.findByIdAndUpdate(req.params.id,{
+        $push: {eventSubscriptions: {
+            stockID: req.body.stockID,
+            parameter: req.body.parameter,
+            value: req.body.value,
+            triggerOrder: req.body.triggerOrder
+        }}
+    },  function(err, result){
+        if(err || result == null){
+            console.log("there is an error");
+            console.log(err);
+        }
+        //console.log("RESULT: " + result);
+        res.send('Done')
+    });
+});
+
+//place buyorder
+router.route('/update/buyorder/:id').post((req, res) => {
+    //console.log('here');
+    User.findByIdAndUpdate(req.params.id,{
+        $push: {unpBuyOrders: {
+            stockID: req.body.stockID,
+            shares: req.body.shares,
+            price: req.body.price
+        }}
+    },  function(err, result){
+        if(err || result == null){
+            console.log("there is an error");
+            console.log(err);
+        }
+        //console.log("RESULT: " + result);
+        res.send('Done')
+    });
+});
+
+
+//place sell order
+router.route('/update/sellorder/:id').post((req, res) => {
+    //console.log('here');
+    User.findByIdAndUpdate(req.params.id,{
+        $push: {unpSellOrders: {
+            stockID: req.body.stockID,
+            shares: req.body.shares,
+            price: req.body.price
+        }}
+    },  function(err, result){
+        if(err || result == null){
+            console.log("there is an error");
+            console.log(err);
+        }
+        //console.log("RESULT: " + result);
+        res.send('Done')
+    });
+});
+
+
 module.exports = router;

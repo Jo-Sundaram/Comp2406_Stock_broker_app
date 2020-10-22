@@ -53,6 +53,65 @@ router.route('/:id').post((req, res) => {
         .catch(err => res.status(400).json('Error:  ' + err));
 });
 
+//add event subscription to stock.
+router.route('/update/ES/:stockAbbreviation').post((req, res) => {
+    //console.log('here');
+    Stock.findOneAndUpdate({'stockAbbreviation' : req.params.stockAbbreviation},{
+        $push: {eventSubscriptions: {
+            userID: req.body.userID,
+            stockID: req.body.stockID,
+            parameter: req.body.parameter,
+            triggerOrder: req.body.triggerOrder
+        }}
+    },  function(err, result){
+        if(err || result == null){
+            console.log("there is an error");
+            console.log(err);
+        }
+        //console.log("RESULT: " + result);
+        res.send('Done')
+    });
+});
+
+//place buy order
+router.route('/update/buyorder/:stockAbbreviation').post((req, res) => {
+    //console.log('here');
+    Stock.findOneAndUpdate({'stockAbbreviation' : req.params.stockAbbreviation},{
+        $push: {buyOrders: {
+            userID: req.body.userID,
+            shares: req.body.shares,
+            price: req.body.price
+        }}
+    },  function(err, result){
+        if(err || result == null){
+            console.log("there is an error");
+            console.log(err);
+        }
+        //console.log("RESULT: " + result);
+        res.send('Done')
+    });
+});
+
+//place sell order
+router.route('/update/sellorder/:stockAbbreviation').post((req, res) => {
+    //console.log('here');
+    Stock.findOneAndUpdate({'stockAbbreviation' : req.params.stockAbbreviation},{
+        $push: {sellOrders: {
+            userID: req.body.userID,
+            shares: req.body.shares,
+            price: req.body.price
+        }}
+    },  function(err, result){
+        if(err || result == null){
+            console.log("there is an error");
+            console.log(err);
+        }
+        //console.log("RESULT: " + result);
+        res.send('Done')
+    });
+});
+
+
 
 
 module.exports = router;
