@@ -15,8 +15,10 @@ const userSchema = new Schema({
         shares: {type: Number, required: true}
 
     }],
-     watchlist: [ {
-        stockID: { type: String, required: true }
+     watchlistCollection: [{
+         watchlist:[{
+            stockID: { type: String, required: true }
+         }]
     }],
 
     notifications: [{
