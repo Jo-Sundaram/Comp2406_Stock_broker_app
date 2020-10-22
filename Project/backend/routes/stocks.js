@@ -76,7 +76,7 @@ router.route('/update/ES/:stockAbbreviation').post((req, res) => {
 
 //place buy order
 router.route('/update/buyorder/:stockAbbreviation').post((req, res) => {
-    //console.log('here');
+    console.log('here');
     Stock.findOneAndUpdate({'stockAbbreviation' : req.params.stockAbbreviation},{
         $push: {buyOrders: {
             orderID: req.body.orderID,
@@ -96,7 +96,7 @@ router.route('/update/buyorder/:stockAbbreviation').post((req, res) => {
 
 //place sell order
 router.route('/update/sellorder/:stockAbbreviation').post((req, res) => {
-    //console.log('here');
+    console.log('...');
     Stock.findOneAndUpdate({'stockAbbreviation' : req.params.stockAbbreviation},{
         $push: {sellOrders: {
             orderID: req.body.orderID,
@@ -133,7 +133,7 @@ router.route('/delete/sellorder/:stockAbbreviation').post((req, res) => {
 
 //delete a buy order
 router.route('/delete/buyorder/:stockAbbreviation').post((req, res) => {
-    //console.log('here');
+    console.log('!!!!');
     Stock.findOneAndUpdate({'stockAbbreviation' : req.params.stockAbbreviation},{
         $pull: {buyOrders: {
             orderID: req.body.orderID
