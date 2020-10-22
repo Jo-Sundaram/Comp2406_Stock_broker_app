@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import axios from 'axios';
 import Navbar from "../NavBar/navbar.component";
 import "./home-page.css"
-import requests from './requests.js';
+import requests from '../functions/requests.js';
 
     
 export default class Home extends Component{
@@ -18,8 +18,8 @@ export default class Home extends Component{
         
 
         this.state = {
+            userID: "5f890ebbbb89e66e947f5652",
             stockPortfolio: [],
-            unpUserSellOrders: [],
 
             stockID: null,
             shares: 0,
@@ -29,11 +29,10 @@ export default class Home extends Component{
 
     componentDidMount() {
         console.log('reloaded');
-        axios.get('http://localhost:5000/users/5f890ebbbb89e66e947f5652') //dummy user ID in place
+        axios.get('http://localhost:5000/users/' + this.state.userID) //dummy user ID in place
             .then(response => {
                 this.setState({
                     stockPortfolio: response.data.stockPortfolio,
-                    unpUserSellOrders: response.data.unpSellOrders
                 })
                 console.log(response.data.unpSellOrders)
             })
@@ -64,39 +63,40 @@ export default class Home extends Component{
     async onOrderSubmit(e){
         e.preventDefault();
         if(this.state.stockID != null){
-            var stockOrders = await (requests.getStockSellOrders(this.state.stockID));        
+              
             var newUserStockP = this.state.stockPortfolio;
             var objIndex = newUserStockP.findIndex((obj => obj.stockID == this.state.stockID));
-            var newUserSellArray = this.state.unpUserSellOrders;
             if(newUserStockP[objIndex].shares >= Number(this.state.shares)){
-                newUserSellArray.push({
-                    stockID: this.state.stockID,
-                    shares: Number(this.state.shares),
-                    price: Number(this.state.price)
-                });
-                console.log(stockOrders);
-                
-                stockOrders.push({
-                    userID: "jo",
-                    shares: Number(this.state.shares),
-                    price: Number(this.state.price)
-                });
+
+                var ID = await (requests.generateSellID(this.state.stockID, this.state.userID));
 
                 newUserStockP[objIndex].shares = newUserStockP[objIndex].shares - Number(this.state.shares);
                 axios.all([    
                     axios({
                         method: 'post',
-                        url: 'http://localhost:5000/users/update/5f890ebbbb89e66e947f5652', //dummy user
+                        url: 'http://localhost:5000/users/update/'+this.state.userID, 
                         data: {
                             stockPortfolio: newUserStockP,
-                            unpSellOrders: newUserSellArray
                         }
                     }),
                     axios({
                         method: 'post',
-                        url: 'http://localhost:5000/stocks/update/'+this.state.stockID ,
+                        url: 'http://localhost:5000/users/update/sellorder/'+this.state.userID, 
                         data: {
-                            sellOrders: stockOrders
+                            orderID: ID,
+                            stockID: this.state.stockID,
+                            shares: Number(this.state.shares),
+                            price: Number(this.state.price)
+                        }
+                    }),
+                    axios({
+                        method: 'post',
+                        url: 'http://localhost:5000/stocks/update/sellorder/' + this.state.stockID, //dummy user
+                        data: {
+                            orderID: ID,
+                            userID: "jo", //dummy userID
+                            shares: Number(this.state.shares),
+                            price: Number(this.state.price)
                         }
                     })
                 ])

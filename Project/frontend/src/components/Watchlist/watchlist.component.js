@@ -39,15 +39,13 @@ export default class Watchlist extends Component{
 
 
     onAdd(e){
-        e.preventDefault();
-         
+        e.preventDefault();   
 
         var newArray = this.state.watchlist;
         // console.log(newArray);
     
         newArray.push({
             stockID: this.state.stockID,
-            
         });
 
         // console.log(newArray);
@@ -69,14 +67,7 @@ export default class Watchlist extends Component{
             console.log(res)
             alert('Something went wrong! Please try again later.')
         });
-
     }
-     
-    onRemove(e){
-
-    }    
-
-
 
 
 

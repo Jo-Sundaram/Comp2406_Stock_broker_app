@@ -58,6 +58,7 @@ router.route('/update/ES/:stockAbbreviation').post((req, res) => {
     //console.log('here');
     Stock.findOneAndUpdate({'stockAbbreviation' : req.params.stockAbbreviation},{
         $push: {eventSubscriptions: {
+            subscriptionID: req.body.subscriptionID,
             userID: req.body.userID,
             stockID: req.body.stockID,
             parameter: req.body.parameter,
@@ -78,6 +79,7 @@ router.route('/update/buyorder/:stockAbbreviation').post((req, res) => {
     //console.log('here');
     Stock.findOneAndUpdate({'stockAbbreviation' : req.params.stockAbbreviation},{
         $push: {buyOrders: {
+            orderID: req.body.orderID,
             userID: req.body.userID,
             shares: req.body.shares,
             price: req.body.price
@@ -97,6 +99,7 @@ router.route('/update/sellorder/:stockAbbreviation').post((req, res) => {
     //console.log('here');
     Stock.findOneAndUpdate({'stockAbbreviation' : req.params.stockAbbreviation},{
         $push: {sellOrders: {
+            orderID: req.body.orderID,
             userID: req.body.userID,
             shares: req.body.shares,
             price: req.body.price
@@ -111,7 +114,39 @@ router.route('/update/sellorder/:stockAbbreviation').post((req, res) => {
     });
 });
 
+//delete a sell order
+router.route('/delete/sellorder/:stockAbbreviation').post((req, res) => {
+    //console.log('here');
+    Stock.findOneAndUpdate({'stockAbbreviation' : req.params.stockAbbreviation},{
+        $pull: {sellOrders: {
+            orderID: req.body.orderID
+        }}
+    },  function(err, result){
+        if(err || result == null){
+            console.log("there is an error");
+            console.log(err);
+        }
+        //console.log("RESULT: " + result);
+        res.send('Done')
+    });
+});
 
+//delete a buy order
+router.route('/delete/buyorder/:stockAbbreviation').post((req, res) => {
+    //console.log('here');
+    Stock.findOneAndUpdate({'stockAbbreviation' : req.params.stockAbbreviation},{
+        $pull: {buyOrders: {
+            orderID: req.body.orderID
+        }}
+    },  function(err, result){
+        if(err || result == null){
+            console.log("there is an error");
+            console.log(err);
+        }
+        //console.log("RESULT: " + result);
+        res.send('Done')
+    });
+});
 
 
 module.exports = router;
