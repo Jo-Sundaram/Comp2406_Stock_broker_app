@@ -15,9 +15,7 @@ export default class Account extends Component{
                 <h2>Your Watchlists</h2>
                 <div className = "list-container">
                     <Watchlist/>
-                    <Watchlist/>
-                    <Watchlist/>
-                    <Watchlist/>
+                  
                 </div>
             </div>
         );
