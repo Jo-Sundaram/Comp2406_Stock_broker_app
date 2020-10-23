@@ -6,6 +6,8 @@ const stockSchema = new Schema({
     stockFullName: {type: String, required: true, unique: true },
     stockAbbreviation: {type: String, required: true },
     eventSubscriptions: [{
+        subscriptionID: {type: String, required: true},
+
         userID: { type: String, required: true },
         parameter: {type: String, required: true }, //we have to figure out the structure for eventSubscription parameters
         value: {type: Number, required: true},
