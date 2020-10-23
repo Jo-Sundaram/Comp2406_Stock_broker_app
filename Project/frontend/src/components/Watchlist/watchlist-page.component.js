@@ -5,7 +5,7 @@ import "./watchlist.css"
 import Navbar from "../NavBar/navbar.component";
 import Watchlist from "./watchlist.component";
 
-export default class Account extends Component{
+export default class WatchlistPage extends Component{
 
     render(){
         return(

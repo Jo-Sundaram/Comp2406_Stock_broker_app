@@ -20,7 +20,7 @@ export default class Search extends Component{
         this.onChangeEsAmount = this.onChangeEsAmount.bind(this);
         this.onChangeEsParameter = this.onChangeEsParameter.bind(this);
         this.onEsSubmit = this.onEsSubmit.bind(this);
-        this.onStockSearch = this.onStockSearch.bind(this);
+        this.handleChange = this.handleChange.bind(this);
 
         //this.onSearchSelect = this.onSearchSelect.bind(this);
 
@@ -164,7 +164,7 @@ export default class Search extends Component{
             axios.all([
                 axios({
                     method: 'post',
-                    url: 'http://localhost:5000/users/update/ES/'+this.state.userID, //dummy user
+                    url: 'http://localhost:5000/users/'+this.state.userID+'/update/ES/add', //dummy user
                     data: {
                         subscription: ID,
                         stockID: this.state.stockID,

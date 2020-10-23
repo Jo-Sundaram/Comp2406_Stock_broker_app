@@ -60,8 +60,20 @@ router.route('/update/:id').post((req, res) => {
 });
 
 
+
+//get all subscriptions.
+router.route('/:id/ES').get((req, res) => {
+    //console.log('here');
+    User.findByIdAndUpdate(req.params.id)
+    .then(user=>{
+            let eventsubs = user.eventSubscriptions;
+            res.json(eventsubs);
+    }).catch(err => res.status(400).json('Error: ' + err))
+});
+
+
 //add event subscription to stock.
-router.route('/update/ES/:id').post((req, res) => {
+router.route('/:id/update/ES/add/').post((req, res) => {
     //console.log('here');
     User.findByIdAndUpdate(req.params.id,{
         $push: {eventSubscriptions: {
@@ -79,6 +91,30 @@ router.route('/update/ES/:id').post((req, res) => {
         //console.log("RESULT: " + result);
         res.send('Done')
     });
+});
+
+
+
+//edit event subscription to stock.
+router.route('/:id/update/ES/update/:eid').post((req, res) => {
+    //console.log('here');
+    User.update({_id: req.params.id, "eventSubscriptions.id" : 2},{
+        $set: {
+           "eventSubscriptions.$.subscriptionID": req.body.subscriptionID,
+            "eventSubscriptions.$.stockID": req.body.stockID,
+            "eventSubscriptions.$.parameter": req.body.parameter,
+           "eventSubscriptions.$.value": req.body.value,
+            "eventSubscriptions.$.triggerOrder": req.body.triggerOrder
+        }
+    },{upsert:true},  function(err, result){
+        if(err || result == null){
+            console.log("there is an error");
+            console.log(err);
+        }
+        //console.log("RESULT: " + result);
+        res.send('Done')
+    });
+
 });
 
 //place buyorder

@@ -25,6 +25,7 @@ export default class Home extends Component{
             stockPortfolio: [],
             userSellOrders: [],
             userBuyOrders: [],
+            eventSubscriptions:[],
             
             stockID: null,
             shares: 0,
@@ -43,7 +44,8 @@ export default class Home extends Component{
                 this.setState({
                     stockPortfolio: response.data.stockPortfolio,
                     userSellOrders: response.data.unpSellOrders,
-                    userBuyOrders: response.data.unpBuyOrders
+                    userBuyOrders: response.data.unpBuyOrders,
+                    eventSubscriptions: response.data.eventSubscriptions
                 })
                 console.log(response.data.unpSellOrders)
             })
@@ -328,20 +330,21 @@ export default class Home extends Component{
                 <div id = "event-subscriptions" class = "view">
                     <h2>Event Subscriptions</h2>
                     <table>
+                        <th>Select</th>
                         <th>Symbol</th>
                         <th>Name</th>
-                        <th>$ / Share</th>
-                        <th>AVG price paid</th>
                         <th>Current value</th>
                         <th>Trigger</th>
-                        <tr>
-                            <td>AAPL</td>
-                            <td>Apple</td>
-                            <td>$10</td>
-                            <td>$40</td>
-                            <td>$60</td>
-                            <td>+5% </td>
-                        </tr>
+                        {this.state.eventSubscriptions.map((item =>
+                            <tr>
+                                <td><input type="radio" name="Sell" value={[item.stockID, item.orderID,"sellorder"]} onChange = {this.onSelectCancel}/></td>
+                                <td>{item.stockID}</td>
+                                <td>{item.name}</td>
+                                <td>{item.price}</td>
+
+                                <td>False</td>
+                            </tr>
+                            ))}
                     </table>
                 </div>           
             </div>

@@ -46,10 +46,12 @@ export default class Navbar extends Component {
           </li>
     
           <li class="nav-item">
-            <a href="#" class="nav-link">
-              <span class="link-text">Edit <br/> Subscriptions</span>
-              <i class="fas fa-bell"></i>
-            </a>
+            <Link to = "/eventsubs">
+              <a class="nav-link">
+                <span class="link-text">Edit <br/> Subscriptions</span>
+                <i class="fas fa-bell"></i>
+              </a>
+            </Link>
           </li>
     
         
@@ -65,6 +67,7 @@ export default class Navbar extends Component {
             </Link>
            
           </li>
+
         </ul>
       </nav>
     );
