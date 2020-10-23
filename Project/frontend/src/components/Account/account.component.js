@@ -6,6 +6,32 @@ import Navbar from "../NavBar/navbar.component";
 
 export default class Account extends Component{
 
+    constructor(props){
+        super(props);
+
+        this.state = {
+            userID: "5f890ebbbb89e66e947f5652",
+            username: '',
+            email: '',
+        }
+    }
+
+    componentDidMount() {
+        console.log('reloaded');
+        axios.get('http://localhost:5000/users/' + this.state.userID) //dummy user ID in place
+            .then(response => {
+
+                this.setState({
+                    username: response.data.username,
+                    email: response.data.email
+                })
+                
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+    }
+
     render(){
         return(
             <div>
@@ -14,9 +40,8 @@ export default class Account extends Component{
                 <div className = "userInfo">
                     <h1>Your Account</h1>
 
-                    <h3>Name: </h3>
-                    <h3>Email: </h3>
-                    <h3>Name: </h3>
+                    <h3>Userame: {this.state.username}</h3>
+                    <h3>Email: {this.state.email}</h3>
 
                 </div>
 
