@@ -61,6 +61,7 @@ router.route('/update/ES/:stockAbbreviation').post((req, res) => {
             subscriptionID: req.body.subscriptionID,
             userID: req.body.userID,
             stockID: req.body.stockID,
+            value: req.body.value,
             parameter: req.body.parameter,
             triggerOrder: req.body.triggerOrder
         }}
@@ -74,9 +75,38 @@ router.route('/update/ES/:stockAbbreviation').post((req, res) => {
     });
 });
 
+//edit event subscription to stock.
+router.route('/:stockAbbreviation/update/ES/').post((req, res) => {
+    console.log(req.body.subscriptionID);
+    Stock.updateMany({"stockAbbreviation": req.params.stockAbbreviation, 'eventSubscriptions.subscriptionID' : req.body.subscriptionID},{
+        $set: {'eventSubscriptions.$.value': req.body.value}   
+    },  function(err, result){
+        if(err || result == null){
+            console.log("there is an error");
+            console.log(err);
+        }
+        //console.log("RESULT: " + result);
+        res.send('Done')
+    });
+});
+
+//remove event subscription to stock.
+router.route('/:stockAbbreviation/update/ES/remove').post((req, res) => {
+    
+    Stock.updateMany({"stockAbbreviation": req.params.stockAbbreviation},{
+        $pull: {'eventSubscriptions': {subscriptionID: req.body.subscription}}   
+    },  function(err, result){
+        if(err || result == null){
+            console.log("there is an error");
+            console.log(err);
+        }
+        //console.log("RESULT: " + result);
+        res.send('Done')
+    });
+});
+
 //place buy order
 router.route('/update/buyorder/:stockAbbreviation').post((req, res) => {
-    console.log('here');
     Stock.findOneAndUpdate({'stockAbbreviation' : req.params.stockAbbreviation},{
         $push: {buyOrders: {
             orderID: req.body.orderID,
