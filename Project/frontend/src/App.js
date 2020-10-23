@@ -7,7 +7,7 @@ import LoginUser from "./components/Login/login-user.component";
 import Home from "./components/Dashboard/home-page.component";
 import Search from "./components/Search/search-page.component"
 import Account from "./components/Account/account.component"
-import WatchlistPage from "./components/Watchlist/watchlist-page.component"
+import Watchlist from "./components/Watchlist/watchlist-page.component"
 import EventSubscriptions from "./components/EventSubscriptions/event-subs.component"
 
 
@@ -24,7 +24,7 @@ function App() {
       <Route path="/home" component={Home} />
       <Route path="/search" component={Search} />
       <Route path="/account" component={Account} />
-      <Route path="/watchlist" component={WatchlistPage} />
+      <Route path="/watchlist" component={Watchlist} />
       <Route path="/eventsubs" component={EventSubscriptions} />
     </div>
     </Router>

@@ -9,7 +9,7 @@ export default class EventSubs extends Component{
     constructor(props){
         super(props);
         // this.onAdd = this.onAdd.bind(this);
-        // this.onRemove = this.onRemove.bind(this);
+        this.onRemove = this.onRemove.bind(this);
         this.onSelectEdit = this.onSelectEdit.bind(this);
         this.onEdit = this.onEdit.bind(this);
         this.onChangeEsAmount = this.onChangeEsAmount.bind(this);
@@ -53,8 +53,7 @@ export default class EventSubs extends Component{
            editSubID: e.target.value.split(",")[2]
        });
        console.log('selected');
-       
-  
+        
     }
 
     onChangeEsAmount(e){
@@ -75,7 +74,7 @@ export default class EventSubs extends Component{
             axios.all([
                 axios({
                     method: 'post',
-                    url: 'http://localhost:5000/users/'+this.state.userID+'/update/ES/add', //dummy user
+                    url: 'http://localhost:5000/users/'+this.state.userID+'/update/ES/update/', //dummy user
                     data: {
                         subscription: this.state.editSubID,
                         stockID: this.state.editStockID,
@@ -86,12 +85,12 @@ export default class EventSubs extends Component{
                 }),
                 axios({
                     method: 'post',
-                    url: 'http://localhost:5000/stocks/update/ES/' + this.state.stockID, //dummy user
+                    url: 'http://localhost:5000/stocks/' + this.state.editStockID+ '/update/ES/', //dummy user
                     data: {
-                        subscription: this.state.editSubID,
-                        userID: this.state.editStockID,
+                        subscriptionID: this.state.editSubID,
+                        userID: this.state.userID,
                         parameter: this.state.esParameter,
-                        value: Number(this.state.editAmount),
+                        value: this.state.editAmount,
                         triggerOrder: 0
                     }
                 }),
@@ -106,9 +105,46 @@ export default class EventSubs extends Component{
                 alert("ES creation failed. Please try again.");
             })
         }
-
-
     }
+
+    onRemove(e){
+        e.preventDefault();
+        axios.all([
+            axios({
+                method: 'post',
+                url: 'http://localhost:5000/users/'+this.state.userID+'/update/ES/update/remove', //dummy user
+                data: {
+                    subscription: this.state.editSubID,
+                    stockID: this.state.editStockID,
+                    parameter: this.state.esParameter,
+                    value: this.state.editAmount,
+                    triggerOrder: 0
+                }
+            }),
+            axios({
+                method: 'post',
+                url: 'http://localhost:5000/stocks/' + this.state.editStockID+ '/update/ES/remove', //dummy user
+                data: {
+                    subscriptionID: this.state.editSubID,
+                    userID: this.state.userID,
+                    parameter: this.state.esParameter,
+                    value: this.state.editAmount,
+                    triggerOrder: 0
+                }
+            }),
+        ])
+        .then(res => {
+            console.log(res.data)
+            alert("ES Removed")
+            window.location.reload(false);
+        })
+        .catch(res => {
+            console.log(res)
+            alert("ES creation failed. Please try again.");
+        })
+    }
+        
+    
 
     render(){
         return(
@@ -118,7 +154,6 @@ export default class EventSubs extends Component{
                 <h2>Your Event Subscriptions</h2>
                 <div className = "list-container">
                 <div id = "event-subscriptions" class = "view">
-                    <h2>Event Subscriptions</h2>
                     <table>
                         <th>Select</th>
                         <th>Symbol</th>
@@ -156,6 +191,7 @@ export default class EventSubs extends Component{
                           
                             <div>
                             <input type="submit" value='Edit Event Subscription'></input>
+                            <button onClick = {this.onRemove}>Remove Subscription</button>
                             </div>
                         </form>
                 </div>    

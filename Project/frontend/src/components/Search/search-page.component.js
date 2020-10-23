@@ -20,6 +20,7 @@ export default class Search extends Component{
         this.onChangeEsAmount = this.onChangeEsAmount.bind(this);
         this.onChangeEsParameter = this.onChangeEsParameter.bind(this);
         this.onEsSubmit = this.onEsSubmit.bind(this);
+        this.onAddWatchlist = this.onAddWatchlist.bind(this);
         this.handleChange = this.handleChange.bind(this);
 
         //this.onSearchSelect = this.onSearchSelect.bind(this);
@@ -177,9 +178,9 @@ export default class Search extends Component{
                     url: 'http://localhost:5000/stocks/update/ES/' + this.state.stockID, //dummy user
                     data: {
                         subscriptionID: ID,
-                        userID: this.state.stockID,
+                        userID: this.state.userID,
                         parameter: this.state.esParameter,
-                        value: Number(this.state.esAmount),
+                        value: this.state.esAmount,
                         triggerOrder: 0
                     }
                 }),
@@ -200,6 +201,10 @@ export default class Search extends Component{
     handleChange = (stockID) => {
         this.setState({ stockID });
         console.log(stockID);
+    }
+
+    onAddWatchlist(e){
+        
     }
 
     render(){
@@ -225,7 +230,7 @@ export default class Search extends Component{
                             <h4><span id = "bid"> Highest Bid: $</span></h4>
 
                             <h4><span id = "ask"> Ask: $</span> </h4>
-
+                            <button onClick = {this.onAddWatchlist}>Add to Watchlist</button>
                         </div>
 
                         <div id = "stock-processed-history">

@@ -1,5 +1,4 @@
 
-
 .list-container{
     margin-left: 5em ;
     border: 2px solid black;
@@ -10,11 +9,20 @@
 
 }
 
+#select{
+    margin-left: 20em ;
+}
+
+#create{
+    margin-left: 10em;
+}
 
 
-.watchlist{
+
+.watchlist{ 
+    margin-left: 6em ;
     border: 1px solid black;
-    width: auto;
+    width: 90%;
     height:50%;
 
 }
