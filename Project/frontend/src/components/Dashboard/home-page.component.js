@@ -33,11 +33,7 @@ export default class Home extends Component{
             stockPortfolio: [],
             userSellOrders: [],
             userBuyOrders: [],
-<<<<<<< HEAD
-            eventSubscriptions:[],
-=======
             eventSubscriptions: [],
->>>>>>> a6f6be3a16cc762f558ee1b63c7648ec822a2d12
             
             stockID: null,
             shares: 0,
@@ -411,34 +407,20 @@ export default class Home extends Component{
                     <table>
                         <th>Select</th>
                         <th>Symbol</th>
-<<<<<<< HEAD
-                        <th>Name</th>
-=======
                         <th>$ / Share</th>
                         <th>AVG price paid</th>
->>>>>>> a6f6be3a16cc762f558ee1b63c7648ec822a2d12
                         <th>Current value</th>
                         <th>Trigger</th>
                         {this.state.eventSubscriptions.map((item =>
                             <tr>
-<<<<<<< HEAD
-                                <td><input type="radio" name="Sell" value={[item.stockID, item.orderID,"sellorder"]} onChange = {this.onSelectCancel}/></td>
-                                <td>{item.stockID}</td>
-                                <td>{item.name}</td>
-                                <td>{item.price}</td>
-
-                                <td>False</td>
-                            </tr>
-                            ))}
-=======
+                                <td> <input type = "radio" name = "select" /></td>
                                 <td>{item.stockID}</td>
                                 <td>Buy</td>
                                 <td>$0</td>
                                 <td>0</td>
-                                <td>False</td>
+                                <td>{item.value}</td>
                             </tr>
                         ))}
->>>>>>> a6f6be3a16cc762f558ee1b63c7648ec822a2d12
                     </table>
                 </div>           
             </div>
