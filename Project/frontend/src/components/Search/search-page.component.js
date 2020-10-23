@@ -165,7 +165,7 @@ export default class Search extends Component{
                     method: 'post',
                     url: 'http://localhost:5000/users/'+this.state.userID+'/update/ES/add', //dummy user
                     data: {
-                        subscription: ID,
+                        subscriptionID: ID,
                         stockID: this.state.stockID,
                         parameter: this.state.esParameter,
                         value: this.state.esAmount,
@@ -176,7 +176,7 @@ export default class Search extends Component{
                     method: 'post',
                     url: 'http://localhost:5000/stocks/update/ES/' + this.state.stockID, //dummy user
                     data: {
-                        subscription: ID,
+                        subscriptionID: ID,
                         userID: this.state.stockID,
                         parameter: this.state.esParameter,
                         value: Number(this.state.esAmount),
