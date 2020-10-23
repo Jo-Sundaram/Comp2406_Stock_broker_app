@@ -18,19 +18,33 @@ export default class Home extends Component{
         
         this.onSelectCancel = this.onSelectCancel.bind(this);
         this.onCancelOrder = this.onCancelOrder.bind(this);
+
+        this.onChangeDep = this.onChangeDep.bind(this);
+        this.onSubmitDep = this.onSubmitDep.bind(this);
+
+        this.onChangeWith = this.onChangeWith.bind(this);
+        this.onSubmitWith = this.onSubmitWith.bind(this);
+
         
 
         this.state = {
             userID: "5f890ebbbb89e66e947f5652",
+            userFunds: 0,
             stockPortfolio: [],
             userSellOrders: [],
             userBuyOrders: [],
+<<<<<<< HEAD
             eventSubscriptions:[],
+=======
+            eventSubscriptions: [],
+>>>>>>> a6f6be3a16cc762f558ee1b63c7648ec822a2d12
             
             stockID: null,
             shares: 0,
             price: 0,
 
+            depAmount: 0,
+            withAmount: 0,
             cancelStockID: null,
             cancelOrderID: null,
             cancelType: null
@@ -42,6 +56,7 @@ export default class Home extends Component{
         axios.get('http://localhost:5000/users/' + this.state.userID) //dummy user ID in place
             .then(response => {
                 this.setState({
+                    userFunds: response.data.userFunds,
                     stockPortfolio: response.data.stockPortfolio,
                     userSellOrders: response.data.unpSellOrders,
                     userBuyOrders: response.data.unpBuyOrders,
@@ -59,7 +74,7 @@ export default class Home extends Component{
             stockID: e.target.value
         });
     }
-
+ 
     onChangeOrderShares(e){
         this.setState({
             shares: e.target.value
@@ -78,7 +93,8 @@ export default class Home extends Component{
         if(this.state.stockID != null){
               
             var newUserStockP = this.state.stockPortfolio;
-            var objIndex = newUserStockP.findIndex((obj => obj.stockID == this.state.stockID));
+            var objIndex = this.state.stockPortfolio.findIndex((obj => obj.stockID == this.state.stockID));
+            console.log(objIndex);
             if(newUserStockP[objIndex].shares >= Number(this.state.shares)){
 
                 var ID = await (requests.generateSellID(this.state.stockID, this.state.userID));
@@ -176,6 +192,75 @@ export default class Home extends Component{
         }
     }
 
+    onChangeDep(e){
+        this.setState({
+            depAmount: e.target.value
+        });
+    }
+
+    onSubmitDep(e){
+        e.preventDefault()
+        if(this.state.depAmount !=0){
+            var newFunds = this.state.userFunds+Number(this.state.depAmount);
+            axios({
+                method: 'post',
+                url: 'http://localhost:5000/users/update/' + this.state.userID, 
+                data: {
+                    userFunds: newFunds,
+                }
+            })
+            .then(res => {
+                console.log(res.data)
+                //i want a function for this.
+                alert('Deposit Successful')
+
+                window.location.reload(false);
+            })
+            .catch(res => {
+                console.log(res)
+                alert('Something went wrong! Please try again later.')
+                window.location.reload(false);
+            });
+        }
+    }
+
+    onChangeWith(e){
+        this.setState({
+            withAmount: e.target.value
+        });
+    }
+
+    onSubmitWith(e){
+        e.preventDefault()
+        if(this.state.withAmount !=0 && this.state.withAmount<=this.state.userFunds){
+            var newFunds = this.state.userFunds-Number(this.state.withAmount);
+            axios({
+                method: 'post',
+                url: 'http://localhost:5000/users/update/' + this.state.userID, 
+                data: {
+                    userFunds: newFunds,
+                }
+            })
+            .then(res => {
+                console.log(res.data)
+                //i want a function for this.
+                alert('Withdrawal Successful')
+
+                window.location.reload(false);
+            })
+            .catch(res => {
+                console.log(res)
+                alert('Something went wrong! Please try again later.')
+                window.location.reload(false);
+            });
+        }
+        else{
+            alert('Invalid Input. Make sure you have the funds to withdraw.')
+            window.location.reload(false);
+        }
+    }
+
+
     render() {
         return(
            <div>
@@ -184,19 +269,31 @@ export default class Home extends Component{
             <div id = "dashboard-body" class = "dashboard">
                 <div id = "user-funds" class = "view">
                     <h2>User Funds</h2>
-                    <h4 id = "balance">Cash balance: $50</h4>
+                    <h4 id = "balance">Cash balance: ${this.state.userFunds}</h4>
                     <h4 id = "total-value">Total portfolio value: $100</h4>
 
                     <div>
-                    <label for="">Deposit Funds</label><br/>
-                    <input type="text" name="" id="deposit-input" />
-                    <button id = "deposit">Deposit</button><br/><br/>
+                        <form onSubmit={this.onSubmitDep}>
+                            <label for="">Deposit Funds</label><br/>
+                            <input 
+                                type="number" min="0"
+                                value={this.state.depAmount}
+                                onChange = {this.onChangeDep}
+                            />
+                            <input type="submit" value='Deposit'></input>
+                        </form>
                     </div>
+                    
                     <div>
-                    <label for="">Widthdraw Funds</label><br/>
-                    <input type="text" name="" id="widthdraw-input" />
-                    <button id = "withdraw">Withdraw</button>
-                </div>
+                        <form onSubmit={this.onSubmitWith}>
+                            <label for="">Widthdraw Funds</label><br/>
+                            <input 
+                                type="number" min="0"
+                                value={this.state.withAmount}
+                                onChange = {this.onChangeWith} />
+                            <input type="submit" value='Withdraw'></input>
+                        </form>
+                    </div>
                 </div>
                 
                 <div id = "stocks-owned" class = "view">
@@ -205,36 +302,18 @@ export default class Home extends Component{
                         <table>
                             <th>Select</th>
                             <th>Symbol</th>
-                            <th>Name</th>
                             <th>Shares Owned</th>
                             <th>AVG price paid</th>
                             <th>Current value</th>
+                            {this.state.stockPortfolio.map((item =>
                             <tr>
-                                <td><input type="radio" name="Sell" value="TSLA" onChange = {this.onChangeOrderStock}/></td>
-                                <td>TSLA</td>
-                                <td>Tesla</td>
-                                <td>5</td>
-                                <td>$40</td>
-                                <td>$10</td>
+                                <td><input type="radio" name="Sell" value={item.stockID} onChange = {this.onChangeOrderStock}/></td>
+                                <td>{item.stockID}</td>
+                                <td>{item.shares}</td>
+                                <td>50</td>
+                                <td>45</td>
                             </tr>
-
-                            <tr>
-                                <td><input type="radio" name="Sell" value="AAPL" onChange = {this.onChangeOrderStock}/></td>
-                                <td>AAPL</td>
-                                <td>Apple</td>
-                                <td>7</td>
-                                <td>$40</td>
-                                <td>$10</td>
-                            </tr>
-                    
-                            <tr>
-                                <td><input type="radio" name="Sell" value="NKE" onChange = {this.onChangeOrderStock}/></td>
-                                <td>NKE</td>
-                                <td>Nike</td>
-                                <td>2</td>
-                                <td>$20</td>
-                                <td>$25</td>
-                            </tr>
+                            ))}
                         </table>
 
                         <div>
@@ -332,11 +411,17 @@ export default class Home extends Component{
                     <table>
                         <th>Select</th>
                         <th>Symbol</th>
+<<<<<<< HEAD
                         <th>Name</th>
+=======
+                        <th>$ / Share</th>
+                        <th>AVG price paid</th>
+>>>>>>> a6f6be3a16cc762f558ee1b63c7648ec822a2d12
                         <th>Current value</th>
                         <th>Trigger</th>
                         {this.state.eventSubscriptions.map((item =>
                             <tr>
+<<<<<<< HEAD
                                 <td><input type="radio" name="Sell" value={[item.stockID, item.orderID,"sellorder"]} onChange = {this.onSelectCancel}/></td>
                                 <td>{item.stockID}</td>
                                 <td>{item.name}</td>
@@ -345,11 +430,19 @@ export default class Home extends Component{
                                 <td>False</td>
                             </tr>
                             ))}
+=======
+                                <td>{item.stockID}</td>
+                                <td>Buy</td>
+                                <td>$0</td>
+                                <td>0</td>
+                                <td>False</td>
+                            </tr>
+                        ))}
+>>>>>>> a6f6be3a16cc762f558ee1b63c7648ec822a2d12
                     </table>
                 </div>           
             </div>
         </div>
         )
     }
-
 }

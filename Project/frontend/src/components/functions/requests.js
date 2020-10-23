@@ -77,8 +77,6 @@ const requests = {
                 }
             }
         }
-        
-        
         return result;
     },
 
