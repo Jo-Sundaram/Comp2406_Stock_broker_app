@@ -51,8 +51,6 @@ export default class Search extends Component{
         .then(responseArr => {
             this.setState({
                 userFunds: responseArr[0].data.userFunds,
-                unpBuyOrders: responseArr[0].data.unpBuyOrders,
-                stockBuyOrders: responseArr[1].data.buyOrders,
             })
         })
         .catch(function (error) {
@@ -75,6 +73,7 @@ export default class Search extends Component{
     //need to add axios post sending the order to the stock
     //need to delete order from both in case of failure (we should make a function for that..?)
     //no pop up programmed confirming to the user that a buy order has been, or displaying order
+
     async onOrderSubmit(e){
         e.preventDefault();
         
@@ -200,7 +199,7 @@ export default class Search extends Component{
     handleChange = (stockID) => {
         this.setState({ stockID });
         console.log(stockID);
-      }
+    }
 
     render(){
         return(
