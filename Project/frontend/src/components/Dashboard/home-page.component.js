@@ -413,11 +413,12 @@ export default class Home extends Component{
                         <th>Trigger</th>
                         {this.state.eventSubscriptions.map((item =>
                             <tr>
+                                <td> <input type = "radio" name = "select" /></td>
                                 <td>{item.stockID}</td>
                                 <td>Buy</td>
                                 <td>$0</td>
                                 <td>0</td>
-                                <td>False</td>
+                                <td>{item.value}</td>
                             </tr>
                         ))}
                     </table>

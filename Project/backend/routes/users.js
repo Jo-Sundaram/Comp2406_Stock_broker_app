@@ -171,6 +171,7 @@ router.route('/delete/sellorder/:id').post((req, res) => {
 
 router.route('/delete/buyorder/:id').post((req, res) => {
     //console.log('here');
+    
     User.findByIdAndUpdate(req.params.id,{
         $pull: {unpBuyOrders: {
             orderID: req.body.orderID
