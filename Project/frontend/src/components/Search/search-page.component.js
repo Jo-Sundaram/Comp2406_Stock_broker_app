@@ -20,6 +20,7 @@ export default class Search extends Component{
         this.onChangeEsAmount = this.onChangeEsAmount.bind(this);
         this.onChangeEsParameter = this.onChangeEsParameter.bind(this);
         this.onEsSubmit = this.onEsSubmit.bind(this);
+        this.onStockSearch = this.onStockSearch.bind(this);
 
         //this.onSearchSelect = this.onSearchSelect.bind(this);
 
