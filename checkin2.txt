@@ -1,0 +1,170 @@
+Project: Stock Broker Application
+-----
+Samee Shahood 101143479
+Jothika Sundaram 101147833
+-----
+Setting up and running server
+
+STARTING BACKEND:
+1) cd/Project/backend
+2) npm install - install required libraries to run the backend (from package.json)
+3) node server - start the backend server (mongoDB is required on your computer for the server to work)
+
+STARTING FRONTEND:
+1) cd/Project/frontend
+2) npm install - install required libraries to run the frontend (from package.json)
+3) npm start
+
+IMPORT DATA INTO MONGODB:
+Python is required to import the stocks.json and users.json into the MongoDB. Since we do not have preset data in the backend or frontend, and are using dummy data, importing these is requires.
+1) pip install pymongo
+2) python import_stocks.py <- imports stock documents into MongoDB
+3) python import_users.py <- import user documents into MongoDB
+
+TESTING SERVER: (http://localhost:3000/home)
+1) Make sure the backend and frontend are running, and navigate to http://localhost:3000/home
+MAKE DEPOSIT/WITHDRAW FUNDS
+- In order to withdraw funds, enter a number into the "Withdraw Funds" text field and submit. If the funds are greater than what is owned, the funds will not be withdrawn from the account
+The user funds will update if the input is valid.
+- In order to deposit funds, enter a number into the "Deposit Funds" text field and submit. The user funds will update if the input is valid with the new user funds
+
+PLACING SELL ORDERS: (http://localhost:3000/home)
+- Select a stock you would like to sell
+- Input price/share you would like to sell the stock for, and the number of shares you would like to sell
+- Submit. You will see the sell order appear under "Unprocessed Sell Orders" on the home page, and the number of stocks owned decrease by the number of shares you own decrease by the number
+of shares you inputted
+- If you do not have a sufficient number of shares, the sell order will not be placed and the user will be warned
+
+SEARCH FOR AND SELECT A STOCK: (http://localhost:3000/search)
+- Click the search bar at the top of the website and select any stock (the search function will filter the dropdown)
+
+PLACE BUY ORDER FOR SELECTED STOCK: (http://localhost:3000/search)
+- Enter the number of shares and offer per share for the stock you are placing a buy order for, and submit. If the user has insufficient funds, the user will appear and the buy order will not
+be submitted
+to the database.
+
+CREATE EVENT SUBSCRIPTION FOR SELECTED STOCK: (http://localhost:3000/search)
+- Enter the parameter, and the value for the event subscription for the selected stock, and enter submit. The event subscription will be stored in the database.
+
+Navigate back to the home page
+You will see the event subscription created, and the buy order created appear on the home page.
+
+CANCEL BUY/SELL ORDER:
+Select an order to cancel, and submit. The order will be removed from the database, and will no longer appear on the users home page.
+
+-----
+
+Files containing business logic:
+
+Backend Files:
+
+/backend/routes/users.js
+
+The routes/users.js file has files that pertains to making changes to the user collection, or a single user
+
+router.route('/:id').get
+- get request that returns the user object whose ID matches the id requested (:id in the route)
+
+router.route('/add').post
+- post request that adds a user to the user collection, typically called upon once a user registers for an account
+
+router.route('/update/:id').post
+- post request that updates certain parameters in the user object, depending on what is sent
+- ex: if the post request contains on {"eventSubscriptions": [{data}]}, the eventSubscription object in the user object will update to the value sent via the post request
+
+router.route('/update/ES/:id').post
+- post request that pushes a new object to the eventSubscriptions array in the user object
+
+ router.route('/update/buyorder/:id').post
+- post request that pushes a new buy order to the unpBuyOrders array in the user object
+
+router.route('/update/sellorder/:id').post
+- post request that pushes a new sell order to the unpSellOrders array in the user object
+
+router.route('/delete/sellorder/:id').post
+- post request that pulls a sell order from the unpSellOrders by finding the orderID and deleting it from the array
+
+router.route('/delete/buyorder/:id').post
+- post request that pulls a buy order from the unpBuyOrders by finding the orderID and deleting it from the array
+
+
+
+/backend/routes/users.js
+
+router.route('/:stockAbbreviation').get
+- get request that returns the user object whose stock abbreviation matches the stock abbreviation requested (:stockAbbreviation in the route)
+
+router.route('/update/:stockAbbreviation').post
+- post request that updates certain parameters in the user object, depending on what is sent
+- ex: if the post request contains on {"buyOrders": [{data}]}, the buyOrders object in the stock object will update to the value sent via the post request
+
+router.route('/update/ES/:stockAbbreviation').post
+- post request that pushes a new object to the eventSubscriptions array in the stocks object
+
+router.route('/update/buyorder/:stockAbbreviation').post
+- post request that pushes a new buy order to the buyOrders array in the stocks object
+
+router.route('/update/sellorder/:stockAbbreviation').post
+- post request that pushes a new sell order to the sellOrders array in the stocks object
+
+router.route('/delete/sellorder/:stockAbbreviation').post
+- post request that pulls a sell order from the sellOrders by finding the orderID and deleting it from the array
+
+router.route('/delete/buyorder/:stockAbbreviation').post
+- post request that pulls a sell order from the buyOrders by finding the orderID and deleting it from the array
+
+
+Frontend Files:
+/frontend/src/components/functions/requests.js
+
+generateSellID/generateBuyID/generateESID(stockID, userID)
+- Create unique ID for a buyOrder/sellOrder/event Subscription
+
+
+/frontend/src/components/Dashboard/home-page.component.js
+
+Creating Sell Orders:
+- aysnc onOrderSubmit(e) function
+- Uses user input from text fields and radio buttons (onChangeOrderStock(e), onChangeOrderShares(e), onChangeOrderPrice(e)) to verify if a sell order with these parameters is possible,
+then appends object to unpSellOrders array in user object with these parameters, and sellOrders array in stock object using the 'stocks/update/sellorder/:stockAbbreviation' and
+the 'stocks/update/sellorder/:id'
+
+Cancel Buy/Sell Order
+- onCancelOrder(e) function
+- Uses user input from text fields and radio buttons (onSelectCancel(e)) to find stock to cancel, then pulls that order from the order and unpOrder arrays in the relevant stock and user
+objects.
+
+Deposit/Withdraw Funds:
+- onSubmitWith(e), onSubmitDep(e)
+- Takes in user input for amount to withdraw/deposit from/to account. Does a post request to the user object with the updated userFunds.
+
+componentDidMount()
+- Gets user data to display on home page, suck as stock portfolio, unprocessed sell and buy orders, user funds and event subscriptions.
+
+
+/frontend/src/components/Dashboard/search-page.component.js
+Search Stocks
+- handleChange = (stockID) =>
+- <SelectSearch 
+	options={this.state.stocks} 
+	search
+	onChange = {this.handleChange}
+   	name="stocks" 
+ 	placeholder="Search for a stock" />
+- Creates search dropdown with pre-loaded stocks to search from/ On selection, the components stockID variable will change to this stock. Allows for users to switch between stocks to commit functionality with
+
+Create Buy Order
+- onOrderSubmit
+- Creates buyOrder using parameters inputted by user (onChangeOrderOffer(e), onChangeOrderShares(e)) for specific stock selected and userID, by pushing a new object to the buyOrder array in the relevant stock and user objects.
+
+Create Event Subscription for stock
+- onEsSubmit
+- Creates event subscriptions using parameters inputted by user (onChangeEsAmount(e), onChangeEsParameter(e)) for specific stock selected and userID, by pushing a new object to the event Subscription array object in the relevant stock and user objects.
+
+componentDidMount()
+- Gets user data such as user Funds for the component in order to check if buy orders placed are valid
+
+-----
+
+In terms of additional expectations, as you can see there is a React application setup with a working database. Data from the database is also rendered on the home page, such as unprocessed buy orders,
+sell orders, event subscriptions, user funds, etc. AJAX interactions on the React application, such as post and get requests, are done using Axios - which sends posts/get requests to the backend.
