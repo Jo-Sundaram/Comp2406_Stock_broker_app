@@ -98,15 +98,9 @@ router.route('/:id/update/ES/add/').post((req, res) => {
 //edit event subscription to stock.
 router.route('/:id/update/ES/update/:eid').post((req, res) => {
     //console.log('here');
-    User.update({_id: req.params.id, "eventSubscriptions.id" : 2},{
-        $set: {
-           "eventSubscriptions.$.subscriptionID": req.body.subscriptionID,
-            "eventSubscriptions.$.stockID": req.body.stockID,
-            "eventSubscriptions.$.parameter": req.body.parameter,
-           "eventSubscriptions.$.value": req.body.value,
-            "eventSubscriptions.$.triggerOrder": req.body.triggerOrder
-        }
-    },{upsert:true},  function(err, result){
+    User.updateMany({_id: req.params.id, 'eventSubscriptions.subscriptionID' : req.params.eid},{
+        $set: {'eventSubscriptions.$.value': req.body.value}   
+    },  function(err, result){
         if(err || result == null){
             console.log("there is an error");
             console.log(err);
