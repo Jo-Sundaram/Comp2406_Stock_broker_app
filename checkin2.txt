@@ -52,6 +52,9 @@ You will see the event subscription created, and the buy order created appear on
 CANCEL BUY/SELL ORDER:
 Select an order to cancel, and submit. The order will be removed from the database, and will no longer appear on the users home page.
 
+CREATE AN ACCOUNT:
+Navigate to http://localhost:3000/register to create an account. If the username and email is unique, the account will be created, otherwise an warning message will appear and the account will not be created.
+
 -----
 
 Files containing business logic:
@@ -120,6 +123,9 @@ Frontend Files:
 generateSellID/generateBuyID/generateESID(stockID, userID)
 - Create unique ID for a buyOrder/sellOrder/event Subscription
 
+getHighestAsk/getLowestBid(stockID)
+- Fetches the highest bid/lowest ask for the requested stock. Used to get information to display on http://localhost:3000/search for the selected stock.
+
 
 /frontend/src/components/Dashboard/home-page.component.js
 
@@ -159,12 +165,24 @@ Create Buy Order
 
 Create Event Subscription for stock
 - onEsSubmit
-- Creates event subscriptions using parameters inputted by user (onChangeEsAmount(e), onChangeEsParameter(e)) for specific stock selected and userID, by pushing a new object to the event Subscription array object in the relevant stock and user objects.
+- Creates event subscriptions using parameters inputted by user (onChangeEsAmount(e), onChangeEsParameter(e)) for specific stock selected and userID, by pushing a new object to the event Subscription array object in the relevant 
+stock and user objects.
 
 componentDidMount()
 - Gets user data such as user Funds for the component in order to check if buy orders placed are valid
+
+
+/frontend/src/components/Dashboard/register-user.component.js
+Create Account
+- onCreateUser
+- Gets parameters to create a user (onChangeEmail, onChangeUsername, onChangePassword) to create an account. Will only create an account if the username and email are unique (though a post request). If not, the user will recieve
+a warning and the account will not be created.
+
 
 -----
 
 In terms of additional expectations, as you can see there is a React application setup with a working database. Data from the database is also rendered on the home page, such as unprocessed buy orders,
 sell orders, event subscriptions, user funds, etc. AJAX interactions on the React application, such as post and get requests, are done using Axios - which sends posts/get requests to the backend.
+
+Data is rendered in the website through react using various component functions and get requests. For example, when rendering the users event subscriptions, a get request is made to acquire the users event subscriptions, and
+displays the information acquired in the render() function within the component.

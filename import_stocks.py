@@ -21,23 +21,33 @@ json_data = '''[{
   "stockFullName": "TESLA",
   "stockAbbreviation": "TSLA",
   "eventSubscriptions": [],
-  "buyOrders": [],
-  "sellOrders": [
+  "buyOrders": [
     {
       "_id": {
-        "$oid": "5f91e6ab76ba070aa446d9aa"
+        "$oid": "5f934b8d70beb2336ccc81ad"
       },
-      "orderID": "ZfL0OmKXVdwB",
+      "orderID": "dO6i1KKmqRmr",
       "userID": "jo",
       "shares": 6,
       "price": 6
+    }
+  ],
+  "sellOrders": [
+    {
+      "_id": {
+        "$oid": "5f934b8170beb2336ccc81ab"
+      },
+      "orderID": "PDctwdbUbz4q",
+      "userID": "jo",
+      "shares": 8,
+      "price": 2
     }
   ],
   "createdAt": {
     "$date": "2020-10-17T14:48:43.085Z"
   },
   "updatedAt": {
-    "$date": "2020-10-22T20:09:34.408Z"
+    "$date": "2020-10-23T21:30:53.937Z"
   },
   "__v": 0
 },{
@@ -46,22 +56,13 @@ json_data = '''[{
   },
   "stockFullName": "CIENA",
   "stockAbbreviation": "CIEN",
-  "eventSubscriptions": [
-    {
-      "_id": {
-        "$oid": "5f9200c176ba070aa446d9b6"
-      },
-      "userID": "CIEN",
-      "parameter": "",
-      "triggerOrder": false
-    }
-  ],
+  "eventSubscriptions": [],
   "buyOrders": [
     {
       "_id": {
-        "$oid": "5f91e6c176ba070aa446d9b2"
+        "$oid": "5f934bae70beb2336ccc81af"
       },
-      "orderID": "aogilje3wupa",
+      "orderID": "ScMmhWbdoOyp",
       "userID": "jo",
       "shares": 5,
       "price": 5
@@ -72,7 +73,7 @@ json_data = '''[{
     "$date": "2020-10-17T14:48:49.724Z"
   },
   "updatedAt": {
-    "$date": "2020-10-22T21:59:29.191Z"
+    "$date": "2020-10-23T21:31:26.560Z"
   },
   "__v": 0
 },{
@@ -81,26 +82,26 @@ json_data = '''[{
   },
   "stockFullName": "APPLE",
   "stockAbbreviation": "AAPL",
-  "eventSubscriptions": [],
-  "buyOrders": [
+  "eventSubscriptions": [
     {
       "_id": {
-        "$oid": "5f91e6bb76ba070aa446d9b0"
+        "$oid": "5f934bc470beb2336ccc81b1"
       },
-      "orderID": "YKgSb28EQHvo",
-      "userID": "jo",
-      "shares": 2,
-      "price": 2
+      "subscriptionID": "Q1DeFwKkqgzS",
+      "userID": "AAPL",
+      "parameter": "incDollar",
+      "triggerOrder": false
     }
   ],
+  "buyOrders": [],
   "sellOrders": [
     {
       "_id": {
-        "$oid": "5f91e6b376ba070aa446d9ae"
+        "$oid": "5f934b7970beb2336ccc81a7"
       },
-      "orderID": "B8heuGBGGBc2",
+      "orderID": "4pEB2D64LHoM",
       "userID": "jo",
-      "shares": 5,
+      "shares": 3,
       "price": 5
     }
   ],
@@ -108,7 +109,7 @@ json_data = '''[{
     "$date": "2020-10-17T14:48:57.309Z"
   },
   "updatedAt": {
-    "$date": "2020-10-22T20:08:27.690Z"
+    "$date": "2020-10-23T21:31:48.367Z"
   },
   "__v": 0
 }]'''

@@ -114,6 +114,45 @@ const requests = {
         }
         
         return result;
+    },
+
+    getHighestAsk: async function(stockID){
+        const promise = axios.get('http://localhost:5000/stocks/'+stockID) //dummy user ID in place
+        
+        const dataPromise = await promise.then((response) => response.data.sellOrders)
+
+        console.log(dataPromise);
+
+
+        var highestAsk = 'N/A';
+        for (var key in dataPromise){
+            if(dataPromise[key].price > highestAsk || highestAsk == 'N/A')
+            {
+                highestAsk = dataPromise[key].price;
+            }
+            
+        }
+
+        return highestAsk;
+    },
+
+    getLowestBid: async function(stockID){
+        const promise = axios.get('http://localhost:5000/stocks/'+stockID) //dummy user ID in place
+        
+        const dataPromise = await promise.then((response) => response.data.buyOrders)
+
+        console.log(dataPromise);
+
+
+        var lowestBid = 'N/A';
+        for (var key in dataPromise){
+            if(dataPromise[key].price > lowestBid || lowestBid == 'N/A')
+            {
+                lowestBid = dataPromise[key].price;
+            }
+        }
+
+        return lowestBid;
     }
 }
   

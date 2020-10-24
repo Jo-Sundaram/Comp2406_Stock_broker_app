@@ -32,7 +32,7 @@ export default class Search extends Component{
             stockID: 'TSLA',
 
             stocks: [
-                {name: ['Tesla', " (TSLA)"], value: "TSLA"},
+                {name: ['TESLA', " (TSLA)"], value: "TSLA"},
                 {name: ['CIENA', " (CIEN)"], value: "CIEN"},
                 {name: ['APPLE', " (AAPL)"], value: "AAPL"}
             ],
@@ -41,7 +41,10 @@ export default class Search extends Component{
             price: 0,
 
             esParameter: '',
-            esAmount: 0
+            esAmount: 0,
+
+            ask: 'N/A',
+            bid: 'N/A'
         }
     }
 
@@ -66,7 +69,7 @@ export default class Search extends Component{
         });
     }
 
-    onChangeOrderOffer(e){
+    async onChangeOrderOffer(e){
         this.setState({
             price: e.target.value        
         });
@@ -198,9 +201,15 @@ export default class Search extends Component{
         //window.location.reload(false);    
     }
 
-    handleChange = (stockID) => {
+    handleChange = async (stockID) => {
         this.setState({ stockID });
-        console.log(stockID);
+
+        var highestAsk = await (requests.getHighestAsk(stockID));
+        var lowestAsk = await (requests.getLowestBid(stockID));
+        this.setState({
+            ask: highestAsk,
+            bid: lowestAsk
+        });
     }
 
     onAddWatchlist(e){
@@ -227,10 +236,12 @@ export default class Search extends Component{
                             Stock Name: {this.state.stockID}
                             </div>
 
-                            <h4><span id = "bid"> Highest Bid: $</span></h4>
+                            <h4><span id = "bid"> Highest Bid: ${this.state.bid}</span></h4>
 
                             <h4><span id = "ask"> Ask: $</span> </h4>
                             <button onClick = {this.onAddWatchlist}>Add to Watchlist</button>
+                            <h4><span id = "ask"> Ask: ${this.state.ask}</span> </h4>
+
                         </div>
 
                         <div id = "stock-processed-history">

@@ -68,16 +68,24 @@ json_data = '''[{
   "username": "jothikasundaram",
   "email": "jothikasundaram@gmail.com",
   "password": "password",
-  "userFunds": 1000,
-  "watchlistCollection": [],
+  "userFunds": 939,
+  "watchlist": [
+    {
+      "_id": {
+        "$oid": "5f92020e76ba070aa446d9b7"
+      },
+      "stockID": "TSLA"
+    }
+  ],
   "notifications": [],
   "eventSubscriptions": [
     {
       "_id": {
-        "$oid": "5f9200c176ba070aa446d9b5"
+        "$oid": "5f934bc470beb2336ccc81b0"
       },
-      "stockID": "CIEN",
-      "parameter": "",
+      "subscriptionID": "Q1DeFwKkqgzS",
+      "stockID": "AAPL",
+      "parameter": "incDollar",
       "value": 15,
       "triggerOrder": false
     }
@@ -89,7 +97,7 @@ json_data = '''[{
       },
       "stockID": "AAPL",
       "stockName": "Apple",
-      "shares": 16
+      "shares": 6
     },
     {
       "_id": {
@@ -97,24 +105,24 @@ json_data = '''[{
       },
       "stockID": "TSLA",
       "stockName": "Tesla",
-      "shares": 37
+      "shares": 24
     }
   ],
   "unpBuyOrders": [
     {
       "_id": {
-        "$oid": "5f91e6bb76ba070aa446d9af"
+        "$oid": "5f934b8d70beb2336ccc81ac"
       },
-      "orderID": "YKgSb28EQHvo",
-      "stockID": "AAPL",
-      "shares": 2,
-      "price": 2
+      "orderID": "dO6i1KKmqRmr",
+      "stockID": "TSLA",
+      "shares": 6,
+      "price": 6
     },
     {
       "_id": {
-        "$oid": "5f91e6c176ba070aa446d9b1"
+        "$oid": "5f934bae70beb2336ccc81ae"
       },
-      "orderID": "aogilje3wupa",
+      "orderID": "ScMmhWbdoOyp",
       "stockID": "CIEN",
       "shares": 5,
       "price": 5
@@ -123,21 +131,21 @@ json_data = '''[{
   "unpSellOrders": [
     {
       "_id": {
-        "$oid": "5f91e6ab76ba070aa446d9a9"
+        "$oid": "5f934b7970beb2336ccc81a6"
       },
-      "orderID": "ZfL0OmKXVdwB",
-      "stockID": "TSLA",
-      "shares": 6,
-      "price": 6
+      "orderID": "4pEB2D64LHoM",
+      "stockID": "AAPL",
+      "shares": 3,
+      "price": 5
     },
     {
       "_id": {
-        "$oid": "5f91e6b376ba070aa446d9ad"
+        "$oid": "5f934b8170beb2336ccc81aa"
       },
-      "orderID": "B8heuGBGGBc2",
-      "stockID": "AAPL",
-      "shares": 5,
-      "price": 5
+      "orderID": "PDctwdbUbz4q",
+      "stockID": "TSLA",
+      "shares": 8,
+      "price": 2
     }
   ],
   "pBuyOrders": [],
@@ -146,7 +154,7 @@ json_data = '''[{
     "$date": "2020-10-16T03:08:43.963Z"
   },
   "updatedAt": {
-    "$date": "2020-10-22T22:05:02.655Z"
+    "$date": "2020-10-23T21:31:48.365Z"
   },
   "__v": 0
 }]'''

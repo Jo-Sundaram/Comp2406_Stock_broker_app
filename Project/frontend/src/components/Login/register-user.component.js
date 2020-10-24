@@ -10,7 +10,7 @@ export default class Register extends Component{
         this.onChangeEmail = this.onChangeEmail.bind(this);
         this.onChangeUsername = this.onChangeUsername.bind(this);
         this.onChangePassword = this.onChangePassword.bind(this);
-        this.onSubmit = this.onSubmit.bind(this);
+        this.onCreateUser = this.onCreateUser.bind(this);
 
         this.state = {
             username: '',
@@ -46,7 +46,7 @@ export default class Register extends Component{
         });
     }
 
-    onSubmit(e){
+    onCreateUser(e){
         e.preventDefault();
 
         const user = {
@@ -66,16 +66,23 @@ export default class Register extends Component{
         console.log(user);
 
         axios.post('http://localhost:5000/users/add', user)
-            .then(res => console.log(res.data));
-
-        window.location = '/login';
+            .then(res => {
+                console.log(res.data)
+                alert("Account created successfully!")
+                window.location = '/login'
+            })
+            .catch(res => {
+                console.log(res)
+                alert("Account already exists.")
+                window.location.reload(false)
+            }); 
     }
 
     render() {
         return (
         <div class="userinputform">
             <h2 className="text">Register</h2>
-            <form onSubmit={this.onSubmit}>
+            <form onSubmit={this.onCreateUser}>
                 <div className="formgroup">
                     <label className="text"><b>Email</b></label>
                     <input type="text" 
