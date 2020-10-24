@@ -22,7 +22,7 @@ json_data = '''[{
   "email": "sameeshahood11@gmail.com",
   "password": "password",
   "userFunds": 22,
-  "watchlist": [],
+  "watchlistCollection": [],
   "notifications": [],
   "eventSubscriptions": [
     {
@@ -69,14 +69,7 @@ json_data = '''[{
   "email": "jothikasundaram@gmail.com",
   "password": "password",
   "userFunds": 1000,
-  "watchlist": [
-    {
-      "_id": {
-        "$oid": "5f92020e76ba070aa446d9b7"
-      },
-      "stockID": "TSLA"
-    }
-  ],
+  "watchlistCollection": [],
   "notifications": [],
   "eventSubscriptions": [
     {
