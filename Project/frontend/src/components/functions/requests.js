@@ -153,6 +153,22 @@ const requests = {
         }
 
         return lowestBid;
+    },
+
+    parseListItems: async function(userID){
+        const promise = axios.get('http://localhost:5000/users/'+userID) //dummy user ID in place
+        
+        const dataPromise = await promise.then((response) => response.data.watchlistCollection)
+
+        var parsedList = [];
+
+        console.log(dataPromise);
+
+        for(var key in dataPromise){
+            parsedList.push({'name': dataPromise[key].name, 'value': dataPromise[key].name});
+        }
+
+        return parsedList;
     }
 }
   

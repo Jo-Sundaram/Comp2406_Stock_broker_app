@@ -37,6 +37,9 @@ export default class Search extends Component{
                 {name: ['APPLE', " (AAPL)"], value: "AAPL"}
             ],
 
+            watchlists: [],
+            selectedList: null,
+
             shares: 0,
             price: 0,
 
@@ -48,7 +51,7 @@ export default class Search extends Component{
         }
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         axios.all([
             axios.get('http://localhost:5000/users/' + this.state.userID), //dummy user ID in place
             axios.get('http://localhost:5000/stocks/' + this.state.stockID),
@@ -61,17 +64,21 @@ export default class Search extends Component{
         .catch(function (error) {
             console.log(error);
         })
+
+        var parsedList = await (requests.parseListItems(this.state.userID));
+
+        this.setState({watchlists : parsedList});
     }
 
     onChangeOrderShares(e){
         this.setState({
             shares: e.target.value
         });
+        console.log(this.state.selectedList);
     }
 
     async onChangeOrderOffer(e){
         this.setState({
-            price: e.target.value        
         });
     }
     //creating buy order
@@ -201,6 +208,33 @@ export default class Search extends Component{
         //window.location.reload(false);    
     }
 
+    onAddWatchlist(e){
+        e.preventDefault();
+
+        if(this.state.selectedList != null & this.state.stockID != null){
+            axios({
+                method: 'post',
+                url: 'http://localhost:5000/users/'+this.state.userID+'/watchlist/update/add', //dummy user
+                data: {
+                    name: this.state.selectedList,
+                    stockID: this.state.stockID
+                }
+            })
+            .then(res => {
+                console.log(res.data)
+                alert('Added to watchlist')
+                window.location.reload(false);
+            })
+            .catch(res => {
+                console.log(res)
+                alert('Something went wrong! Please try again later.')
+            });
+        }
+        else{
+            alert('Invalid selection');
+        }
+    }
+
     handleChange = async (stockID) => {
         this.setState({ stockID });
 
@@ -212,8 +246,8 @@ export default class Search extends Component{
         });
     }
 
-    onAddWatchlist(e){
-        
+    handleChangeWatchlist = async (selectedList) => {
+        this.setState({ selectedList });
     }
 
     render(){
@@ -238,9 +272,15 @@ export default class Search extends Component{
 
                             <h4><span id = "bid"> Highest Bid: ${this.state.bid}</span></h4>
 
-                            <h4><span id = "ask"> Ask: $</span> </h4>
-                            <button onClick = {this.onAddWatchlist}>Add to Watchlist</button>
                             <h4><span id = "ask"> Ask: ${this.state.ask}</span> </h4>
+
+                            <SelectSearch 
+                                options={this.state.watchlists}
+                                search
+                                onChange={this.handleChangeWatchlist}
+                                name="stocks" 
+                                placeholder="Select a watchlist" />
+                            <button onClick = {this.onAddWatchlist}>Add to Watchlist</button>
 
                         </div>
 

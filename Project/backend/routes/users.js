@@ -96,25 +96,10 @@ router.route('/:id/update/ES/add/').post((req, res) => {
 
 
 //edit event subscription to stock.
-router.route('/:id/update/ES/update/').post((req, res) => {
-    
-    User.updateMany({_id: req.params.id, 'eventSubscriptions.subscriptionID' : req.body.subscription},{
+router.route('/:id/update/ES/update/:eid').post((req, res) => {
+    //console.log('here');
+    User.updateMany({_id: req.params.id, 'eventSubscriptions.subscriptionID' : req.params.eid},{
         $set: {'eventSubscriptions.$.value': req.body.value}   
-    },  function(err, result){
-        if(err || result == null){
-            console.log("there is an error");
-            console.log(err);
-        }
-        //console.log("RESULT: " + result);
-        res.send('Done')
-    });
-});
-
-//remove event subscription to stock.
-router.route('/:id/update/ES/update/remove').post((req, res) => {
-    
-    User.updateMany({_id: req.params.id},{
-        $pull: {'eventSubscriptions': {subscriptionID: req.body.subscription}}   
     },  function(err, result){
         if(err || result == null){
             console.log("there is an error");
@@ -185,7 +170,6 @@ router.route('/delete/sellorder/:id').post((req, res) => {
 
 router.route('/delete/buyorder/:id').post((req, res) => {
     //console.log('here');
-    
     User.findByIdAndUpdate(req.params.id,{
         $pull: {unpBuyOrders: {
             orderID: req.body.orderID
@@ -223,8 +207,8 @@ router.route('/:id/watchlist/add').post((req, res) => {
     //console.log('here');
     User.findByIdAndUpdate(req.params.id,{
             $push: {watchlistCollection: {
-                 name: req.body.name,
-                 watchlist:[],
+                name: req.body.name,
+                watchlist:[],
             }
         }
     },  function(err, result){
@@ -254,65 +238,52 @@ router.route('/:id/watchlist/').get((req, res) => {
 router.route('/:id/watchlist/:wid').get((req, res) => {
     User.findById(req.params.id)
         .then(users =>{
-
             let list = users.watchlistCollection;
             list.forEach(element => {
-              
                 if(element.name==req.params.wid){
                     res.json(element.watchlist)
                 }
-                
             });
-
             res.json(list);
-
         })
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
 
-
 // add stock to a watchlist 
-router.route('/:id/watchlist/update/add').post((req, res) => {
+router.route('/:id/watchlist/:wid/add').post((req, res) => {
     // console.log('here');
 
-   
-    User.updateMany({_id: req.params.id, 'watchlistCollection.name' : req.body.name},{
-        $push: {'watchlistCollection.$.watchlist': {
-            stockID: req.body.stockID,
+    User.findByIdAndUpdate(req.params.id,{
+         $push: {"watchlistCollection.0.watchlist": {stockID:req.body.stockID}}
 
-        }   
-    }},  function(err, result){
+    },  function(err, result){
         if(err || result == null){
             console.log("there is an error");
             console.log(err);
         }
         //console.log("RESULT: " + result);
-        res.send('Stock Added to List')
+        res.send('Stock added')
     });
- 
  
 });
 
 
 // remove stock from a watchlist 
-router.route('/:id/watchlist/update/remove').post((req, res) => {
+router.route('/:id/watchlist/:wid/remove').post((req, res) => {
     // console.log('here');
 
-    User.updateMany({_id: req.params.id, 'watchlistCollection.name' : req.body.name},{
-        $pull: {'watchlistCollection.$.watchlist': {
-            stockID: req.body.stockID,
+    User.findByIdAndUpdate(req.params.id,{
+         $pull: {"watchlistCollection.2.watchlist": {stockID: req.body.stockID}}
 
-        }   
-    }},  function(err, result){
+    },  function(err, result){
         if(err || result == null){
             console.log("there is an error");
             console.log(err);
         }
         //console.log("RESULT: " + result);
-        res.send('Stock Removed from List')
+        res.send('Stock removed')
     });
- 
  
 });
 
@@ -320,12 +291,13 @@ router.route('/:id/watchlist/update/remove').post((req, res) => {
 // remove a watchlist from the collection
 router.route('/:id/watchlist/remove').post((req, res) => {
     //console.log('here');
-    User.updateMany({_id: req.params.id},{
-        $pull: {watchlistCollection: {
-            name: req.body.name,
-
-        }   
-    }},  function(err, result){
+    User.findByIdAndUpdate(req.params.id,{
+            $pull: {watchlistCollection:
+                {
+                    _id: req.body.id
+                }
+        }
+    },  function(err, result){
         if(err || result == null){
             console.log("there is an error");
             console.log(err);

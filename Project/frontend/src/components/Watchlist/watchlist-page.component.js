@@ -4,78 +4,77 @@ import axios from 'axios';
 import Navbar from "../NavBar/navbar.component";
 import "./watchlist.css"
 import helper from "./helper.js"
-
+import SelectSearch from 'react-select-search';
 
 
 export default class Watchlist extends Component{
     constructor(props){
         super(props);
         this.onAddList = this.onAddList.bind(this);
-        // this.onRemoveStock = this.onRemoveStock.bind(this);
+        this.onRemoveStock = this.onRemoveStock.bind(this);
         // this.onRemoveList = this.onRemoveList.bind(this);
+
         this.onSelectList = this.onSelectList.bind(this);
         this.onSelectStock = this.onSelectStock.bind(this);
         this.handleInput= this.handleInput.bind(this);
-
     
         this.state = {
             userID: "5f890ebbbb89e66e947f5652",
             watchlistCollection: [],
             parsedLists: [],
             stockItems:[],
-            listname: null,
-            stockID: null,
+            listname: '',
+            stockID: '',
+            newname: ''
             
         }
     }
-    componentDidMount() {
+    async componentDidMount() {
         console.log('reloaded');
         axios.get('http://localhost:5000/users/' + this.state.userID + '/watchlist') //dummy user ID in place
             .then(response => {
-                let list = helper.parseListItems(response.data);
-                let stocks = helper.getStockItems(response.data);
-
                 this.setState({
-                    watchlistCollection: response.data,
-                    parsedLists:list
-                 
+                    watchlistCollection: response.data.watchListCollection,
                 })
-                // console.log(response.data)
-
-              
                 
             })
             .catch(function (error) {
                 console.log(error);
             })
+            var parsedList = []
+            try {
+                parsedList = await (helper.parseListItems(this.state.userID));            
+            }
+              catch(e) {
+                console.log('Catch an error: ', e)
+            }
+            
+            this.setState({parsedLists:parsedList});
+            console.log(parsedList);    
+        
     }
-
-
-
 
     onSelectList(e){
         console.log(e.target.value.name)
     }
 
-// change to onRemove
 
     onSelectStock(e){
-    this.setState({
-        //    editAmount: e.target.value.split(",")[0],
-        stockID: e.target.value.split(",")[0],
-        // editSubID: e.target.value.split(",")[2]
-    });
-    console.log(e.target.value.split(",")[0].watchlist);
+        this.setState({
+            //    editAmount: e.target.value.split(",")[0],
+            stockID: e.target.value
+            // editSubID: e.target.value.split(",")[2]
+        });
+        console.log(e.target.value);
+        console.log(this.state.listname);
         
     }
     onRemoveStock(e){
-        e.preventDefault();   
-
-   
-        // console.log(newArray);
+        e.preventDefault();
+        console.log(this.state.listname);
         axios({
             method: 'post',
-            url: 'http://localhost:5000/users/update/5f890ebbbb89e66e947f5652/watchlist/update/remove', //dummy user
+            url: 'http://localhost:5000/users/5f890ebbbb89e66e947f5652/watchlist/update/remove', //dummy user
             data: {
                 name: this.state.listname,
                 stockID: this.state.stockID
@@ -83,10 +82,8 @@ export default class Watchlist extends Component{
         })
         .then(res => {
             console.log(res.data)
-            //i want a function for this.
             alert('Watchlist Item Removed!')
-
-            //window.location.reload(false);
+            window.location.reload(false);
         })
         .catch(res => {
             console.log(res)
@@ -94,25 +91,20 @@ export default class Watchlist extends Component{
         });
     }
 
-
     handleInput(e){
         this.setState({
-           listname : e.target.value
+           newname : e.target.value
         });
-   
     }
-
 
     onAddList(e){
         e.preventDefault();   
-        // console.log(this.state.listname)
-
-
+        console.log(this.state.newname)
        axios({
             method: 'post',
             url: 'http://localhost:5000/users/5f890ebbbb89e66e947f5652/watchlist/add', //dummy user
             data: {
-                name: this.state.listname,
+                name: this.state.newname
             }
         })
         .then(res => {
@@ -120,17 +112,27 @@ export default class Watchlist extends Component{
             //i want a function for this.
             alert('New Watchlist Added!')
 
-            //window.location.reload(false);
+            window.location.reload(false);
         })
         .catch(res => {
             console.log(res)
             alert('Something went wrong! Please try again later.')
+            window.location.reload(false);
         }); 
 
 
     }
 
+    handleChange = async (listname) => {
+        this.setState({ listname });
     
+        var stocksInWL = await (helper.getStockItems(this.state.userID, listname));
+        this.setState({
+            stockItems: stocksInWL
+        });
+
+        console.log(stocksInWL);
+    }
 
     render(){
         // console.log("watchlist");
@@ -147,14 +149,21 @@ export default class Watchlist extends Component{
 
                 <div id = "select">
                 <form onSubmit = {this.onAddList}>
-                    <label for = "lists">Select</label>
+
+                    <SelectSearch 
+                    options={this.state.parsedLists} 
+                    search
+                    onChange = {this.handleChange}
+                    name="stocks" 
+                    placeholder="Search for a stock" />
+                    {/* <label for = "lists">Select</label>
                     <select name = "lists" value = {this.onSelectList}>
                     {this.state.parsedLists.map((item,index)=>(
                         <option value = {item.name}>{item.name}</option>
 
                     ))}
 
-                    </select>
+                    </select> */}
                 
 
               
@@ -177,12 +186,12 @@ export default class Watchlist extends Component{
                         <th>Current value</th>
                         {this.state.stockItems.map((item,index)=>(
                             <tr>
-                                <td><input type="checkbox" name="Remove" value={[item.stockID]} onChange = {this.onSelectStock}/></td>
+                                <td><input type="radio" name="Remove" value={[item.stockID]} onChange = {this.onSelectStock}/></td>
                                 <td>{item.stockID}</td>
-                                <td>{item.name}</td>
-                                <td>{item.price}</td>
-                                <td>{item.shares}</td>
-                                <td>False</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                             </tr>
                         ))}
                     </table>

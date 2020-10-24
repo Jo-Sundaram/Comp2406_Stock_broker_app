@@ -14,6 +14,22 @@ db = myclient["webdevproject"]
 Collection = db["users"] 
   
 # Loading or Opening the json file 
+json_data = '''import json 
+from pymongo import MongoClient 
+from bson.json_util import loads
+  
+  
+# Making Connection 
+myclient = MongoClient("mongodb://localhost:27017/")  
+   
+# database  
+db = myclient["webdevproject"] 
+   
+# Created or Switched to collection  
+# names: GeeksForGeeks 
+Collection = db["users"] 
+  
+# Loading or Opening the json file 
 json_data = '''[{
   "_id": {
     "$oid": "5f890e53bb89e66e947f5651"
@@ -22,7 +38,7 @@ json_data = '''[{
   "email": "sameeshahood11@gmail.com",
   "password": "password",
   "userFunds": 22,
-  "watchlistCollection": [],
+  "watchlist": [],
   "notifications": [],
   "eventSubscriptions": [
     {
@@ -68,16 +84,23 @@ json_data = '''[{
   "username": "jothikasundaram",
   "email": "jothikasundaram@gmail.com",
   "password": "password",
-  "userFunds": 939,
+  "userFunds": 1000,
+  "watchlist": [
+    {
+      "_id": {
+        "$oid": "5f92020e76ba070aa446d9b7"
+      },
+      "stockID": "TSLA"
+    }
+  ],
   "notifications": [],
   "eventSubscriptions": [
     {
       "_id": {
-        "$oid": "5f934bc470beb2336ccc81b0"
+        "$oid": "5f9200c176ba070aa446d9b5"
       },
-      "subscriptionID": "Q1DeFwKkqgzS",
-      "stockID": "AAPL",
-      "parameter": "incDollar",
+      "stockID": "CIEN",
+      "parameter": "",
       "value": 15,
       "triggerOrder": false
     }
@@ -89,7 +112,7 @@ json_data = '''[{
       },
       "stockID": "AAPL",
       "stockName": "Apple",
-      "shares": 6
+      "shares": 16
     },
     {
       "_id": {
@@ -97,24 +120,24 @@ json_data = '''[{
       },
       "stockID": "TSLA",
       "stockName": "Tesla",
-      "shares": 24
+      "shares": 37
     }
   ],
   "unpBuyOrders": [
     {
       "_id": {
-        "$oid": "5f934b8d70beb2336ccc81ac"
+        "$oid": "5f91e6bb76ba070aa446d9af"
       },
-      "orderID": "dO6i1KKmqRmr",
-      "stockID": "TSLA",
-      "shares": 6,
-      "price": 6
+      "orderID": "YKgSb28EQHvo",
+      "stockID": "AAPL",
+      "shares": 2,
+      "price": 2
     },
     {
       "_id": {
-        "$oid": "5f934bae70beb2336ccc81ae"
+        "$oid": "5f91e6c176ba070aa446d9b1"
       },
-      "orderID": "ScMmhWbdoOyp",
+      "orderID": "aogilje3wupa",
       "stockID": "CIEN",
       "shares": 5,
       "price": 5
@@ -123,21 +146,21 @@ json_data = '''[{
   "unpSellOrders": [
     {
       "_id": {
-        "$oid": "5f934b7970beb2336ccc81a6"
+        "$oid": "5f91e6ab76ba070aa446d9a9"
       },
-      "orderID": "4pEB2D64LHoM",
-      "stockID": "AAPL",
-      "shares": 3,
-      "price": 5
+      "orderID": "ZfL0OmKXVdwB",
+      "stockID": "TSLA",
+      "shares": 6,
+      "price": 6
     },
     {
       "_id": {
-        "$oid": "5f934b8170beb2336ccc81aa"
+        "$oid": "5f91e6b376ba070aa446d9ad"
       },
-      "orderID": "PDctwdbUbz4q",
-      "stockID": "TSLA",
-      "shares": 8,
-      "price": 2
+      "orderID": "B8heuGBGGBc2",
+      "stockID": "AAPL",
+      "shares": 5,
+      "price": 5
     }
   ],
   "pBuyOrders": [],
@@ -146,32 +169,20 @@ json_data = '''[{
     "$date": "2020-10-16T03:08:43.963Z"
   },
   "updatedAt": {
-    "$date": "2020-10-24T04:18:38.730Z"
+    "$date": "2020-10-22T22:05:02.655Z"
   },
-  "__v": 0,
-  "watchlistCollection": [
-    {
-      "_id": {
-        "$oid": "5f93ab1e599f750a302d810a"
-      },
-      "name": "test",
-      "watchlist": [
-        {
-          "_id": {
-            "$oid": "5f93ab1e599f750a302d810b"
-          },
-          "stockID": "TSLA"
-        },
-        {
-          "_id": {
-            "$oid": "5f93ab1e599f750a302d810c"
-          },
-          "stockID": "CIEN"
-        }
-      ]
-    }
-  ]
+  "__v": 0
 }]'''
+
+data = loads(json_data)
+      
+# Inserting the loaded data in the Collection 
+# if JSON contains data more than one entry 
+# insert_many is used else inser_one is used 
+if isinstance(data, list): 
+    Collection.insert_many(data)   
+else: 
+    Collection.insert_one(data)
 
 data = loads(json_data)
       
