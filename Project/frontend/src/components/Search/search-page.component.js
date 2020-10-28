@@ -171,30 +171,41 @@ export default class Search extends Component{
             
             var ID = await (requests.generateESID(this.state.stockID, this.state.userID));
 
-            axios.all([
-                axios({
-                    method: 'post',
-                    url: 'http://localhost:5000/users/'+this.state.userID+'/update/ES/add', //dummy user
-                    data: {
-                        subscriptionID: ID,
-                        stockID: this.state.stockID,
-                        parameter: this.state.esParameter,
-                        value: this.state.esAmount,
-                        triggerOrder: 0
-                    }
-                }),
-                axios({
-                    method: 'post',
-                    url: 'http://localhost:5000/stocks/update/ES/' + this.state.stockID, //dummy user
-                    data: {
-                        subscriptionID: ID,
-                        userID: this.state.userID,
-                        parameter: this.state.esParameter,
-                        value: this.state.esAmount,
-                        triggerOrder: 0
-                    }
-                }),
-            ])
+            // axios.all([
+            //     axios({
+            //         method: 'post',
+            //         url: 'http://localhost:5000/users/'+this.state.userID+'/update/ES/add', //dummy user
+            //         data: {
+            //             subscriptionID: ID,
+            //             stockID: this.state.stockID,
+            //             parameter: this.state.esParameter,
+            //             value: this.state.esAmount,
+            //             triggerOrder: 0
+            //         }
+            //     }),
+            //     axios({
+            //         method: 'post',
+            //         url: 'http://localhost:5000/stocks/update/ES/' + this.state.stockID, //dummy user
+            //         data: {
+            //             subscriptionID: ID,
+            //             userID: this.state.userID,
+            //             parameter: this.state.esParameter,
+            //             value: this.state.esAmount,
+            //             triggerOrder: 0
+            //         }
+            //     }),
+            // ])
+
+            axios({
+                method: 'post',
+                url: 'http://localhost:5000/update/'+this.state.userID+'/'+this.state.stockID+'/ES/add', //dummy user
+                data: {
+                    subscriptionID: ID,
+                    parameter: this.state.esParameter,
+                    value: this.state.esAmount,
+                    triggerOrder: 0
+                }
+            })
             .then(res => {
                 console.log(res.data)
                 alert("Successfully created ES")
