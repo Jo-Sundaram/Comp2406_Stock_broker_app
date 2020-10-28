@@ -152,10 +152,13 @@ app.get('/:id/watchlist/:wid', function(req,res){
             }
             let list = res.watchlistCollection;
             list.forEach(element => {
+              
                 if(element.name==req.params.wid){
                     res.json(element.watchlist)
                 }
+                
             });
+
             res.json(list);
         }
     )
