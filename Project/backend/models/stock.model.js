@@ -7,7 +7,6 @@ const stockSchema = new Schema({
     stockAbbreviation: {type: String, required: true },
     eventSubscriptions: [{
         subscriptionID: {type: String, required: true},
-
         userID: { type: String, required: true },
         parameter: {type: String, required: true }, //we have to figure out the structure for eventSubscription parameters
         value: {type: Number, required: true},
@@ -15,12 +14,14 @@ const stockSchema = new Schema({
      }], 
     sellOrders: [{
         orderID: {type: String, required: true},
+        orderPlacement: {type: Number, required: true},
         userID: { type: String, required: true },
         shares: {type: Number, required: true},
-        price: {type: Number, required: true}
+        price: {type: Number, required: true},
     }],
     buyOrders: [{
         orderID: {type: String, required: true},
+        orderPlacement: {type: Number, required: true},
         userID: { type: String, required: true },
         shares: {type: Number, required: true},
         price: {type: Number, required: true}
