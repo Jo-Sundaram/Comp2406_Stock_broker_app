@@ -27,10 +27,12 @@ connection.once('open', () => {
 
 const usersRouter = require('./routes/users');
 const stocksRouter = require('./routes/stocks');
+const updateRouter = require('./routes/update')
 
 
 app.use('/users', usersRouter);
 app.use('/stocks', stocksRouter);
+app.use('/update', updateRouter);
 
 app.listen(port, () => {
     console.log('Server is running on port 5000');

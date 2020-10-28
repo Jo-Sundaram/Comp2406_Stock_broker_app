@@ -1,311 +1,214 @@
-const router = require('express').Router();
-const { watch } = require('../models/user.model');
+//const router = require('express').Router();
+//const { watch } = require('../models/user.model');
+const express = require("express");
 let User = require('../models/user.model');
+const app = express.Router();
 
-router.route('/').get((req, res) => {
-    User.find()
-        .then(users => res.json(users))
-        .catch(err => res.status(400).json('Error: ' + err));
+app.get("/", async(req,res) => {
+    const stocks = await User.find();
+    res.send(stocks);
 });
 
-router.route('/:id').get((req, res) => {
-    User.findById(req.params.id)
-        .then(users => res.json(users))
-        .catch(err => res.status(400).json('Error: ' + err));
+app.get("/:id", async(req,res) => {
+    const user = await User.findById(req.params.id);
+    res.send(user);
 });
 
 
-router.route('/add').post((req, res) => {
-    const username = req.body.username;
-    const email = req.body.email;
-    const password = req.body.password;
-    const userFunds = Number(req.body.userFunds);
-    const watchlist = req.body.watchlist; 
-    const notifications = req.body.notifications;
-    const eventSubscriptions = req.body.eventSubscriptions;
-    const unpBuyOrders = req.body.unpBuyOrders;
-    const unpSellOrders = req.body.unpSellOrders;
-    const pBuyOrders = req.body.unpBuyOrders;
-    const pSellOrders = req.body.pSellOrders;
+// router.route('/add').post((req, res) => {
+//     const username = req.body.username;
+//     const email = req.body.email;
+//     const password = req.body.password;
+//     const userFunds = Number(req.body.userFunds);
+//     const watchlist = req.body.watchlist; 
+//     const notifications = req.body.notifications;
+//     const eventSubscriptions = req.body.eventSubscriptions;
+//     const unpBuyOrders = req.body.unpBuyOrders;
+//     const unpSellOrders = req.body.unpSellOrders;
+//     const pBuyOrders = req.body.unpBuyOrders;
+//     const pSellOrders = req.body.pSellOrders;
 
+//     const newUser = new User({
+//         username,
+//         email,
+//         password,
+//         userFunds,
+//         watchlist,
+//         notifications,
+//         eventSubscriptions,
+//         stockPortfolio,
+//         unpBuyOrders,
+//         pBuyOrders,
+//         unpSellOrders,
+//         pSellOrders
+//     });
+
+//     newUser.save()
+//         .then(() => res.json('User added to the database'))
+//         .catch(err => res.status(400).json('Error: ' + err));
+// });
+
+app.post("/register", function(req,res) {
     const newUser = new User({
-        username,
-        email,
-        password,
-        userFunds,
-        watchlist,
-        notifications,
-        eventSubscriptions,
-        stockPortfolio,
-        unpBuyOrders,
-        pBuyOrders,
-        unpSellOrders,
-        pSellOrders
+        username : req.body.username,
+        email: req.body.email,
+        password: req.body.password,
+        userFunds: 0,
+        notifications: [],
+        eventSubscriptions: [],
+        watchlistCollection: [],
+        stockPortfolio: [],
+        unpBuyOrders: [],
+        pBuyOrders: [],
+        unpSellOrders: [],
+        pSellOrders: []
     });
 
-    newUser.save()
-        .then(() => res.json('User added to the database'))
-        .catch(err => res.status(400).json('Error: ' + err));
-});
-
-router.route('/update/:id').post((req, res) => {
-    User.findByIdAndUpdate(req.params.id,{$set:req.body},{new:true},  function(err, result){
-        if(err || result == null){
-            console.log("there is an error");
-            console.log(err);
-        }
-        //console.log("RESULT: " + result);
-        res.send('Done')
-    });
-});
-
-
-
-//get all subscriptions.
-router.route('/:id/ES').get((req, res) => {
-    //console.log('here');
-    User.findByIdAndUpdate(req.params.id)
-    .then(user=>{
-            let eventsubs = user.eventSubscriptions;
-            res.json(eventsubs);
-    }).catch(err => res.status(400).json('Error: ' + err))
-});
-
-
-//add event subscription to stock.
-router.route('/:id/update/ES/add/').post((req, res) => {
-    //console.log('here');
-    User.findByIdAndUpdate(req.params.id,{
-        $push: {eventSubscriptions: {
-            subscriptionID: req.body.subscriptionID,
-            stockID: req.body.stockID,
-            parameter: req.body.parameter,
-            value: req.body.value,
-            triggerOrder: req.body.triggerOrder
-        }}
-    },  function(err, result){
-        if(err || result == null){
-            console.log("there is an error");
-            console.log(err);
-        }
-        //console.log("RESULT: " + result);
-        res.send('Done')
-    });
-});
-
-
-
-//edit event subscription to stock.
-router.route('/:id/update/ES/update/:eid').post((req, res) => {
-    //console.log('here');
-    User.updateMany({_id: req.params.id, 'eventSubscriptions.subscriptionID' : req.params.eid},{
-        $set: {'eventSubscriptions.$.value': req.body.value}   
-    },  function(err, result){
-        if(err || result == null){
-            console.log("there is an error");
-            console.log(err);
-        }
-        //console.log("RESULT: " + result);
-        res.send('Done')
-    });
-});
-
-//place buyorder
-router.route('/update/buyorder/:id').post((req, res) => {
-    //console.log('here');
-    User.findByIdAndUpdate(req.params.id,{
-        $push: {unpBuyOrders: {
-            orderID: req.body.orderID,
-            stockID: req.body.stockID,
-            shares: req.body.shares,
-            price: req.body.price
-        }}
-    },  function(err, result){
-        if(err || result == null){
-            console.log("there is an error");
-            console.log(err);
-        }
-        //console.log("RESULT: " + result);
-        res.send('Done')
-    });
-});
-
-
-//place sell order
-router.route('/update/sellorder/:id').post((req, res) => {
-    //console.log('here');
-    User.findByIdAndUpdate(req.params.id,{
-        $push: {unpSellOrders: {
-            orderID: req.body.orderID,
-            stockID: req.body.stockID,
-            shares: req.body.shares,
-            price: req.body.price
-        }}
-    },  function(err, result){
-        if(err || result == null){
-            console.log("there is an error");
-            console.log(err);
-        }
-        //console.log("RESULT: " + result);
-        res.send('Done')
-    });
-});
-
-//place sell order
-router.route('/delete/sellorder/:id').post((req, res) => {
-    //console.log('here');
-    User.findByIdAndUpdate(req.params.id,{
-        $pull: {unpSellOrders: {
-            orderID: req.body.orderID
-        }}
-    },  function(err, result){
-        if(err || result == null){
-            console.log("there is an error");
-            console.log(err);
-        }
-        //console.log("RESULT: " + result);
-        res.send('Done')
-    });
-});
-
-router.route('/delete/buyorder/:id').post((req, res) => {
-    //console.log('here');
-    User.findByIdAndUpdate(req.params.id,{
-        $pull: {unpBuyOrders: {
-            orderID: req.body.orderID
-        }}
-    },  function(err, result){
-        if(err || result == null){
-            console.log("there is an error");
-            console.log(err);
-        }
-        //console.log("RESULT: " + result);
-        res.send('Done')
-    });
-});
-
-
-router.route('/delete/buyorder/:id').post((req, res) => {
-    //console.log('here');
-    User.findByIdAndUpdate(req.params.id,{
-        $pull: {unpBuyOrders: {
-            orderID: req.body.orderID
-        }}
-    },  function(err, result){
-        if(err || result == null){
-            console.log("there is an error");
-            console.log(err);
-        }
-        //console.log("RESULT: " + result);
-        res.send('Done')
-    });
-});
-
-
-// add an empty watchlist to collection
-router.route('/:id/watchlist/add').post((req, res) => {
-    //console.log('here');
-    User.findByIdAndUpdate(req.params.id,{
-            $push: {watchlistCollection: {
-                name: req.body.name,
-                watchlist:[],
+    newUser.save(function(err){
+        if(err){
+            if (err.name === 'MongoError' && err.code === 11000) {
+                // Duplicate username/email
+                return res.status(400).send({ success: false, message: 'User/Email already exist!' });
+              }
+        
+              // Some other error
+              return res.status(400).send(err);
             }
-        }
-    },  function(err, result){
-        if(err || result == null){
-            console.log("there is an error");
-            console.log(err);
-        }
-        //console.log("RESULT: " + result);
-        res.send('Done')
+        res.send(newUser);
     });
 });
 
-
-// get entire watchlist collection
-router.route('/:id/watchlist/').get((req, res) => {
-    User.findById(req.params.id)
-        .then(users =>{
-            let list = users.watchlistCollection;
-
-            res.json(list);
-
-        })
-        .catch(err => res.status(400).json('Error: ' + err));
+app.post("/update/:id", function(req,res){
+    User.findByIdAndUpdate(req.params.id, {$set:req.body},{new:true}, function(err){
+        if(err){
+            return res.status(400).send(err);
+        }
+        res.json({success: true});
+    });
 });
 
-// get single watchlist
-router.route('/:id/watchlist/:wid').get((req, res) => {
-    User.findById(req.params.id)
-        .then(users =>{
+app.get("/:id/ES", function(req,res){
+    User.findById(req.params.id, function(err, result){
+        if(err){
+            return res.status(400).send(err);
+        }
+        res.json(result.eventSubscriptions);
+    });
+});
+
+//note: withdraw too much
+app.post("/:id/updateFunds", function(req,res){
+    User.findByIdAndUpdate(
+        req.params.id,
+        {$set: {userFunds: req.body.userFunds}},
+        function(err){
+            if(err){
+                return res.status(400).send(err);
+            }
+            res.json({success: true});
+        }
+    );
+});
+
+//add an empty watchlist to collection
+app.post("/:id/watchlist/add", function(req,res){
+    User.findByIdAndUpdate(
+        req.params.id,{
+        $push: {watchlistCollection: {
+            name: req.body.name,
+            watchlist:[],
+        }}},
+        function(err){
+            if(err){
+                return res.status(400).send(err);
+            }
+            res.json({success: true});
+        }
+    );
+});
+
+
+//get entire watchlist collection
+app.get("/:id/watchlist/", function(req,res){
+    User.findById(req.params.id,
+        function(err){
+            if(err){
+                return res.status(400).send(err);
+            }
             let list = users.watchlistCollection;
+            res.json(list);
+        }
+    );
+});
+
+
+// // get single watchlist
+app.get('/:id/watchlist/:wid', function(req,res){
+    User.findById(
+        req.params.id,
+        function(err){
+            if (err){
+                return res.status(400).send(err);
+            }
+            let list = res.watchlistCollection;
             list.forEach(element => {
                 if(element.name==req.params.wid){
                     res.json(element.watchlist)
                 }
             });
             res.json(list);
-        })
-        .catch(err => res.status(400).json('Error: ' + err));
-});
-
-
-// add stock to a watchlist 
-router.route('/:id/watchlist/:wid/add').post((req, res) => {
-    // console.log('here');
-
-    User.findByIdAndUpdate(req.params.id,{
-         $push: {"watchlistCollection.0.watchlist": {stockID:req.body.stockID}}
-
-    },  function(err, result){
-        if(err || result == null){
-            console.log("there is an error");
-            console.log(err);
         }
-        //console.log("RESULT: " + result);
-        res.send('Stock added')
-    });
- 
+    )
 });
 
+// // add stock to a watchlist 
+app.post("/:id/watchlist/update/add", function(res, req){
+    User.updateMany(
+        {_id: req.params.id, 'watchlistCollection.name': req.body.name},
+        {$push:{'watchlistCollection.$.watchlist':
+            {stockID: req.body.stockID
+        }}},
+        function(err){
+            if(err){
+                return res.status(400).send(err);
+            }
+            res.json({success: true});
+        }
+    );
+});
 
 // remove stock from a watchlist 
-router.route('/:id/watchlist/:wid/remove').post((req, res) => {
-    // console.log('here');
-
-    User.findByIdAndUpdate(req.params.id,{
-         $pull: {"watchlistCollection.2.watchlist": {stockID: req.body.stockID}}
-
-    },  function(err, result){
-        if(err || result == null){
-            console.log("there is an error");
-            console.log(err);
+app.delete("/:id/watchlist/update/remove", function(res,req){
+    User.updateMany(
+        {_id: req.params.id, 'watchlistCollection.name': req.body.name},
+        {$pull : {'watchlistCollection.$.watchlist' : 
+            {stockID: req.body.stockID
+        }}},
+        function(err){
+            if(err){
+                return res.status(400).send(err);
+            }
+            res.json({success: true});
         }
-        //console.log("RESULT: " + result);
-        res.send('Stock removed')
-    });
- 
+    );
 });
 
 
-// remove a watchlist from the collection
-router.route('/:id/watchlist/remove').post((req, res) => {
-    //console.log('here');
-    User.findByIdAndUpdate(req.params.id,{
-            $pull: {watchlistCollection:
-                {
-                    _id: req.body.id
-                }
+// // remove a watchlist from the collection
+app.delete('/:id/watchlist/remove', function(req, res){
+    User.findByIdAndUpdate(
+        req.params.id,
+        {$pull: {watchlistCollection: {
+            name: req.body.name
+        }}},
+        function(err){
+            if(err){
+                return res.status(400).send(err);
+            }
+            res.json({success: true});
         }
-    },  function(err, result){
-        if(err || result == null){
-            console.log("there is an error");
-            console.log(err);
-        }
-        //console.log("RESULT: " + result);
-        res.send('Watchlist Removed')
-    });
+    );
 });
        
-
-module.exports = router;
+// module.exports = router;
+module.exports = app;
