@@ -7,6 +7,7 @@ import Navbar from "../NavBar/navbar.component";
 import requests from '../functions/requests.js';
 
 import SelectSearch from 'react-select-search';
+import Axios from 'axios';
 
 export default class Search extends Component{
 
@@ -170,31 +171,6 @@ export default class Search extends Component{
         if(this.state.esParameter !=null && this.state.esAmount != null && this.state.esAmount != 0){
             
             var ID = await (requests.generateESID(this.state.stockID, this.state.userID));
-
-            // axios.all([
-            //     axios({
-            //         method: 'post',
-            //         url: 'http://localhost:5000/users/'+this.state.userID+'/update/ES/add', //dummy user
-            //         data: {
-            //             subscriptionID: ID,
-            //             stockID: this.state.stockID,
-            //             parameter: this.state.esParameter,
-            //             value: this.state.esAmount,
-            //             triggerOrder: 0
-            //         }
-            //     }),
-            //     axios({
-            //         method: 'post',
-            //         url: 'http://localhost:5000/stocks/update/ES/' + this.state.stockID, //dummy user
-            //         data: {
-            //             subscriptionID: ID,
-            //             userID: this.state.userID,
-            //             parameter: this.state.esParameter,
-            //             value: this.state.esAmount,
-            //             triggerOrder: 0
-            //         }
-            //     }),
-            // ])
 
             axios({
                 method: 'post',
