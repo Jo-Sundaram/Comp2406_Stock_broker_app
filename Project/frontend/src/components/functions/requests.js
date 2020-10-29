@@ -172,10 +172,35 @@ const requests = {
     },
 
 
-    parseStockItems(stocks){
+    parseStockItems: async function(){
         var list = []
 
-        console.log(stocks);
+        const promise = axios.get('http://localhost:5000/stocks/') //dummy user ID in place
+        
+        const dataPromise = await promise.then((response) => response.data);
+
+        for(var key in dataPromise){
+            list.push({'name':[dataPromise[key].stockFullName," (" + dataPromise[key].stockAbbreviation + ")"], 'value': dataPromise[key].stockAbbreviation})
+
+        }
+
+        console.log("newList");
+        console.log(list);
+
+
+        return list;
+
+
+    },
+
+
+    getHistory: async function(stockID){
+        var list = [];
+
+        const promise = axios.get('http://localhost:5000/stocks/'+stockID) //dummy user ID in place
+        const dataPromise = await promise.then((response) => response.data.history);
+
+        return dataPromise;
 
 
     }

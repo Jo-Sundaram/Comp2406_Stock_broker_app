@@ -30,16 +30,21 @@ export default class Search extends Component{
         this.state = {
             userID: "5f890ebbbb89e66e947f5652",
             userFunds: 0,
-            stockID: 'TSLA',
+            stockID: null,
 
-            stocks: [
-                {name: ['TESLA', " (TSLA)"], value: "TSLA"},
-                {name: ['CIENA', " (CIEN)"], value: "CIEN"},
-                {name: ['APPLE', " (AAPL)"], value: "AAPL"}
-            ],
+            // stocks: [
+            //     {name: ['TESLA', " (TSLA)"], value: "TSLA"},
+            //     {name: ['CIENA', " (CIEN)"], value: "CIEN"},
+            //     {name: ['APPLE', " (AAPL)"], value: "AAPL"}
+            // ],
+
+            stocks:[],
+            stockList:[],
 
             watchlists: [],
-            selectedList: 'list1',
+            selectedList: null,
+
+            stockHistory: [],
 
             shares: 0,
             price: 0,
@@ -55,11 +60,12 @@ export default class Search extends Component{
     async componentDidMount() {
         axios.all([
             axios.get('http://localhost:5000/users/' + this.state.userID), //dummy user ID in place
-            axios.get('http://localhost:5000/stocks/' + this.state.stockID),
+            // axios.get('http://localhost:5000/stocks/'),
         ])
         .then(responseArr => {
             this.setState({
                 userFunds: responseArr[0].data.userFunds,
+                // stocks:responseArr[1].data
             })
         })
         .catch(function (error) {
@@ -67,16 +73,17 @@ export default class Search extends Component{
         })
 
         var parsedList = await (requests.parseListItems(this.state.userID));
+        var stockParsedList = await (requests.parseStockItems(this.state.stocks));
 
 
 
         this.setState({
             watchlists : parsedList,
+            stockList: stockParsedList,
         });
 
-      
-
-
+        console.log(this.state.stocks)
+        console.log(this.state.stockList)
 
 
     }
@@ -231,9 +238,11 @@ export default class Search extends Component{
 
         var highestAsk = await (requests.getHighestAsk(stockID));
         var lowestAsk = await (requests.getLowestBid(stockID));
+        var history = await (requests.getHistory(stockID));
         this.setState({
             ask: highestAsk,
-            bid: lowestAsk
+            bid: lowestAsk,
+            stockHistory: history
         });
     }
 
@@ -242,14 +251,14 @@ export default class Search extends Component{
     }
 
     render(){
-        console.log(this.state.stocks);
+       
         return(
                 <div>
                     <Navbar/>
                     <div id = "top-nav" >
                         <div>
                             <SelectSearch 
-                            options={this.state.stocks} 
+                            options={this.state.stockList} 
                             search
                             onChange = {this.handleChange}
                             name="stocks" 
@@ -285,9 +294,22 @@ export default class Search extends Component{
 
                             <table id = "stock-history">
                                 <th>Sell Price</th>
+                                <th>Buy Price</th>
                                 <th>Shares</th>
-                                <th>BidderUsername</th>
-                                <th>Seller Username</th>                        
+                                <th>Bidder Username</th>
+                                <th>Seller Username</th>    
+
+                                {this.state.stockHistory.map((item,index)=>(
+                                    <tr>
+                                        <td>{item.seller}</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+
+                                    </tr>
+
+                                ))}                    
                             </table>
                         </div>
                     <div id = "place-buy">

@@ -577,7 +577,7 @@ app.get("/:stockAbbreviation", async function(req, res){
         
             let currStocks = 0
             let hasStock = false;
-            for (var stock in userPortfolio){
+            for (let stock in userPortfolio){
                 if (userPortfolio[stock].stockID == req.params.stockAbbreviation){
                     currStocks = userPortfolio[stock].shares;
                     hasStock = true;
