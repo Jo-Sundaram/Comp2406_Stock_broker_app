@@ -43,6 +43,7 @@ json_data = '''[{
       "price": 2
     }
   ],
+  
   "createdAt": {
     "$date": "2020-10-17T14:48:43.085Z"
   },

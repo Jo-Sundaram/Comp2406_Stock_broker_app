@@ -169,6 +169,15 @@ const requests = {
         }
 
         return parsedList;
+    },
+
+
+    parseStockItems(stocks){
+        var list = []
+
+        console.log(stocks);
+
+
     }
 }
   

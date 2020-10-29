@@ -126,7 +126,7 @@ async onEdit(e){
     console.log(this.state.editSubID);
     console.log(this.state.editAmount);
 
-    if(this.state.esParameter !=null && this.state.esAmount != null && this.state.esAmount != 0){
+    if(this.state.esParameter !=null && this.state.editAmount != null && this.state.editAmount != 0){
         
         // var ID = await (requests.generateESID(this.state.stockID, this.state.userID));
 
@@ -135,8 +135,6 @@ async onEdit(e){
                 method: 'post',
                 url: 'http://localhost:5000/update/'+this.state.userID+ '/'+this.state.editStockID+'/ES/update/'+this.state.editSubID, //dummy user
                 data: {
-                    subscription: this.state.editSubID,
-                    stockID: this.state.editStockID,
                     parameter: this.state.esParameter,
                     value: this.state.editAmount,
                     triggerOrder: 0
@@ -146,13 +144,15 @@ async onEdit(e){
         ])
         .then(res => {
             console.log(res.data)
-            alert("Successfully created ES")
-            // window.location.reload(false);
+            alert("Successfully Edited ES")
+            window.location.reload(false);
         })
         .catch(res => {
             console.log(res)
-            alert("ES creation failed. Please try again.");
+            alert("ES edit failed. Please try again.");
         })
+    }else{
+        alert("Please fill out fields to edit");
     }
 }
 
@@ -161,25 +161,26 @@ async onEdit(e){
 onRemove(e){
     e.preventDefault();
     console.log("removed");
-    if(this.state.cancelESStockID != null && this.state.cancelESSubID!=null){
+    if(this.state.editStockID != null && this.state.editSubID!=null){
         axios.all([
             axios({
                 method: 'delete',
-                url: 'http://localhost:5000/update/'+this.state.userID+'/'+this.state.cancelESStockID+ '/ES/remove/' +this.state.cancelESSubID, //dummy user
+                url: 'http://localhost:5000/update/'+this.state.userID+'/'+this.state.editStockID+ '/ES/remove/' +this.state.editSubID, //dummy user
               
             })
         ])
         .then(res => {
             console.log(res.data)
             alert("Successfully cancelled event subscription.")
-            // window.location.reload(false);
+            window.location.reload(false);
         })
         .catch(res => {
             console.log(res)
             alert("Cancellation failed. Please try again later.");
         })
+    }else{
+        alert("Please select a stock to remove");
     }
-
 
 }
 
@@ -208,7 +209,7 @@ onRemove(e){
                             </tr>
                             ))}
                     </table>
-                    <form onSubmit={this.onSubmit}>
+                    <form>
                            
                                 <b>Edit Subscription: {this.state.editStockID}</b><br/>
                                 <label>Select Parameter</label>
@@ -227,8 +228,11 @@ onRemove(e){
                                     placeholder="%10"/>
                           
                             <div>
-                            <input type="submit" value='Edit Event Subscription' onClick = {()=> this.state.submitButton = 1}></input>
-                            <input type="submit" value='Remove Event Subscription' onClick = {()=> this.state.submitButton = 2}></input>
+                            {/* <input type="submit" value='Edit Event Subscription'></input> */}
+                            {/* <input type="submit" value='Remove Event Subscription' onClick = {()=> this.state.submitButton = 2}></input>  */}
+
+                            <button onClick = {this.onEdit}>Edit Subscription</button>
+                            <button onClick = {this.onRemove}>Remove Subscription</button>
                             </div>
                         </form>
                 </div>    

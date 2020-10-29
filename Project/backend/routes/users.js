@@ -119,6 +119,7 @@ app.get("/:id/watchlist/", async(req,res)=>{
 
 // // get single watchlist
 app.get('/:id/watchlist/:wid', async(req,res)=>{
+    // console.log(req.params);
     const user = await User.findById(req.params.id)
     .catch((err)=>{
         return res.send("user not found");
@@ -136,12 +137,10 @@ app.get('/:id/watchlist/:wid', async(req,res)=>{
     });
     
 
-
-
 });
 
 // // add stock to a watchlist 
-app.post("/:id/watchlist/update/add", function(res, req){
+app.post("/:id/watchlist/update/add", function(req, res){
     User.updateMany(
         {_id: req.params.id, 'watchlistCollection.name': req.body.name},
         {$push:{'watchlistCollection.$.watchlist':
@@ -154,10 +153,13 @@ app.post("/:id/watchlist/update/add", function(res, req){
             res.json({success: true});
         }
     );
+
+
 });
 
 // remove stock from a watchlist 
-app.delete("/:id/watchlist/update/remove", function(res,req){
+app.delete("/:id/watchlist/update/remove", function(req,res){
+    // console.log(req.params);
     User.updateMany(
         {_id: req.params.id, 'watchlistCollection.name': req.body.name},
         {$pull : {'watchlistCollection.$.watchlist' : 

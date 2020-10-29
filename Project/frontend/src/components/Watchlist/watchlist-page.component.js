@@ -12,7 +12,7 @@ export default class Watchlist extends Component{
         super(props);
         this.onAddList = this.onAddList.bind(this);
         this.onRemoveStock = this.onRemoveStock.bind(this);
-        // this.onRemoveList = this.onRemoveList.bind(this);
+        this.onRemoveList = this.onRemoveList.bind(this);
 
         this.onSelectList = this.onSelectList.bind(this);
         this.onSelectStock = this.onSelectStock.bind(this);
@@ -51,9 +51,11 @@ export default class Watchlist extends Component{
             
             this.setState({parsedLists:parsedList});
             console.log(parsedList);    
+
         
     }
 
+    // on select watchlist from dropdown
     onSelectList(e){
         console.log(e.target.value.name)
     }
@@ -73,7 +75,7 @@ export default class Watchlist extends Component{
         e.preventDefault();
         console.log(this.state.listname);
         axios({
-            method: 'post',
+            method: 'delete',
             url: 'http://localhost:5000/users/5f890ebbbb89e66e947f5652/watchlist/update/remove', //dummy user
             data: {
                 name: this.state.listname,
@@ -134,6 +136,33 @@ export default class Watchlist extends Component{
         console.log(stocksInWL);
     }
 
+    onRemoveList(e){
+        e.preventDefault()
+        console.log(this.state.listname)
+        axios({
+             method: 'delete',
+             url: 'http://localhost:5000/users/5f890ebbbb89e66e947f5652/watchlist/remove', //dummy user
+             data: {
+                 name: this.state.listname
+             }
+         })
+         .then(res => {
+             console.log(res.data)
+             //i want a function for this.
+             alert('Watchlist Removed!')
+ 
+             window.location.reload(false);
+         })
+         .catch(res => {
+             console.log(res)
+             alert('Something went wrong! Please try again later.')
+             window.location.reload(false);
+         }); 
+
+
+
+    }
+
     render(){
          return(
 
@@ -191,7 +220,7 @@ export default class Watchlist extends Component{
                     </table>
 
                 <button onClick ={this.onRemoveStock}>Remove Stock</button>            
-                <button>Delete Entire List</button>            
+                <button onClick = {this.onRemoveList}>Delete Entire List</button>            
                 </div>
 
 

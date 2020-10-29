@@ -68,7 +68,17 @@ export default class Search extends Component{
 
         var parsedList = await (requests.parseListItems(this.state.userID));
 
-        this.setState({watchlists : parsedList});
+
+
+        this.setState({
+            watchlists : parsedList,
+        });
+
+      
+
+
+
+
     }
 
     onChangeOrderShares(e){
@@ -145,8 +155,6 @@ export default class Search extends Component{
             }
         }
     }
-
-
 
 
     onChangeEsParameter(e){
@@ -234,6 +242,7 @@ export default class Search extends Component{
     }
 
     render(){
+        console.log(this.state.stocks);
         return(
                 <div>
                     <Navbar/>
