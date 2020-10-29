@@ -14,10 +14,13 @@ export default class Home extends Component{
         this.onChangeOrderStock = this.onChangeOrderStock.bind(this);
         this.onChangeOrderShares = this.onChangeOrderShares.bind(this);
         this.onChangeOrderPrice = this.onChangeOrderPrice.bind(this);
-        this.onOrderSubmit = this.onOrderSubmit.bind(this);
+        this.onSellOrderSubmit = this.onSellOrderSubmit.bind(this);
         
         this.onSelectCancel = this.onSelectCancel.bind(this);
         this.onCancelOrder = this.onCancelOrder.bind(this);
+        
+        this.onSelectRemove = this.onSelectRemove.bind(this);
+        this.onCancelES = this.onCancelES.bind(this);
 
         this.onChangeDep = this.onChangeDep.bind(this);
         this.onSubmitDep = this.onSubmitDep.bind(this);
@@ -43,7 +46,10 @@ export default class Home extends Component{
             withAmount: 0,
             cancelStockID: null,
             cancelOrderID: null,
-            cancelType: null
+            cancelType: null,
+
+            cancelESStockID: null,
+            cancelESSubID: null,
         }
     }
 
@@ -84,7 +90,7 @@ export default class Home extends Component{
         });
     }
 
-    async onOrderSubmit(e){
+    /* async onSellOrderSubmit(e){
         e.preventDefault();
         if(this.state.stockID != null){
               
@@ -146,6 +152,56 @@ export default class Home extends Component{
         else{
             alert("Select a stock to sell.");
         }
+    } */
+    async onSellOrderSubmit(e){
+        e.preventDefault();
+        if(this.state.stockID != null){
+              
+            var newUserStockP = this.state.stockPortfolio;
+            var objIndex = this.state.stockPortfolio.findIndex((obj => obj.stockID == this.state.stockID));
+            console.log(objIndex);
+            if(newUserStockP[objIndex].shares >= Number(this.state.shares)){
+
+                var ID = await (requests.generateSellID(this.state.stockID, this.state.userID));
+
+                newUserStockP[objIndex].shares = newUserStockP[objIndex].shares - Number(this.state.shares);
+                axios.all([    
+                    axios({
+                        method: 'post',
+                        url: 'http://localhost:5000/users/update/'+this.state.userID, 
+                        data: {
+                            stockPortfolio: newUserStockP,
+                        }
+                    }),
+                    axios({
+                        method: 'post',
+                        url: 'http://localhost:5000/update/'+this.state.userID + '/'+this.state.stockID+'/sellorder/add',
+                        data: {
+                            orderID: ID,
+                            stockID: this.state.stockID,
+                            shares: Number(this.state.shares),
+                            price: Number(this.state.price)
+                        }
+                    }),
+          
+                ])
+                .then(
+                    alert("Successfully created sell order"),
+                    window.location.reload(false)
+                )
+                .catch(res => {
+                    console.log(res)
+                    alert("Sell Order creation failed. Please try again.")
+                    window.location.reload(false)
+                });
+            }
+            else{
+                alert("Insufficient number of stocks owned.");
+            }
+        }
+        else{
+            alert("Select a stock to sell.");
+        }
     }
 
     onSelectCancel(e){
@@ -157,7 +213,7 @@ export default class Home extends Component{
         console.log(e.target.value.split(",")[1]);
     }
 
-    onCancelOrder(e){
+/*    onCancelOrder(e){
         e.preventDefault();
         if(this.state.cancelOrderID != null && this.state.cancelStockID !=null){
             axios.all([
@@ -175,6 +231,31 @@ export default class Home extends Component{
                         orderID: this.state.cancelOrderID
                     }
                 }),
+            ])
+            .then(res => {
+                console.log(res.data)
+                alert("Successfully cancelled buy order.")
+                window.location.reload(false);
+            })
+            .catch(res => {
+                console.log(res)
+                alert("Cancellation failed. Please try again later.");
+            })
+        }
+    }  */
+
+
+    onCancelOrder(e){
+        e.preventDefault();
+        if(this.state.cancelOrderID != null && this.state.cancelStockID !=null){
+            axios.all([
+                axios({
+                    method: 'delete',
+                    url: 'http://localhost:5000/update/'+this.state.userID+'/'+this.state.cancelStockID+'/'+this.state.cancelType+'/remove/' +this.state.cancelOrderID, //dummy user
+                    data: {
+                        orderID: this.state.cancelOrderID
+                    }
+                })
             ])
             .then(res => {
                 console.log(res.data)
@@ -257,6 +338,39 @@ export default class Home extends Component{
     }
 
 
+    onSelectRemove(e){
+        this.setState({
+            cancelESStockID: e.target.value.split(",")[0],
+            cancelESSubID: e.target.value.split(",")[1]
+
+        });
+    }
+
+    onCancelES(e){
+        e.preventDefault();
+        if(this.state.cancelESStockID != null && this.state.cancelESSubID!=null){
+            axios.all([
+                axios({
+                    method: 'delete',
+                    url: 'http://localhost:5000/update/'+this.state.userID+'/'+this.state.cancelESStockID+ '/ES/remove/' +this.state.cancelESSubID, //dummy user
+                  
+                })
+            ])
+            .then(res => {
+                console.log(res.data)
+                alert("Successfully cancelled buy order.")
+                window.location.reload(false);
+            })
+            .catch(res => {
+                console.log(res)
+                alert("Cancellation failed. Please try again later.");
+            })
+        }
+
+
+    }
+
+
     render() {
         return(
            <div>
@@ -293,7 +407,7 @@ export default class Home extends Component{
                 </div>
                 
                 <div id = "stocks-owned" class = "view">
-                    <form onSubmit={this.onOrderSubmit}>
+                    <form onSubmit={this.onSellOrderSubmit}>
                         <h2>Stocks Owned</h2>
                         <table>
                             <th>Select</th>
@@ -359,7 +473,7 @@ export default class Home extends Component{
                     </div>
                     <div id = "processed-buy-orders" class = "view">
                         
-                        <h2>Unprocessed Buy Orders</h2>
+                        <h2>Unprocessed Sell Orders</h2>
                         <table>
                             <th>Select</th>	
                             <th>Symbol</th>
@@ -401,28 +515,30 @@ export default class Home extends Component{
                         </tr>
                     </table>
                 </div>
-                
-                <div id = "event-subscriptions" class = "view">
-                    <h2>Event Subscriptions</h2>
-                    <table>
-                        <th>Select</th>
-                        <th>Symbol</th>
-                        <th>$ / Share</th>
-                        <th>AVG price paid</th>
-                        <th>Current value</th>
-                        <th>Trigger</th>
-                        {this.state.eventSubscriptions.map((item =>
-                            <tr>
-                                <td> <input type = "radio" name = "select" /></td>
-                                <td>{item.stockID}</td>
-                                <td>Buy</td>
-                                <td>$0</td>
-                                <td>0</td>
-                                <td>{item.value}</td>
-                            </tr>
-                        ))}
-                    </table>
-                </div>           
+                <form onSubmit={this.onCancelES}>
+                    <div id = "event-subscriptions" class = "view">
+                        <h2>Event Subscriptions</h2>
+                        <table>
+                            <th>Select</th>
+                            <th>Symbol</th>
+                            {/* <th>$ / Share</th> */}
+                            <th>AVG price paid</th>
+                            <th>Current value</th>
+                            <th>Trigger</th>
+                            {this.state.eventSubscriptions.map((item =>
+                                <tr>
+                                    <td><input type="radio" name="ES" value={[item.stockID, item.subscriptionID]} onChange = {this.onSelectRemove}/></td>
+                                    <td>{item.stockID}</td>
+                                    <td>$0</td>
+                                    <td>0</td>
+                                    <td>{item.value}</td>
+                                </tr>
+                            ))}
+                        </table>
+                        <input type="submit" value='Cancel Subscription'></input>
+
+                    </div>    
+                </form>       
             </div>
         </div>
         )

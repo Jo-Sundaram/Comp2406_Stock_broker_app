@@ -8,7 +8,7 @@ export default class EventSubs extends Component{
 
     constructor(props){
         super(props);
-        // this.onAdd = this.onAdd.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
         this.onRemove = this.onRemove.bind(this);
         this.onSelectEdit = this.onSelectEdit.bind(this);
         this.onEdit = this.onEdit.bind(this);
@@ -24,7 +24,9 @@ export default class EventSubs extends Component{
 
             editAmount :null,
             editStockID :null,
-            editSubID :null
+            editSubID :null,
+
+            submitButton : 0
 
         }
     }
@@ -62,7 +64,7 @@ export default class EventSubs extends Component{
         });
     }
 
-    async onEdit(e){
+/* async onEdit(e){
         e.preventDefault();
         console.log(this.state.editSubID);
         console.log(this.state.editAmount);
@@ -106,13 +108,32 @@ export default class EventSubs extends Component{
             })
         }
     }
+ */
 
-    onRemove(e){
-        e.preventDefault();
+
+
+onSubmit(e){
+
+    if(this.state.submitButton==1){
+        return this.onEdit;
+    }
+    console.log("remove");
+    return this.onRemove;
+}
+
+async onEdit(e){
+    e.preventDefault();
+    console.log(this.state.editSubID);
+    console.log(this.state.editAmount);
+
+    if(this.state.esParameter !=null && this.state.esAmount != null && this.state.esAmount != 0){
+        
+        // var ID = await (requests.generateESID(this.state.stockID, this.state.userID));
+
         axios.all([
             axios({
                 method: 'post',
-                url: 'http://localhost:5000/users/'+this.state.userID+'/update/ES/update/remove', //dummy user
+                url: 'http://localhost:5000/update/'+this.state.userID+ '/'+this.state.editStockID+'/ES/update/'+this.state.editSubID, //dummy user
                 data: {
                     subscription: this.state.editSubID,
                     stockID: this.state.editStockID,
@@ -121,30 +142,46 @@ export default class EventSubs extends Component{
                     triggerOrder: 0
                 }
             }),
-            axios({
-                method: 'post',
-                url: 'http://localhost:5000/stocks/' + this.state.editStockID+ '/update/ES/remove', //dummy user
-                data: {
-                    subscriptionID: this.state.editSubID,
-                    userID: this.state.userID,
-                    parameter: this.state.esParameter,
-                    value: this.state.editAmount,
-                    triggerOrder: 0
-                }
-            }),
+      
         ])
         .then(res => {
             console.log(res.data)
-            alert("ES Removed")
-            window.location.reload(false);
+            alert("Successfully created ES")
+            // window.location.reload(false);
         })
         .catch(res => {
             console.log(res)
             alert("ES creation failed. Please try again.");
         })
     }
-        
-    
+}
+
+
+
+onRemove(e){
+    e.preventDefault();
+    console.log("removed");
+    if(this.state.cancelESStockID != null && this.state.cancelESSubID!=null){
+        axios.all([
+            axios({
+                method: 'delete',
+                url: 'http://localhost:5000/update/'+this.state.userID+'/'+this.state.cancelESStockID+ '/ES/remove/' +this.state.cancelESSubID, //dummy user
+              
+            })
+        ])
+        .then(res => {
+            console.log(res.data)
+            alert("Successfully cancelled event subscription.")
+            // window.location.reload(false);
+        })
+        .catch(res => {
+            console.log(res)
+            alert("Cancellation failed. Please try again later.");
+        })
+    }
+
+
+}
 
     render(){
         return(
@@ -171,7 +208,7 @@ export default class EventSubs extends Component{
                             </tr>
                             ))}
                     </table>
-                    <form onSubmit={this.onEdit}>
+                    <form onSubmit={this.onSubmit}>
                            
                                 <b>Edit Subscription: {this.state.editStockID}</b><br/>
                                 <label>Select Parameter</label>
@@ -190,8 +227,8 @@ export default class EventSubs extends Component{
                                     placeholder="%10"/>
                           
                             <div>
-                            <input type="submit" value='Edit Event Subscription'></input>
-                            <button onClick = {this.onRemove}>Remove Subscription</button>
+                            <input type="submit" value='Edit Event Subscription' onClick = {()=> this.state.submitButton = 1}></input>
+                            <input type="submit" value='Remove Event Subscription' onClick = {()=> this.state.submitButton = 2}></input>
                             </div>
                         </form>
                 </div>    

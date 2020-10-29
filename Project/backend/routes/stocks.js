@@ -13,6 +13,11 @@ app.get("/:stockAbbreviation", async(req,res) => {
     res.send(stock);
 });
 
+app.get("/:stockAbbreviation/history", async(req,res) => {
+    const stock = await Stock.findOne({'stockAbbreviation' : req.params.stockAbbreviation});
+    res.send(stock.history);
+});
+
 // router.route('/add').post((req, res) => {
 //     const stockFullName = req.body.stockFullName;
 //     const stockAbbreviation = req.body.stockAbbreviation;

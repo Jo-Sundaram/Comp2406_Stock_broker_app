@@ -15,38 +15,6 @@ app.get("/:id", async(req,res) => {
 });
 
 
-// router.route('/add').post((req, res) => {
-//     const username = req.body.username;
-//     const email = req.body.email;
-//     const password = req.body.password;
-//     const userFunds = Number(req.body.userFunds);
-//     const watchlist = req.body.watchlist; 
-//     const notifications = req.body.notifications;
-//     const eventSubscriptions = req.body.eventSubscriptions;
-//     const unpBuyOrders = req.body.unpBuyOrders;
-//     const unpSellOrders = req.body.unpSellOrders;
-//     const pBuyOrders = req.body.unpBuyOrders;
-//     const pSellOrders = req.body.pSellOrders;
-
-//     const newUser = new User({
-//         username,
-//         email,
-//         password,
-//         userFunds,
-//         watchlist,
-//         notifications,
-//         eventSubscriptions,
-//         stockPortfolio,
-//         unpBuyOrders,
-//         pBuyOrders,
-//         unpSellOrders,
-//         pSellOrders
-//     });
-
-//     newUser.save()
-//         .then(() => res.json('User added to the database'))
-//         .catch(err => res.status(400).json('Error: ' + err));
-// });
 
 app.post("/register", function(req,res) {
     const newUser = new User({
@@ -129,39 +97,47 @@ app.post("/:id/watchlist/add", function(req,res){
 
 
 //get entire watchlist collection
-app.get("/:id/watchlist/", function(req,res){
-    User.findById(req.params.id,
-        function(err){
-            if(err){
-                return res.status(400).send(err);
-            }
-            let list = users.watchlistCollection;
-            res.json(list);
-        }
-    );
+app.get("/:id/watchlist/", async(req,res)=>{
+
+  /*   try{
+        const user = await User.findById(req.params.id);
+        res.send(user.watchlistCollection);
+    }catch(e){
+        return res.send("user not found");
+    }
+ */
+    const user = await User.findById(req.params.id)
+    .catch((err)=>{
+        return res.send("user not found");
+    })
+    
+    res.send(user.watchlistCollection);
+    
+    
 });
 
 
 // // get single watchlist
-app.get('/:id/watchlist/:wid', function(req,res){
-    User.findById(
-        req.params.id,
-        function(err){
-            if (err){
-                return res.status(400).send(err);
-            }
-            let list = res.watchlistCollection;
-            list.forEach(element => {
-              
-                if(element.name==req.params.wid){
-                    res.json(element.watchlist)
-                }
-                
-            });
+app.get('/:id/watchlist/:wid', async(req,res)=>{
+    const user = await User.findById(req.params.id)
+    .catch((err)=>{
+        return res.send("user not found");
+    })
+  
 
-            res.json(list);
+    let collection = user.watchlistCollection;
+
+    collection.forEach(element => {
+        if(element.name==req.params.wid){
+
+            res.send(element);
         }
-    )
+    
+    });
+    
+
+
+
 });
 
 // // add stock to a watchlist 

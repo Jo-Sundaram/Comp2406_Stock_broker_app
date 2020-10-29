@@ -39,7 +39,7 @@ export default class Search extends Component{
             ],
 
             watchlists: [],
-            selectedList: null,
+            selectedList: 'list1',
 
             shares: 0,
             price: 0,
@@ -80,12 +80,14 @@ export default class Search extends Component{
 
     async onChangeOrderOffer(e){
         this.setState({
+            price: e.target.value
         });
     }
     //creating buy order
     //need to add axios post sending the order to the stock
     //need to delete order from both in case of failure (we should make a function for that..?)
     //no pop up programmed confirming to the user that a buy order has been, or displaying order
+
 
     async onOrderSubmit(e){
         e.preventDefault();
@@ -109,7 +111,7 @@ export default class Search extends Component{
                 }),
                 axios({
                     method: 'post',
-                    url: 'http://localhost:5000/users/update/buyorder/' + this.state.userID, //dummy user
+                    url: 'http://localhost:5000/update/' + this.state.userID + "/" + this.state.stockID+"/buyorder/add", //dummy user
                     data: {
                         orderID: ID,
                         stockID: this.state.stockID,
@@ -117,16 +119,7 @@ export default class Search extends Component{
                         price: Number(this.state.price)
                     }
                 }),
-                axios({
-                    method: 'post',
-                    url: 'http://localhost:5000/stocks/update/buyorder/' + this.state.stockID, //dummy user
-                    data: {
-                        orderID: ID,
-                        userID: "jo", //dummy userID
-                        shares: Number(this.state.shares),
-                        price: Number(this.state.price)
-                    }
-                })
+  
             ])
             .then(res => {
                 console.log(res.data)
@@ -152,6 +145,9 @@ export default class Search extends Component{
             }
         }
     }
+
+
+
 
     onChangeEsParameter(e){
         this.setState({
@@ -267,7 +263,11 @@ export default class Search extends Component{
                                 onChange={this.handleChangeWatchlist}
                                 name="stocks" 
                                 placeholder="Select a watchlist" />
-                            <button onClick = {this.onAddWatchlist}>Add to Watchlist</button>
+                            
+                            <div>
+                                <button onClick = {this.onAddWatchlist}>Add to Watchlist</button>
+                            </div>
+                            
 
                         </div>
 

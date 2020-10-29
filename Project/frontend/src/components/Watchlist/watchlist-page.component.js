@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import axios from 'axios';
 import Navbar from "../NavBar/navbar.component";
 import "./watchlist.css"
-import helper from "./helper.js"
+import helper from "../functions/helper.js"
 import SelectSearch from 'react-select-search';
 
 
@@ -135,13 +135,7 @@ export default class Watchlist extends Component{
     }
 
     render(){
-        // console.log("watchlist");
-        // this.state.parsedLists.map(item=>{
-        //     console.log(item.stockID);
-
-        // });
-
-        return(
+         return(
 
             <div>
                 <Navbar/>
@@ -155,7 +149,7 @@ export default class Watchlist extends Component{
                     search
                     onChange = {this.handleChange}
                     name="stocks" 
-                    placeholder="Search for a stock" />
+                    placeholder="Select a watchlist" />
                     {/* <label for = "lists">Select</label>
                     <select name = "lists" value = {this.onSelectList}>
                     {this.state.parsedLists.map((item,index)=>(

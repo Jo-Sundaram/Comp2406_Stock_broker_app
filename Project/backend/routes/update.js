@@ -38,6 +38,7 @@ app.post("/:id/:stockAbbreviation/ES/add", function(req,res){
     res.json({success: true});
 });
 
+// Edit ES
 app.post("/:id/:stockAbbreviation/ES/update/:eid", function(req,res){
     User.updateMany(
         {_id: req.params.id, 'eventSubscriptions.subscriptionID' : req.params.eid},
@@ -60,6 +61,7 @@ app.post("/:id/:stockAbbreviation/ES/update/:eid", function(req,res){
     res.json({success: true});
 });
 
+// Remove ES
 app.delete("/:id/:stockAbbreviation/ES/remove/:eid", function(req,res){
     User.findByIdAndUpdate(
         {_id: req.params.id},
@@ -149,6 +151,25 @@ app.delete("/:id/:stockAbbreviation/buyorder/remove/:bid", async function(req,re
                 if(result.unpBuyOrders[i].orderID = req.params.bid){
                     orderTotal = result.unpBuyOrders[i].shares*result.unpBuyOrders[i].price
                 }
+            }        if(this.state.cancelOrderID != null && this.state.cancelStockID !=null){
+                axios.all([
+                    axios({
+                        method: 'delete',
+                        url: 'http://localhost:5000/update/'+this.state.userID+'/'+this.state.cancelStockID+'/'+this.state.cancelType+'/remove/' +this.state.cancelOrderID, //dummy user
+                        data: {
+                            orderID: this.state.cancelOrderID
+                        }
+                    })
+                ])
+                .then(res => {
+                    console.log(res.data)
+                    alert("Successfully cancelled buy order.")
+                    window.location.reload(false);
+                })
+                .catch(res => {
+                    console.log(res)
+                    alert("Cancellation failed. Please try again later.");
+                })
             }
         }
     );

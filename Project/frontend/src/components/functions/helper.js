@@ -6,7 +6,7 @@ import axios from 'axios';
   
 const helper = {
     parseListItems: async function(userID){
-        const promise = axios.get('http://localhost:5000/users/'+userID) //dummy user ID in place
+        const promise = axios.get('http://localhost:5000/users/'+userID ) //dummy user ID in place
         
         const dataPromise = await promise.then((response) => response.data.watchlistCollection)
 
@@ -28,8 +28,8 @@ const helper = {
 
         var stocks = []
 
-        for(var key in dataPromise){
-            stocks.push({'stockID': dataPromise[key].stockID});
+        for(var key in dataPromise.watchlist){
+            stocks.push({'stockID': dataPromise.watchlist[key].stockID});
         }
         return stocks;
     }    
