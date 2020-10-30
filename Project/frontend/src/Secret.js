@@ -22,14 +22,15 @@ export default class Secret extends Component {
             return res.json();
         })
         .then((user) => {
-            console.log(user.email);
+            console.log(user);
             this.setState({
-                user: user.email
+                user: user._id
             });
         })
         .catch((err) => {
             console.log(err);
         });
+
     }
 
     render(){
