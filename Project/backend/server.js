@@ -1,12 +1,50 @@
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
 const mongoose = require('mongoose'); // helps connect to mongodb database
 
+const passport = require("passport");
+const LocalStrategy = require("passport-local");
+const passportJWT = require("passport-jwt");
+
+JWTStrategy = passportJWT.Strategy;
 
 require('dotenv').config();
 
 const app = express();
 const port = process.env.PORT || 5000;
+
+app.use(passport.initialize())
+
+const user = {
+    id: "1",
+    email: "example@email.com",
+    password: "password"
+}
+  
+passport.use(new LocalStrategy({
+usernameField: "email"
+}, (email, password, done) => {
+if(email === user.email && password === user.password) {
+    return done(null, user)
+}else {
+    return done(null, false)
+}
+}))
+
+passport.use(new JWTStrategy({
+jwtFromRequest: passportJWT.ExtractJwt.fromAuthHeaderAsBearerToken(),
+secretOrKey: "jwt_secret"
+}, (jwt_payload, done) => {
+if(user.id === jwt_payload.user._id){
+    return done(null, user)
+} else {
+    return done(null, false, {
+    message: "Token not matched"
+    })
+}
+}))
+
 
 app.use(cors());
 app.use(express.json());
@@ -25,14 +63,21 @@ connection.once('open', () => {
     console.log('Connection with MongoDb successfully established');
 })
 
+const apiRouter = require('./routes/api');
 const usersRouter = require('./routes/users');
 const stocksRouter = require('./routes/stocks');
-const updateRouter = require('./routes/update')
+const updateRouter = require('./routes/update');
 
+app.use(express.static(path.join(__dirname, "client/build")))
 
 app.use('/users', usersRouter);
 app.use('/stocks', stocksRouter);
 app.use('/update', updateRouter);
+app.use('/api', apiRouter);
+
+app.get("*", (req, res) => {
+    return res.sendFile(path.join(__dirname, "/client/build/index.html"))
+});
 
 app.listen(port, () => {
     console.log('Server is running on port 5000');
