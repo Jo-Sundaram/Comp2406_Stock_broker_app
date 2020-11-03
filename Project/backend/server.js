@@ -1,7 +1,10 @@
 const express = require('express');
+const http = require("http");
 const cors = require('cors');
 const path = require('path');
 const mongoose = require('mongoose'); // helps connect to mongodb database
+
+const socketIo = require("socket.io")
 
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
@@ -86,6 +89,7 @@ passport.use(new JWTStrategy({
     }
 ))
 
+
 const apiRouter = require('./routes/api');
 const usersRouter = require('./routes/users');
 const stocksRouter = require('./routes/stocks');
@@ -98,10 +102,40 @@ app.use('/stocks', stocksRouter);
 app.use('/update', updateRouter);
 app.use('/api', apiRouter);
 
-// app.get("*", (req, res) => {
-//     return res.sendFile(path.join(__dirname, "/client/build/index.html"))
-// });
+const server = http.createServer(app)
 
-app.listen(port, () => {
+const io = socketIo(server);
+
+let interval;
+
+let users = []
+
+io.on("connection", (client) => {
+    console.log("New client connected");
+    console.log('Client ID:' + client.id);
+
+    client.on("connected", function(data){
+        console.log('UserID:' + data);
+        users.push({})
+    });
+
+    if (interval) {
+        clearInterval(interval);
+    }
+    interval = setInterval(() => getApiAndEmit(client), 1000);
+
+    client.on("disconnect", () => {
+        console.log("Client disconnected");
+        clearInterval(interval);
+    });
+});
+
+const getApiAndEmit = client => {
+  const response = new Date();
+  // Emitting a new message. Will be consumed by the client
+  client.emit("FromAPI", response);
+};
+
+server.listen(port, () => {
     console.log('Server is running on port 5000');
 });

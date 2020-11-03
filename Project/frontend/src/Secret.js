@@ -30,7 +30,6 @@ export default class Secret extends Component {
         .catch((err) => {
             console.log(err);
         });
-
     }
 
     render(){
