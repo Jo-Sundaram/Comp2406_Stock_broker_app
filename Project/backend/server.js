@@ -114,18 +114,29 @@ io.on("connection", (client) => {
     console.log("New client connected");
     console.log('Client ID:' + client.id);
 
-    client.on("connected", function(data){
-        console.log('UserID:' + data);
-        users.push({})
+    client.on("connected", function(user){
+        console.log('UserID:' + user);
+        users.push({userID: user, clientInfo: client})
+        //console.log(users);
+
+        //checkOutProcessedOrders(client);
     });
 
     if (interval) {
         clearInterval(interval);
     }
-    interval = setInterval(() => getApiAndEmit(client), 1000);
+
+    interval = setInterval(() => checkOutProcessedOrders(client), 50000);
 
     client.on("disconnect", () => {
         console.log("Client disconnected");
+
+        for(var i in users){
+            if (users[i].clientInfo == client){
+                users.splice(i,1);
+            }
+        }
+        console.log(users);
         clearInterval(interval);
     });
 });
@@ -133,8 +144,34 @@ io.on("connection", (client) => {
 const getApiAndEmit = client => {
   const response = new Date();
   // Emitting a new message. Will be consumed by the client
+  
   client.emit("FromAPI", response);
 };
+
+let Stock = require('./models/stock.model');
+const checkOutProcessedOrders = async client => {
+    const stocks = await Stock.find();
+    
+    for(var i in stocks){
+        for (var j in stocks[i].fulfilledOrders){
+            for(var k in users){
+                if(stocks[i].fulfilledOrders[j].sellerID == users[k].userID){
+                    console.log("pop!");
+                    client = users[k].clientInfo;
+                    client.emit("processedSellOrder", stocks[i].fulfilledOrders[j], stocks[i].stockAbbreviation);
+                }
+                if(stocks[i].fulfilledOrders[j].buyerID == users[k].userID){
+                    console.log("pop!");
+                    client = users[k].clientInfo;
+                    client.emit("processedBuyOrder", stocks[i].fulfilledOrders[j], stocks[i].stockAbbreviation);
+                }
+            }
+        }
+    }
+}
+
+app.io = io;
+
 
 server.listen(port, () => {
     console.log('Server is running on port 5000');
