@@ -51,6 +51,10 @@ function App() {
       alert("You sold " + purchase.shares + ' shares of ' + stockAbbreviation + " for $" + purchase.soldFor + " to " + purchase.buyerID);
     });
 
+    socket.on("eventNotif", (notification) => {
+      alert("EVENT SUBSCRIPTION: " + notification.stock + " " + notification.type + " " + notification.change + " by " + notification.value + notification.param + ".");
+    });
+
   }, []);
 
   return (
