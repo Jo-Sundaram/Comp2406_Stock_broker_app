@@ -24,19 +24,10 @@ export default class Search extends Component{
         this.onAddWatchlist = this.onAddWatchlist.bind(this);
         this.handleChange = this.handleChange.bind(this);
 
-        //this.onSearchSelect = this.onSearchSelect.bind(this);
-
-
         this.state = {
-            userID: "5f890ebbbb89e66e947f5652",
+            userID: "",
             userFunds: 0,
             stockID: null,
-
-            // stocks: [
-            //     {name: ['TESLA', " (TSLA)"], value: "TSLA"},
-            //     {name: ['CIENA', " (CIEN)"], value: "CIEN"},
-            //     {name: ['APPLE', " (AAPL)"], value: "AAPL"}
-            // ],
 
             stocks:[],
             stockList:[],
@@ -57,24 +48,18 @@ export default class Search extends Component{
         }
     }
 
-    async componentDidMount() {
-        axios.all([
-            axios.get('http://localhost:5000/users/' + this.state.userID), //dummy user ID in place
-            // axios.get('http://localhost:5000/stocks/'),
-        ])
-        .then(responseArr => {
-            this.setState({
-                userFunds: responseArr[0].data.userFunds,
-                // stocks:responseArr[1].data
-            })
-        })
-        .catch(function (error) {
-            console.log(error);
+
+
+     async componentWillReceiveProps(props){
+        this.setState({
+            userFunds: props.user.userFunds,
+            userID: props.user._id,
+
         })
 
-        var parsedList = await (requests.parseListItems(this.state.userID));
-        var stockParsedList = await (requests.parseStockItems(this.state.stocks));
 
+        var parsedList = await (requests.parseListItems(props.user._id));
+        var stockParsedList = await (requests.parseStockItems());
 
 
         this.setState({
@@ -82,23 +67,21 @@ export default class Search extends Component{
             stockList: stockParsedList,
         });
 
-        console.log(this.state.stocks)
-        console.log(this.state.stockList)
-
-
-    }
+    } 
 
     onChangeOrderShares(e){
         this.setState({
             shares: e.target.value
         });
-        console.log(this.state.selectedList);
+        console.log(this.state.shares);
     }
 
     async onChangeOrderOffer(e){
         this.setState({
             price: e.target.value
         });
+
+        console.log("Price: " + this.state.price)
     }
     //creating buy order
     //need to add axios post sending the order to the stock
@@ -111,12 +94,14 @@ export default class Search extends Component{
         
         var orderTotal = Number(this.state.price)*Number(this.state.shares);
         
+        console.log("User funds: " + this.state.userFunds)
+
         if (this.state.userFunds >= orderTotal && this.state.price > 0 && this.state.shares > 0){
             var newUserFunds = Number(this.state.userFunds) - orderTotal;
-            
+            console.log("Order Total: "+ orderTotal);
             var ID = await (requests.generateBuyID(this.state.stockID, this.state.userID));
 
-            console.log(this.state.stockID);
+            console.log("Stock on order: " + this.state.stockID);
 
             axios.all([
                 axios({
@@ -128,7 +113,7 @@ export default class Search extends Component{
                 }),
                 axios({
                     method: 'post',
-                    url: 'http://localhost:5000/update/' + this.state.userID + "/" + this.state.stockID+"/buyorder/add", //dummy user
+                    url: 'http://localhost:5000/update/' + this.state.userID + "/" + this.state.stockID+"/buyorder/add", 
                     data: {
                         orderID: ID,
                         stockID: this.state.stockID,

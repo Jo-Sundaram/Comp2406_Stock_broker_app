@@ -24,7 +24,7 @@ export default class Secret extends Component {
         .then((user) => {
             console.log(user);
             this.setState({
-                user: user._id
+                user: user.email
             });
         })
         .catch((err) => {

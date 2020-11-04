@@ -46,6 +46,9 @@ export default class LoginUser extends Component{
                 localStorage.setItem('token', res.data.token)
                 console.log(res);
                 alert("Logged In Poggers.");
+                
+
+
             } else {
                 alert("Invalid account");
                 // const error = new Error(res.error);
