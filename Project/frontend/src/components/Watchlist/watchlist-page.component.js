@@ -19,7 +19,7 @@ export default class Watchlist extends Component{
         this.handleInput= this.handleInput.bind(this);
     
         this.state = {
-            userID: "5f890ebbbb89e66e947f5652",
+            userID: "",
             watchlistCollection: [],
             parsedLists: [],
             stockItems:[],
@@ -29,30 +29,25 @@ export default class Watchlist extends Component{
             
         }
     }
-    async componentDidMount() {
-        console.log('reloaded');
-        axios.get('http://localhost:5000/users/' + this.state.userID + '/watchlist') //dummy user ID in place
-            .then(response => {
-                this.setState({
-                    watchlistCollection: response.data.watchListCollection,
-                })
-                
-            })
-            .catch(function (error) {
-                console.log(error);
-            })
-            var parsedList = []
-            try {
-                parsedList = await (helper.parseListItems(this.state.userID));            
-            }
-              catch(e) {
-                console.log('Catch an error: ', e)
-            }
-            
-            this.setState({parsedLists:parsedList});
-            console.log(parsedList);    
 
+    async componentWillReceiveProps(props){
+
+        this.setState({
+         userID: props.user._id,
+          watchlistCollection: props.user.watchListCollection
+
+        })
+
+        var parsedList = []
+        try {
+            parsedList = await (helper.parseListItems(props.user._id));            
+        }
+          catch(e) {
+            console.log('Catch an error: ', e)
+        }
         
+        this.setState({parsedLists:parsedList});
+        console.log(parsedList);   
     }
 
     // on select watchlist from dropdown
@@ -179,14 +174,7 @@ export default class Watchlist extends Component{
                     onChange = {this.handleChange}
                     name="stocks" 
                     placeholder="Select a watchlist" />
-                    {/* <label for = "lists">Select</label>
-                    <select name = "lists" value = {this.onSelectList}>
-                    {this.state.parsedLists.map((item,index)=>(
-                        <option value = {item.name}>{item.name}</option>
 
-                    ))}
-
-                    </select> */}
                 
 
               

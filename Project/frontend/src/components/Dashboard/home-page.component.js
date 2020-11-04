@@ -1,10 +1,12 @@
-import React, { Component } from 'react';
+import React, { Component, useContext } from 'react';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
 import Navbar from "../NavBar/navbar.component";
 import "./home-page.css"
 import requests from '../functions/requests.js';
 import thisUser from '../../App';
+import userHook from '../../UserContext';
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
 
     
@@ -12,7 +14,6 @@ export default class Home extends Component{
 
     constructor(props){
         super(props);
-
         this.onChangeOrderStock = this.onChangeOrderStock.bind(this);
         this.onChangeOrderShares = this.onChangeOrderShares.bind(this);
         this.onChangeOrderPrice = this.onChangeOrderPrice.bind(this);
@@ -33,7 +34,7 @@ export default class Home extends Component{
         
 
         this.state = {
-            userID: "5f890ebbbb89e66e947f5652",
+            userID: "",
             userFunds: 0,
             stockPortfolio: [],
             userSellOrders: [],
@@ -52,25 +53,28 @@ export default class Home extends Component{
 
             cancelESStockID: null,
             cancelESSubID: null,
+            
+            user:'',
+            
         }
+
+    
+
     }
 
-    componentDidMount() {
-        console.log('reloaded');
-        axios.get('http://localhost:5000/users/' + this.state.userID) //dummy user ID in place
-            .then(response => {
-                this.setState({
-                    userFunds: response.data.userFunds,
-                    stockPortfolio: response.data.stockPortfolio,
-                    userSellOrders: response.data.unpSellOrders,
-                    userBuyOrders: response.data.unpBuyOrders,
-                    eventSubscriptions: response.data.eventSubscriptions
-                })
-                console.log(response.data.unpSellOrders)
-            })
-            .catch(function (error) {
-                console.log(error);
-            })
+  
+    componentWillReceiveProps(props){ //this is called to before render method
+        this.setState({
+           user : props.user.username,
+           userID: props.user._id,
+           userFunds: props.user.userFunds,
+            stockPortfolio: props.user.stockPortfolio,
+            userSellOrders: props.user.unpSellOrders,
+            userBuyOrders: props.user.unpBuyOrders,
+            eventSubscriptions: props.user.eventSubscriptions,
+         })
+
+
     }
 
     onChangeOrderStock(e){
@@ -92,69 +96,7 @@ export default class Home extends Component{
         });
     }
 
-    /* async onSellOrderSubmit(e){
-        e.preventDefault();
-        if(this.state.stockID != null){
-              
-            var newUserStockP = this.state.stockPortfolio;
-            var objIndex = this.state.stockPortfolio.findIndex((obj => obj.stockID == this.state.stockID));
-            console.log(objIndex);
-            if(newUserStockP[objIndex].shares >= Number(this.state.shares)){
-
-                var ID = await (requests.generateSellID(this.state.stockID, this.state.userID));
-
-                newUserStockP[objIndex].shares = newUserStockP[objIndex].shares - Number(this.state.shares);
-                axios.all([    
-                    axios({
-                        method: 'post',
-                        url: 'http://localhost:5000/users/update/'+this.state.userID, 
-                        data: {
-                            stockPortfolio: newUserStockP,
-                        }
-                    }),
-                    axios({
-                        method: 'post',
-                        url: 'http://localhost:5000/users/update/sellorder/'+this.state.userID, 
-                        data: {
-                            orderID: ID,
-                            stockID: this.state.stockID,
-                            shares: Number(this.state.shares),
-                            price: Number(this.state.price)
-                        }
-                    }),
-                    axios({
-                        method: 'post',
-                        url: 'http://localhost:5000/stocks/update/sellorder/' + this.state.stockID, //dummy user
-                        data: {
-                            orderID: ID,
-                            userID: "jo", //dummy userID
-                            shares: Number(this.state.shares),
-                            price: Number(this.state.price)
-                        }
-                    })
-                ])
-                .then(axios.spread((...responses) => {
-                    //console.log(responses)                            
-                    //window.location.reload(false)
-                }))
-                .then(
-                    alert("Successfully created sell order"),
-                    window.location.reload(false)
-                )
-                .catch(res => {
-                    console.log(res)
-                    alert("Sell Order creation failed. Please try again.")
-                    window.location.reload(false)
-                });
-            }
-            else{
-                alert("Insufficient number of stocks owned.");
-            }
-        }
-        else{
-            alert("Select a stock to sell.");
-        }
-    } */
+   
     async onSellOrderSubmit(e){
         e.preventDefault();
         if(this.state.stockID != null){
@@ -214,37 +156,6 @@ export default class Home extends Component{
         });
         console.log(e.target.value.split(",")[1]);
     }
-
-/*    onCancelOrder(e){
-        e.preventDefault();
-        if(this.state.cancelOrderID != null && this.state.cancelStockID !=null){
-            axios.all([
-                axios({
-                    method: 'post',
-                    url: 'http://localhost:5000/users/delete/'+this.state.cancelType+'/' +this.state.userID, //dummy user
-                    data: {
-                        orderID: this.state.cancelOrderID
-                    }
-                }),
-                axios({
-                    method: 'post',
-                    url: 'http://localhost:5000/stocks/delete/'+this.state.cancelType+'/' + this.state.cancelStockID, //dummy user
-                    data: {
-                        orderID: this.state.cancelOrderID
-                    }
-                }),
-            ])
-            .then(res => {
-                console.log(res.data)
-                alert("Successfully cancelled buy order.")
-                window.location.reload(false);
-            })
-            .catch(res => {
-                console.log(res)
-                alert("Cancellation failed. Please try again later.");
-            })
-        }
-    }  */
 
 
     onCancelOrder(e){
@@ -374,18 +285,18 @@ export default class Home extends Component{
 
 
     render() {
-        // console.log(thisUser);
+        console.log("This user: " + this.state.userID);
         return(
             
            <div>
-            <div id = "top-nav" class = "view">Welcome User</div>
+            <div id = "top-nav" class = "view">Welcome {this.state.user}</div>
             <Navbar/>
             <div id = "dashboard-body" class = "dashboard">
                 <div id = "user-funds" class = "view">
                     <h2>User Funds</h2>
                     <h4 id = "balance">Cash balance: ${this.state.userFunds}</h4>
                     <h4 id = "total-value">Total portfolio value: $100</h4>
-
+                    
                     <div>
                         <form onSubmit={this.onSubmitDep}>
                             <label for="">Deposit Funds</label><br/>
@@ -548,3 +459,4 @@ export default class Home extends Component{
         )
     }
 }
+
