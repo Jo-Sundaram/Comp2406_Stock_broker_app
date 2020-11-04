@@ -196,7 +196,6 @@ const checkMetES = async client => {
             }
         }
 
-
         let dollarAskChange = Math.abs(currentAsk - openingAsk);
         let perAskChange = Math.abs(dollarAskChange/openingAsk)*100;
 
@@ -206,6 +205,7 @@ const checkMetES = async client => {
         for (var k in stocks[i].eventSubscriptions){
             let notifSent = 0;
             let notification = {};
+
             if(stocks[i].eventSubscriptions[k].notifSent == 0){
                 
                 if(stocks[i].eventSubscriptions[k].type == "Ask"){
@@ -234,7 +234,7 @@ const checkMetES = async client => {
                         }
                     }
                     if(stocks[i].eventSubscriptions[k].parameter == "decPrcnt"){
-                        if (perAskChange <=  stocks[i].eventSubscriptions[k].value){
+                        if (perAskChange >=  stocks[i].eventSubscriptions[k].value){
                             notification = {
                                 type: "ask",
                                 stock: stocks[i].stockAbbreviation,
@@ -246,7 +246,7 @@ const checkMetES = async client => {
                         }
                     }
                     if(stocks[i].eventSubscriptions[k].parameter == "decDollar"){
-                        if (dollarAskChange <=  stocks[i].eventSubscriptions[k].value){
+                        if (dollarAskChange >=  stocks[i].eventSubscriptions[k].value){
                             notification = {
                                 type: "ask",
                                 stock: stocks[i].stockAbbreviation,
@@ -285,7 +285,7 @@ const checkMetES = async client => {
                         }
                     }
                     if(stocks[i].eventSubscriptions[k].parameter == "decPrcnt"){
-                        if (perBidChange <=  stocks[i].eventSubscriptions[k].value){
+                        if (perBidChange >=  stocks[i].eventSubscriptions[k].value){
                             notification = {
                                 type: "bid",
                                 stock: stocks[i].stockAbbreviation,
@@ -297,7 +297,7 @@ const checkMetES = async client => {
                         }
                     }
                     if(stocks[i].eventSubscriptions[k].parameter == "decDollar"){
-                        if (dollarBidChange <=  stocks[i].eventSubscriptions[k].value){
+                        if (dollarBidChange >=  stocks[i].eventSubscriptions[k].value){
                             notification = {
                                 type: "bid",
                                 stock: stocks[i].stockAbbreviation,
@@ -317,6 +317,7 @@ const checkMetES = async client => {
                     if(stocks[i].eventSubscriptions[k].userID == users[f].userID){
                         console.log("prrrrrrrrrrrrraaaaaaappaapap");
                         client = users[f].clientInfo;
+                        
                         client.emit("eventNotif", notification);
 
                         Stock.updateMany(
