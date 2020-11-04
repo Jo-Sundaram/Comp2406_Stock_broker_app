@@ -20,7 +20,6 @@ router.post("/login", (req, res, next) => {
   })(req, res, next)
 })
 
-
 router.get("/secret", passport.authenticate("jwt", { session: false }), (req, res) => {
   if(!req.user){
     res.json({

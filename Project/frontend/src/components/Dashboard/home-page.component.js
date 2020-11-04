@@ -4,6 +4,8 @@ import axios from 'axios';
 import Navbar from "../NavBar/navbar.component";
 import "./home-page.css"
 import requests from '../functions/requests.js';
+import thisUser from '../../App';
+
 
     
 export default class Home extends Component{
@@ -372,7 +374,9 @@ export default class Home extends Component{
 
 
     render() {
+        // console.log(thisUser);
         return(
+            
            <div>
             <div id = "top-nav" class = "view">Welcome User</div>
             <Navbar/>
