@@ -21,7 +21,7 @@ const userSchema = new Schema({
     }],
 
     notifications: [{
-        idontknow: { type: String, required: true } //////we have to figure out the structure for a notification object
+        notification: { type: String, required: true } //////we have to figure out the structure for a notification object
     }],
 
     eventSubscriptions: [{ //so users can edit their own subscriptions/view their own subscriptions

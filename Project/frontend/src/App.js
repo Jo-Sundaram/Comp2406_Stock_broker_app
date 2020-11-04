@@ -43,7 +43,34 @@ export const Test = () =>{
         
       socket.on("FromAPI", data => {
           setResponse(data);
+function App() {
+  let history = useHistory();
+
+  const [response, setResponse] = useState("");
+  const [userInfo, setUser] = useState("");
+
+  useEffect(() => {
+    const socket = socketIOClient(ENDPOINT);
+
+    fetch("http://localhost:5000/api/secret", {
+    headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+    },})
+      .then((res) => {
+          return res.json();
+      })
+      .then((user) => {
+        setUser(user);
+          console.log(user);
+          socket.emit("connected", user._id);
+      })
+      .catch((err) => {
+          console.log(err);
       });
+      
+    socket.on("FromAPI", data => {
+        setResponse(data);
+    });
 
     }, []);
 
@@ -80,15 +107,22 @@ function App() {
       
     socket.on("FromAPI", data => {
         setResponse(data);
+    socket.on("processedBuyOrder", (purchase, stockAbbreviation) => {
+      alert("You bought " + purchase.shares + ' shares of ' + stockAbbreviation + " for $" + purchase.soldFor + " from " + purchase.sellerID);
+    });
+
+    socket.on("processedSellOrder", (purchase, stockAbbreviation) => {
+      alert("You sold " + purchase.shares + ' shares of ' + stockAbbreviation + " for $" + purchase.soldFor + " to " + purchase.buyerID);
     });
 
   }, []);
 
-
-
   return (
     // <Router>
       <div className="container">
+      <p>
+        It's <time dateTime={response}>{response}</time>
+      </p>
         <Router>
         <Switch>
         <Route path="/register" component={Register} />

@@ -32,6 +32,12 @@ const stockSchema = new Schema({
         shares: {type: Number, required: true},
         buyPrice: {type: Number, required: true},
         sellPrice: {type: Number, required: true}
+    }],
+    fulfilledOrders: [{
+        buyerID: {type: String, required: true},
+        sellerID: {type: String, required: true},
+        shares: {type: Number, required: true},
+        soldFor: {type: Number, reqiured: true}
     }]
 }, {
     timestamps: true, //idk what this does ngl>???

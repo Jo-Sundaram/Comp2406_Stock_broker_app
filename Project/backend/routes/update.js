@@ -3,6 +3,7 @@ let User = require('../models/user.model');
 let Stock = require('../models/stock.model');
 const app = express.Router();
 
+
 //Event Subscriptions
 
 app.post("/:id/:stockAbbreviation/ES/add", function(req,res){
@@ -555,10 +556,10 @@ app.get("/:stockAbbreviation", async function(req, res){
 
     async function addToFulfilled(sellOrder, buyOrder, shares){
         completedOrders.push({
-            buyer: buyOrder.userID,
-            seller: sellOrder.userID,
+            buyerID: buyOrder.userID,
+            sellerID: sellOrder.userID,
             shares: shares,
-            price: buyOrder.price
+            soldFor: buyOrder.price
         });
     }
 
@@ -588,7 +589,7 @@ app.get("/:stockAbbreviation", async function(req, res){
                 console.log("here.")
                 User.updateMany(
                     {_id: sellOrders[i].userID, 'stockPortfolio.stockID' : req.params.stockAbbreviation},
-                    {$set: {'stockPortfolio.$.shares': currStocks+shares}},
+                    {$set: {'stockPortfolio.$.shares': currStocks+sellOrders[i].shares}},
                     function(err){
                         if(err){
                             return res.status(422).send(err);
@@ -601,7 +602,7 @@ app.get("/:stockAbbreviation", async function(req, res){
                     sellOrders[i].userID,{
                     $push: {stockPortfolio: {
                         stockID: req.params.stockAbbreviation,
-                        shares: shares
+                        shares: sellOrders[i].shares
                     }}}, 
                     function(err){
                         if(err){
@@ -638,9 +639,17 @@ app.get("/:stockAbbreviation", async function(req, res){
         }
     }
 
-    res.json({success: completedOrders});
+    Stock.findOneAndUpdate(
+        {'stockAbbreviation' : req.params.stockAbbreviation},
+        {$set: {fulfilledOrders: completedOrders}},
 
-
+        function(err){
+            if(err){
+                return res.status(400).send(err);
+            }
+            res.json({success: completedOrders});
+        }
+    );
 });
 
 module.exports = app;
