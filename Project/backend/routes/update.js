@@ -315,6 +315,7 @@ app.get("/:stockAbbreviation", async function(req, res){
     let buyOrders = [];
 
     let completedOrders = [];
+    let uncompletedOrders = [];
 
     const stock = await Stock.findOne(
         {'stockAbbreviation' : req.params.stockAbbreviation},
@@ -611,6 +612,13 @@ app.get("/:stockAbbreviation", async function(req, res){
                     }
                 );
             }
+
+            uncompletedOrders.push({
+                type: "sell",
+                userID: sellOrders[i].userID,
+                shares: sellOrders[i].shares,
+                price: sellOrders[i].price,
+            });
         }
     }
 
@@ -636,6 +644,13 @@ app.get("/:stockAbbreviation", async function(req, res){
                     }
                 }
             );
+
+            uncompletedOrders.push({
+                type: "buy",
+                userID: buyOrders[i].userID,
+                shares: buyOrders[i].shares,
+                price: buyOrders[i].price,
+            });
         }
     }
 

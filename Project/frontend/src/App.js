@@ -53,15 +53,11 @@ function App() {
         alert("You sold " + purchase.shares + ' shares of ' + stockAbbreviation + " for $" + purchase.soldFor + " to " + purchase.buyerID);
       });
 
-<<<<<<< HEAD
-    }, []);
-=======
     socket.on("eventNotif", (notification) => {
       alert("EVENT SUBSCRIPTION: " + notification.stock + " " + notification.type + " " + notification.change + " by " + notification.value + notification.param + ".");
     });
 
   }, []);
->>>>>>> fce2d9d8a592b4602acf19f24658007e9daa66fa
 
   },[]);
 console.log("CURRENT USER " + user.email)

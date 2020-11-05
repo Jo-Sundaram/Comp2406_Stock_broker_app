@@ -167,6 +167,17 @@ const checkOutProcessedOrders = async client => {
                 }
             }
         }
+
+        for(var k in stocks[i].unfulfilledOrders){
+            for(var k in users){
+                if(stocks[i].unfulfilledOrders[j].userID == users[k].userID){
+                    console.log("pop!");
+                    client = users[k].clientInfo;
+                    client.emit("unprocessedOrder", stocks[i].unfulfilledOrders[j], stocks[i].stockAbbreviation);
+                }
+            }
+        }
+
     }
 }
 
