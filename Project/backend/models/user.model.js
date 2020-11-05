@@ -47,15 +47,21 @@ const userSchema = new Schema({
     }],
 
     pBuyOrders: [{  
-        stockID: {type: String, required: true},
+        buyerID: {type: String, required: true},
+        sellerID: { type: String, required: true },
         shares: {type: Number, required: true},
-        price: {type: Number, required: true} //users bid
+        soldFor: {type: Number, required: true},
+        asked: {type: Number, required: true},
+        datetime: {type: String, required: true} //users bid
     }], 
 
     pSellOrders: [{
-        stockID: {type: String, required: true},
+        buyerID: {type: String, required: true},
+        sellerID: { type: String, required: true },
         shares: {type: Number, required: true},
-        price: {type: Number, required: true} //users price to sell
+        soldFor: {type: Number, required: true},
+        asked: {type: Number, required: true},
+        datetime: {type: String, required: true} //users price to sell
     }]
     
 },{
