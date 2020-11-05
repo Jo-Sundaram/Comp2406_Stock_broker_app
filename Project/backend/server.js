@@ -468,7 +468,6 @@ const updateStockValue = async () => {
             }
             res.json({success: true});
         });
-
     }
 }
 
