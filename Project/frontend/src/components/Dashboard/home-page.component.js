@@ -124,7 +124,10 @@ export default class Home extends Component{
                         url: 'http://localhost:5000/users/update/'+this.state.userID, 
                         data: {
                             stockPortfolio: newUserStockP,
-                        }
+                        },
+						headers: {
+							Authorization: "Bearer " + localStorage.getItem("token")
+						}
                     }),
                     axios({
                         method: 'post',
@@ -134,7 +137,10 @@ export default class Home extends Component{
                             stockID: this.state.stockID,
                             shares: Number(this.state.shares),
                             price: Number(this.state.price)
-                        }
+                        },
+						headers: {
+							Authorization: "Bearer " + localStorage.getItem("token")
+						}
                     }),
           
                 ])
@@ -176,7 +182,10 @@ export default class Home extends Component{
                     url: 'http://localhost:5000/update/'+this.state.userID+'/'+this.state.cancelStockID+'/'+this.state.cancelType+'/remove/' +this.state.cancelOrderID, //dummy user
                     data: {
                         orderID: this.state.cancelOrderID
-                    }
+                    },
+					headers: {
+						Authorization: "Bearer " + localStorage.getItem("token")
+					}
                 })
             ])
             .then(res => {
@@ -206,7 +215,10 @@ export default class Home extends Component{
                 url: 'http://localhost:5000/users/update/' + this.state.userID, 
                 data: {
                     userFunds: newFunds,
-                }
+                },
+				headers: {
+					Authorization: "Bearer " + localStorage.getItem("token")
+				}
             })
             .then(res => {
                 console.log(res.data)
@@ -274,7 +286,10 @@ export default class Home extends Component{
             axios.all([
                 axios({
                     method: 'delete',
-                    url: 'http://localhost:5000/update/'+this.state.userID+'/'+this.state.cancelESStockID+ '/ES/remove/' +this.state.cancelESSubID, //dummy user
+                    url: 'http://localhost:5000/update/'+this.state.userID+'/'+this.state.cancelESStockID+ '/ES/remove/' +this.state.cancelESSubID, //dummy user,
+					headers: {
+						Authorization: "Bearer " + localStorage.getItem("token")
+					}
                   
                 })
             ])

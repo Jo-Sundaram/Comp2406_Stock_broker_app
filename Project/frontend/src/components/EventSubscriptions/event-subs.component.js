@@ -91,7 +91,10 @@ export default class EventSubs extends Component{
                         parameter: this.state.esParameter,
                         value: this.state.editAmount,
                         triggerOrder: 0
-                    }
+                    },
+					headers: {
+						Authorization: "Bearer " + localStorage.getItem("token")
+					}
                 }),
         
             ])
@@ -118,7 +121,10 @@ export default class EventSubs extends Component{
             axios.all([
                 axios({
                     method: 'delete',
-                    url: 'http://localhost:5000/update/'+this.state.userID+'/'+this.state.editStockID+ '/ES/remove/' +this.state.editSubID, //dummy user
+                    url: 'http://localhost:5000/update/'+this.state.userID+'/'+this.state.editStockID+ '/ES/remove/' +this.state.editSubID, //dummy user,
+					headers: {
+						Authorization: "Bearer " + localStorage.getItem("token")
+					}
                 
                 })
             ])

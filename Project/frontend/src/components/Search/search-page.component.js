@@ -51,11 +51,9 @@ export default class Search extends Component{
 
     componentDidMount() {
         console.log('reloaded /search');
-
-
     } 
 
-     async componentWillReceiveProps(props){
+	async componentWillReceiveProps(props){
         this.setState({
             userFunds: props.user.userFunds,
             userID: props.user._id,
@@ -114,7 +112,10 @@ export default class Search extends Component{
                     url: 'http://localhost:5000/users/update/' + this.state.userID, 
                     data: {
                         userFunds: newUserFunds,
-                    }
+					},
+					headers: {
+						Authorization: "Bearer " + localStorage.getItem("token")
+					}
                 }),
                 axios({
                     method: 'post',
@@ -124,7 +125,10 @@ export default class Search extends Component{
                         stockID: this.state.stockID,
                         shares: Number(this.state.shares),
                         price: Number(this.state.price)
-                    }
+					},
+					headers: {
+						Authorization: "Bearer " + localStorage.getItem("token")
+					}
                 }),
   
             ])
@@ -153,7 +157,6 @@ export default class Search extends Component{
         }
     }
 
-
     onChangeEsParameter(e){
         this.setState({
             esParameter: e.target.value        
@@ -181,7 +184,10 @@ export default class Search extends Component{
                     parameter: this.state.esParameter,
                     value: this.state.esAmount,
                     triggerOrder: 0
-                }
+				},
+				headers: {
+					Authorization: "Bearer " + localStorage.getItem("token")
+				}
             })
             .then(res => {
                 console.log(res.data)
@@ -206,7 +212,10 @@ export default class Search extends Component{
                 data: {
                     name: this.state.selectedList,
                     stockID: this.state.stockID
-                }
+                },
+				headers: {
+					Authorization: "Bearer " + localStorage.getItem("token")
+				}
             })
             .then(res => {
                 console.log(res.data)

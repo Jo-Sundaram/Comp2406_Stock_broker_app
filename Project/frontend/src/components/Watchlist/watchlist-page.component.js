@@ -82,7 +82,10 @@ export default class Watchlist extends Component{
             data: {
                 name: this.state.listname,
                 stockID: this.state.stockID
-            }
+            },
+			headers: {
+				Authorization: "Bearer " + localStorage.getItem("token")
+			}
         })
         .then(res => {
             console.log(res.data)
@@ -109,7 +112,10 @@ export default class Watchlist extends Component{
             url: 'http://localhost:5000/users/' + this.state.userID+'/watchlist/add', //dummy user
             data: {
                 name: this.state.newname
-            }
+            },
+			headers: {
+				Authorization: "Bearer " + localStorage.getItem("token")
+			}
         })
         .then(res => {
             console.log(res.data)
@@ -146,7 +152,10 @@ export default class Watchlist extends Component{
              url: 'http://localhost:5000/users/' + this.state.userID+'/watchlist/remove', //dummy user
              data: {
                  name: this.state.listname
-             }
+             },
+			 headers: {
+				 Authorization: "Bearer " + localStorage.getItem("token")
+			 }
          })
          .then(res => {
              console.log(res.data)

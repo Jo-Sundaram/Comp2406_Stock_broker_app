@@ -51,7 +51,8 @@ const requests = {
         const dataPromise = await promise.then((response) => response.data.buyOrders)
 
         const promise2 = axios.get('http://localhost:5000/users/'+userID) //dummy user ID in place
-        
+		
+		console.log(dataPromise);
         const dataPromise2 = await promise2.then((response) => response.data.unpBuyOrders)
         
         var valid = 1;
