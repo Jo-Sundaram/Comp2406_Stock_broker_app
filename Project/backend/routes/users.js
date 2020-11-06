@@ -99,13 +99,6 @@ app.post("/:id/watchlist/add", function(req,res){
 //get entire watchlist collection
 app.get("/:id/watchlist/", async(req,res)=>{
 
-  /*   try{
-        const user = await User.findById(req.params.id);
-        res.send(user.watchlistCollection);
-    }catch(e){
-        return res.send("user not found");
-    }
- */
     const user = await User.findById(req.params.id)
     .catch((err)=>{
         return res.send("user not found");

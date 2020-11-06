@@ -47,7 +47,7 @@ export default class LoginUser extends Component{
                 console.log(res);
                 alert("Logged In Poggers.");
                 
-
+                window.location = '/home';     
 
             } else {
                 alert("Invalid account");

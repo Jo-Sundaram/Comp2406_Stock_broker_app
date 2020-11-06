@@ -49,6 +49,11 @@ export default class Search extends Component{
     }
 
 
+    componentDidMount() {
+        console.log('reloaded /search');
+
+
+    } 
 
      async componentWillReceiveProps(props){
         this.setState({

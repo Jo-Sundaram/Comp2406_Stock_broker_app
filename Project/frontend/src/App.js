@@ -53,38 +53,41 @@ function App() {
         alert("You sold " + purchase.shares + ' shares of ' + stockAbbreviation + " for $" + purchase.soldFor + " to " + purchase.buyerID);
       });
 
-<<<<<<< HEAD
-    }, []);
-=======
     socket.on("eventNotif", (notification) => {
       alert("EVENT SUBSCRIPTION: " + notification.stock + " " + notification.type + " " + notification.change + " by " + notification.value + notification.param + ".");
     });
 
   }, []);
->>>>>>> fce2d9d8a592b4602acf19f24658007e9daa66fa
 
   },[]);
 console.log("CURRENT USER " + user.email)
-  return (
+console.log("CURRENT USER " + user.stockPortfolio)
+
+if(user.stockPortfolio!==undefined){
+   console.log(Object.keys(user.stockPortfolio))
+console.log("Stock portfolio: " + Object.keys( user.stockPortfolio["0"]))
+
+}
+//
+
+
+
+   return (
     
     // <Router>
       <div className="container">
 
-{/*       <p>
-        It's <time dateTime={response}>{response}</time>
-      </p> */}
         <Router>
           <Switch>
           <Route path="/register" component={Register} />
           <Route path="/login" component={LoginUser} />
     
-          {/* <Route path="/home" component={Home}/> */}
 
           <Route path = "/home" render = {(routeProps) => (<Home {...routeProps} user = {user}/>)}/>
            
           <Route path="/search" render = {(routeProps) => (<Search {...routeProps} user = {user}/>)}/>
 
-          <Route path="/account" component={Account} />
+          <Route path="/account" render = {(routeProps) => (<Account {...routeProps} user = {user}/>)}/>
 
           <Route path="/watchlist" render = {(routeProps) => (<Watchlist {...routeProps} user = {user}/>)}/>
 
@@ -97,6 +100,8 @@ console.log("CURRENT USER " + user.email)
       </div>
   );
 }
+ 
+
 
 
 export default App;

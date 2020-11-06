@@ -34,7 +34,7 @@ export default class Home extends Component{
         
 
         this.state = {
-            userID: "",
+            userID: null,
             userFunds: 0,
             stockPortfolio: [],
             userSellOrders: [],
@@ -54,7 +54,7 @@ export default class Home extends Component{
             cancelESStockID: null,
             cancelESSubID: null,
             
-            user:'',
+            user: null,
             
         }
 
@@ -62,20 +62,29 @@ export default class Home extends Component{
 
     }
 
+
+
+    componentDidMount() {
+        console.log('reloaded /home');
+   
+     
+    }  
+
   
     componentWillReceiveProps(props){ //this is called to before render method
         this.setState({
-           user : props.user.username,
-           userID: props.user._id,
-           userFunds: props.user.userFunds,
+            user : props.user.username,
+            userID: props.user._id,
+            userFunds: props.user.userFunds,
             stockPortfolio: props.user.stockPortfolio,
             userSellOrders: props.user.unpSellOrders,
             userBuyOrders: props.user.unpBuyOrders,
             eventSubscriptions: props.user.eventSubscriptions,
-         })
+         }) 
 
-
+         console.log("this user in props: " + this.state.userID);
     }
+
 
     onChangeOrderStock(e){
         this.setState({
@@ -285,7 +294,27 @@ export default class Home extends Component{
 
 
     render() {
-        console.log("This user: " + this.state.userID);
+        if(this.state.user==null){
+            console.log("user is null");
+            setTimeout(()=>{
+
+                return(
+
+                    <div>
+                        loading...
+                    </div>
+                )
+
+            },5000)
+        }else{
+            console.log("user exists")
+        }
+
+
+
+        console.log("portfolio: " + this.props.user.stockPortfolio);
+
+        console.log("This user in render: " + this.state.userID);
         return(
             
            <div>

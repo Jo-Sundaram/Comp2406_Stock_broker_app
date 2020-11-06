@@ -30,6 +30,13 @@ export default class Watchlist extends Component{
         }
     }
 
+    
+   componentDidMount() {
+    console.log('reloaded /watchlist');
+
+    
+    } 
+
     async componentWillReceiveProps(props){
 
         this.setState({
@@ -71,7 +78,7 @@ export default class Watchlist extends Component{
         console.log(this.state.listname);
         axios({
             method: 'delete',
-            url: 'http://localhost:5000/users/5f890ebbbb89e66e947f5652/watchlist/update/remove', //dummy user
+            url: 'http://localhost:5000/users/' + this.state.userID+'/watchlist/update/remove', //dummy user
             data: {
                 name: this.state.listname,
                 stockID: this.state.stockID
@@ -99,7 +106,7 @@ export default class Watchlist extends Component{
         console.log(this.state.newname)
        axios({
             method: 'post',
-            url: 'http://localhost:5000/users/5f890ebbbb89e66e947f5652/watchlist/add', //dummy user
+            url: 'http://localhost:5000/users/' + this.state.userID+'/watchlist/add', //dummy user
             data: {
                 name: this.state.newname
             }
@@ -136,7 +143,7 @@ export default class Watchlist extends Component{
         console.log(this.state.listname)
         axios({
              method: 'delete',
-             url: 'http://localhost:5000/users/5f890ebbbb89e66e947f5652/watchlist/remove', //dummy user
+             url: 'http://localhost:5000/users/' + this.state.userID+'/watchlist/remove', //dummy user
              data: {
                  name: this.state.listname
              }

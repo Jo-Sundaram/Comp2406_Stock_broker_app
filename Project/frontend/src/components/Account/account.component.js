@@ -5,31 +5,49 @@ import "./account.css"
 import Navbar from "../NavBar/navbar.component";
 
 export default class Account extends Component{
+    
 
     constructor(props){
         super(props);
+        this.onLogout = this.onLogout.bind(this);
 
         this.state = {
-            userID: "5f890ebbbb89e66e947f5652",
+            userID: " ",
             username: '',
+            password: '',
             email: '',
         }
     }
 
-    componentDidMount() {
-        console.log('reloaded');
-        axios.get('http://localhost:5000/users/' + this.state.userID) //dummy user ID in place
-            .then(response => {
+   componentDidMount() {
+        console.log('reloaded /account');
 
-                this.setState({
-                    username: response.data.username,
-                    email: response.data.email
-                })
-                
-            })
-            .catch(function (error) {
-                console.log(error);
-            })
+        // this.componentWillReceiveProps(this.props)
+
+    } 
+
+
+    componentWillReceiveProps(props){
+        console.log("here")
+        this.setState({
+            userID: props.user._id,
+            username: props.user.username,
+            password: props.user.password,
+            email: props.user.email
+        })
+
+    }
+
+
+
+    onLogout(e){
+        e.preventDefault()
+        localStorage.removeItem('token');
+        console.log("button")
+        alert('You have been successfully logged out!')
+        
+
+        window.location = '/login';
     }
 
     render(){
@@ -38,7 +56,7 @@ export default class Account extends Component{
                 <Navbar/>
 
                 <div className = "userInfo">
-                    <h1>Your Account</h1>
+                    <h1>Your Account <button onClick = {this.onLogout}>Logout</button></h1>
 
                     <h3>Userame: {this.state.username}</h3>
                     <h3>Email: {this.state.email}</h3>

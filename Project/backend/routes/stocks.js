@@ -3,9 +3,68 @@ const express = require("express");
 let Stock = require('../models/stock.model');
 const app = express.Router();
 
-app.get("/", async(req,res) => {
+/* app.get("/", async(req,res) => {
     const stocks = await Stock.find();
     res.send(stocks);
+}); */
+
+app.get("/", async(req,res)=>{
+
+    console.log(req.query);
+    console.log(Object.keys(req.query).length);
+    if(Object.keys(req.query).length==0){
+        const stocks = await Stock.find();
+        res.send(stocks);
+    }
+
+
+    else {
+        let symbol = '';
+        let minprice =0;
+        let maxprice = Number.MAX_SAFE_INTEGER;
+
+   
+        req.query.hasOwnProperty('symbol')?symbol=req.query['symbol']:''
+        req.query.hasOwnProperty('minprice')?minprice= parseInt(req.query['minprice']):0;
+        req.query.hasOwnProperty('maxprice')?maxprice = req.query['maxprice']:Number.MAX_SAFE_INTEGER;
+
+
+        var stocks;
+        if(symbol!=''){
+            stocks = await Stock.find({
+            'stockAbbreviation': {'$regex': symbol, '$options': 'i'},
+
+            'currentAsk':{$gte:minprice, $lte: maxprice},
+            
+           });
+        }else{
+            stocks = await Stock.find({
+
+            'currentAsk':{$gte:minprice, $lte: maxprice},
+            
+            });
+        }
+
+       
+
+        if(!stocks){
+            res.send("No stock symbols found");
+        }else{
+                res.send(stocks)
+
+        }
+    }
+
+
+
+/*     const stocks = await Stock.find({'stockAbbreviation': { '$regex': req.body.symbol, '$options': 'i'}},{})
+    if(!stocks){
+        res.send("No stock symbols found");
+    }else{
+            res.send(stocks)
+    }
+ */
+
 });
 
 app.get("/:stockAbbreviation", async(req,res) => {
@@ -14,9 +73,17 @@ app.get("/:stockAbbreviation", async(req,res) => {
 });
 
 app.get("/:stockAbbreviation/history", async(req,res) => {
-    const stock = await Stock.findOne({'stockAbbreviation' : req.params.stockAbbreviation});
-    res.send(stock.history);
+    const stock = await Stock.findOne({'stockAbbreviation' : req.params.stockAbbreviation})
+            .then((stock)=>{
+                res.send(stock.history);
+            })
+            .catch((err)=>{
+                res.send("Stock not found")
+            });
+
 });
+
+
 
 // router.route('/add').post((req, res) => {
 //     const stockFullName = req.body.stockFullName;
@@ -50,6 +117,9 @@ app.get("/:stockAbbreviation/history", async(req,res) => {
 //         res.send('Done')
 //     });
 // });
+
+
+
 app.post("/update/:stockAbbreviation", function(req,res){
     Stock.findOneAndUpdate(req.params.stockAbbreviation, {$set:req.body},{new:true}, function(err){
         if(err){

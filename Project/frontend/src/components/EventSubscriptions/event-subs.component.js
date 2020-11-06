@@ -16,7 +16,7 @@ export default class EventSubs extends Component{
 
     
         this.state = {
-            userID: " ",
+            userID: "",
             eventSubscriptions: [],
             stockID: 'IBM',
             esParameter: "",
@@ -32,11 +32,20 @@ export default class EventSubs extends Component{
     }
 
     
+    componentDidMount() {
+        console.log('reloaded /eventsubs');
+    
+    } 
+    
     componentWillReceiveProps(props){
+
         this.setState({
             userID: props.user._id,
             eventSubscriptions: props.user.eventSubscriptions
+
         })
+        console.log(this.props)
+     
     }
 
 
