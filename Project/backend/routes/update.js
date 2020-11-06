@@ -3,6 +3,8 @@ let User = require('../models/user.model');
 let Stock = require('../models/stock.model');
 const app = express.Router();
 
+let buyOrderPlacement = 0;
+let sellOrderPlacement = 0;
 
 //Event Subscriptions
 
@@ -101,13 +103,14 @@ app.post("/:id/:stockAbbreviation/buyorder/add", async function(req,res){
         }
     );
 
+    
     if(funds>=orderTotal){
+        buyOrderPlacement += 1
         User.findByIdAndUpdate(
             req.params.id,
             {$push: {unpBuyOrders : {
                 orderID: req.body.orderID,
                 stockID: req.params.stockAbbreviation,
-                orderPlacement: req.body.orderPlacement,
                 shares: req.body.shares,
                 price: req.body.price
             }},
@@ -122,6 +125,7 @@ app.post("/:id/:stockAbbreviation/buyorder/add", async function(req,res){
             {'stockAbbreviation' : req.params.stockAbbreviation},
             {$push: {buyOrders: {
                 orderID: req.body.orderID,
+                orderPlacement: buyOrderPlacement,
                 userID: req.params.id,
                 shares: req.body.shares,
                 price: req.body.price
@@ -224,6 +228,7 @@ app.post("/:id/:stockAbbreviation/sellorder/add", async function(req,res){
     console.log(shares);
 
     if(shares>=req.body.shares){
+        sellOrderPlacement += 1;
         User.updateMany(
             {_id: req.params.id, 'stockPortfolio.stockID': req.params.stockAbbreviation},
             {$push: {unpSellOrders : {
@@ -243,8 +248,8 @@ app.post("/:id/:stockAbbreviation/sellorder/add", async function(req,res){
             {'stockAbbreviation' : req.params.stockAbbreviation},
             {$push: {sellOrders: {
                 orderID: req.body.orderID,
+                orderPlacement: sellOrderPlacement,
                 userID: req.params.id,
-                orderPlacement: req.body.orderPlacement,
                 shares: req.body.shares,
                 price: req.body.price
             }}},
@@ -310,7 +315,10 @@ app.delete("/:id/:stockAbbreviation/sellorder/remove/:sid", async function(req,r
     res.json({success: true});
 });
 
-app.get("/:stockAbbreviation", async function(req, res){
+app.get("/:stockAbbreviation/", async function(req, res){ //i wanna change :day to a query parameter
+    
+    let day = parseInt(req.query['day']);
+
     let sellOrders = [];
     let buyOrders = [];
 
@@ -562,7 +570,7 @@ app.get("/:stockAbbreviation", async function(req, res){
             shares: shares,
             soldFor: buyOrder.price,
             asked: sellOrder.price,
-            datetime: new Date()
+            datetime: day
         });
     }
 

@@ -5,7 +5,6 @@ const path = require('path');
 const mongoose = require('mongoose'); // helps connect to mongodb database
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
-
 const socketIo = require("socket.io")
 
 const passport = require("passport");
@@ -91,7 +90,6 @@ passport.use(new JWTStrategy({
     }
 ))
 
-
 const apiRouter = require('./routes/api');
 const usersRouter = require('./routes/users');
 const stocksRouter = require('./routes/stocks');
@@ -119,6 +117,7 @@ let interval;
 
 let users = []
 let serverKey = "jomama";
+let day = 0;
 
 io.on("connection", (client) => {
     console.log("New client connected");
@@ -399,9 +398,11 @@ function pushNotification(userID, notification){
 const processStocks = async () => {
     const stocks = await Stock.find();
 
+    day+=1;
+
     for(let i in stocks){
         var xmlHttp = new XMLHttpRequest();
-        xmlHttp.open( "GET", "http://localhost:5000/update/" + stocks[i].stockAbbreviation, true ); // false for synchronous request
+        xmlHttp.open( "GET", "http://localhost:5000/update/" + stocks[i].stockAbbreviation + '?day=' + day, true ); // false for synchronous request
         xmlHttp.send( null );
     }
 
@@ -472,7 +473,6 @@ const updateStockValue = async () => {
 }
 
 app.io = io;
-
 
 server.listen(port, () => {
     console.log('Server is running on port 5000');
