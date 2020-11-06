@@ -3,6 +3,8 @@ const http = require("http");
 const cors = require('cors');
 const path = require('path');
 const mongoose = require('mongoose'); // helps connect to mongodb database
+var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+
 
 const socketIo = require("socket.io")
 
@@ -106,9 +108,17 @@ const server = http.createServer(app)
 
 const io = socketIo(server);
 
+app.use(express.static(__dirname + '/superuser')); 
+//redirect / to our index.html file
+
+app.get('/superuser', function(req, res,next) {  
+  res.sendFile(__dirname + '/superuser/superuser.html');
+});
+
 let interval;
 
 let users = []
+let serverKey = "jomama";
 
 io.on("connection", (client) => {
     console.log("New client connected");
@@ -122,11 +132,20 @@ io.on("connection", (client) => {
         //checkOutProcessedOrders(client);
     });
 
+    client.on("simday", function(user){
+        console.log(user);
+        if(user.key == serverKey){
+            processStocks();
+        }
+    })
+
     if (interval) {
         clearInterval(interval);
     }
 
-    interval = setInterval(() => checkMetES(client), 5000);
+    interval = setInterval(() => checkMetES(client), 150000);
+    interval = setInterval(() => checkOutProcessedOrders(client), 150000);
+    interval = setInterval(() => updateStockValue(), 150000);
 
     client.on("disconnect", () => {
         console.log("Client disconnected");
@@ -159,14 +178,28 @@ const checkOutProcessedOrders = async client => {
                     console.log("pop!");
                     client = users[k].clientInfo;
                     client.emit("processedSellOrder", stocks[i].fulfilledOrders[j], stocks[i].stockAbbreviation);
+                    pushNotification(stocks[i].fulfilledOrders[j].sellerID, ("You sold " + stocks[i].fulfilledOrders[j].shares + ' shares of ' + stocks[i].stockAbbreviation + " for $" + stocks[i].fulfilledOrders[j].soldFor + " to " + stocks[i].fulfilledOrders[j].buyerID));
                 }
                 if(stocks[i].fulfilledOrders[j].buyerID == users[k].userID){
                     console.log("pop!");
                     client = users[k].clientInfo;
                     client.emit("processedBuyOrder", stocks[i].fulfilledOrders[j], stocks[i].stockAbbreviation);
+                    pushNotification(stocks[i].fulfilledOrders[j].buyerID, ("You bought " + stocks[i].fulfilledOrders[j].shares + ' shares of ' + stocks[i].stockAbbreviation + " for $" + stocks[i].fulfilledOrders[j].soldFor + " to " + stocks[i].fulfilledOrders[j].buyerID));
                 }
             }
         }
+
+        for(var k in stocks[i].unfulfilledOrders){
+            for(var k in users){
+                if(stocks[i].unfulfilledOrders[j].userID == users[k].userID){
+                    console.log("pop!");
+                    client = users[k].clientInfo;
+                    client.emit("unprocessedOrder", stocks[i].unfulfilledOrders[j], stocks[i].stockAbbreviation);
+                    pushNotification(stocks[i].unfulfilledOrders[j].userID, ("Could not fulfill " + stocks[i].unfulfilledOrders[j].type + " order" + " for " + stocks[i].stockAbbreviation + " (" + stocks[i].unfulfilledOrders[j].price +"/share, " + stocks[i].unfulfilledOrders[j].shares + "shares)"));
+                }
+            }
+        }
+
     }
 }
 
@@ -196,7 +229,6 @@ const checkMetES = async client => {
             }
         }
 
-
         let dollarAskChange = Math.abs(currentAsk - openingAsk);
         let perAskChange = Math.abs(dollarAskChange/openingAsk)*100;
 
@@ -206,6 +238,7 @@ const checkMetES = async client => {
         for (var k in stocks[i].eventSubscriptions){
             let notifSent = 0;
             let notification = {};
+
             if(stocks[i].eventSubscriptions[k].notifSent == 0){
                 
                 if(stocks[i].eventSubscriptions[k].type == "Ask"){
@@ -234,7 +267,7 @@ const checkMetES = async client => {
                         }
                     }
                     if(stocks[i].eventSubscriptions[k].parameter == "decPrcnt"){
-                        if (perAskChange <=  stocks[i].eventSubscriptions[k].value){
+                        if (perAskChange >=  stocks[i].eventSubscriptions[k].value){
                             notification = {
                                 type: "ask",
                                 stock: stocks[i].stockAbbreviation,
@@ -246,7 +279,7 @@ const checkMetES = async client => {
                         }
                     }
                     if(stocks[i].eventSubscriptions[k].parameter == "decDollar"){
-                        if (dollarAskChange <=  stocks[i].eventSubscriptions[k].value){
+                        if (dollarAskChange >=  stocks[i].eventSubscriptions[k].value){
                             notification = {
                                 type: "ask",
                                 stock: stocks[i].stockAbbreviation,
@@ -285,7 +318,7 @@ const checkMetES = async client => {
                         }
                     }
                     if(stocks[i].eventSubscriptions[k].parameter == "decPrcnt"){
-                        if (perBidChange <=  stocks[i].eventSubscriptions[k].value){
+                        if (perBidChange >=  stocks[i].eventSubscriptions[k].value){
                             notification = {
                                 type: "bid",
                                 stock: stocks[i].stockAbbreviation,
@@ -297,7 +330,7 @@ const checkMetES = async client => {
                         }
                     }
                     if(stocks[i].eventSubscriptions[k].parameter == "decDollar"){
-                        if (dollarBidChange <=  stocks[i].eventSubscriptions[k].value){
+                        if (dollarBidChange >=  stocks[i].eventSubscriptions[k].value){
                             notification = {
                                 type: "bid",
                                 stock: stocks[i].stockAbbreviation,
@@ -317,6 +350,7 @@ const checkMetES = async client => {
                     if(stocks[i].eventSubscriptions[k].userID == users[f].userID){
                         console.log("prrrrrrrrrrrrraaaaaaappaapap");
                         client = users[f].clientInfo;
+                        
                         client.emit("eventNotif", notification);
 
                         Stock.updateMany(
@@ -345,6 +379,95 @@ const checkMetES = async client => {
 
             }
         }
+    }
+}
+
+function pushNotification(userID, notification){
+    User.findByIdAndUpdate(
+        userID,
+        {$push: {notifications: {
+            notification: notification
+        }}},
+        function(err){
+            if(err){
+                console.log(err);
+            }
+        }
+    );
+}
+
+const processStocks = async () => {
+    const stocks = await Stock.find();
+
+    for(let i in stocks){
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.open( "GET", "http://localhost:5000/update/" + stocks[i].stockAbbreviation, true ); // false for synchronous request
+        xmlHttp.send( null );
+    }
+
+    const users = await User.find();
+
+    for(let j in users){
+        User.findByIdAndUpdate(
+            users[j]._id,
+            {$set: {unpBuyOrders: []}},
+            function(err){
+                if(err){
+                    console.log(err);
+                }
+                
+            }
+        );
+
+        User.findByIdAndUpdate(
+            users[j]._id,
+            {$set: {unpSellOrders: []}},
+            function(err){
+                if(err){
+                    console.log(err);
+                }
+                
+            }
+        );
+    }
+}
+
+const updateStockValue = async () => {
+
+    const stocks = await Stock.find();
+
+    for(var i in stocks){
+        let currentAsk = 0;
+        let currentBid = 0;
+
+        if(stocks[i].sellOrders.length >= 1){
+            currentAsk = stocks[i].sellOrders[0].price;
+        }
+
+        for(var j in stocks[i].buyOrders){
+            if (stocks[i].buyOrders[j].price > currentBid){
+                currentBid = stocks[i].buyOrders[j].price;
+            }
+        }
+
+        for(var j in stocks[i].sellOrders){
+            if (stocks[i].sellOrders[j].price < currentAsk){
+                currentAsk = stocks[i].sellOrders[j].price;
+            }
+        }
+        Stock.findOneAndUpdate(stocks[i].stockAbbreviation, {$set:{currentAsk: currentAsk}},{new:true}, function(err){
+            if(err){
+                return res.status(400).send(err);
+            }
+            res.json({success: true});
+        });
+
+        Stock.findOneAndUpdate(stocks[i].stockAbbreviation, {$set:{currentBid: currentBid}},{new:true}, function(err){
+            if(err){
+                return res.status(400).send(err);
+            }
+            res.json({success: true});
+        });
     }
 }
 

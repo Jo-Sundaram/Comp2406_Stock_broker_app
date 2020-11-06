@@ -315,6 +315,7 @@ app.get("/:stockAbbreviation", async function(req, res){
     let buyOrders = [];
 
     let completedOrders = [];
+    let uncompletedOrders = [];
 
     const stock = await Stock.findOne(
         {'stockAbbreviation' : req.params.stockAbbreviation},
@@ -559,7 +560,9 @@ app.get("/:stockAbbreviation", async function(req, res){
             buyerID: buyOrder.userID,
             sellerID: sellOrder.userID,
             shares: shares,
-            soldFor: buyOrder.price
+            soldFor: buyOrder.price,
+            asked: sellOrder.price,
+            datetime: new Date()
         });
     }
 
@@ -611,6 +614,13 @@ app.get("/:stockAbbreviation", async function(req, res){
                     }
                 );
             }
+
+            uncompletedOrders.push({
+                type: "Sell",
+                userID: sellOrders[i].userID,
+                shares: sellOrders[i].shares,
+                price: sellOrders[i].price,
+            });
         }
     }
 
@@ -636,6 +646,13 @@ app.get("/:stockAbbreviation", async function(req, res){
                     }
                 }
             );
+
+            uncompletedOrders.push({
+                type: "Buy",
+                userID: buyOrders[i].userID,
+                shares: buyOrders[i].shares,
+                price: buyOrders[i].price,
+            });
         }
     }
 
@@ -647,9 +664,69 @@ app.get("/:stockAbbreviation", async function(req, res){
             if(err){
                 return res.status(400).send(err);
             }
-            res.json({success: completedOrders});
+            console.log("success");
         }
     );
+
+    for (let i in completedOrders){
+        Stock.findOneAndUpdate(
+            {'stockAbbreviation' : req.params.stockAbbreviation},
+            {$push: {history: completedOrders[i]}},
+    
+            function(err){
+                if(err){
+                    return res.status(400).send(err);
+                }
+            }
+        );
+
+        User.findByIdAndUpdate(
+            completedOrders[i].buyerID,
+            {$push: {pBuyOrders: completedOrders[i]}},
+            function(err){
+                if(err){
+                    return res.status(400).send(err);
+                }
+                
+            }
+        );
+
+        User.findByIdAndUpdate(
+            completedOrders[i].sellerID,
+            {$push: {pSellOrders: completedOrders[i]}},
+            function(err){
+                if(err){
+                    return res.status(400).send(err);
+                }
+                
+            }
+        );
+    }
+
+    Stock.findOneAndUpdate(
+        {'stockAbbreviation' : req.params.stockAbbreviation},
+        {$set: {sellOrders: []}},
+
+        function(err){
+            if(err){
+                return res.status(400).send(err);
+            }
+        }
+    );
+
+    Stock.findOneAndUpdate(
+        {'stockAbbreviation' : req.params.stockAbbreviation},
+        {$set: {buyOrders: []}},
+
+        function(err){
+            if(err){
+                return res.status(400).send(err);
+            }
+        }
+    );
+
+    res.json({success: completedOrders});
+
 });
 
 module.exports = app;

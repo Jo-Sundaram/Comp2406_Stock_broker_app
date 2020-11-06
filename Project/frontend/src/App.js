@@ -49,13 +49,18 @@ function App() {
         alert("You bought " + purchase.shares + ' shares of ' + stockAbbreviation + " for $" + purchase.soldFor + " from " + purchase.sellerID);
       });
 
-      socket.on("processedSellOrder", (purchase, stockAbbreviation) => {
-        alert("You sold " + purchase.shares + ' shares of ' + stockAbbreviation + " for $" + purchase.soldFor + " to " + purchase.buyerID);
-      });
+    socket.on("processedSellOrder", (purchase, stockAbbreviation) => {
+      alert("You sold " + purchase.shares + ' shares of ' + stockAbbreviation + " for $" + purchase.soldFor + " to " + purchase.buyerID);
+    });
+
+    socket.on("unprocessedOrder", (order, stockAbbreviation) => {
+      alert("Could not fulfill " + order.type + " order" + " for " + stockAbbreviation + " (" + order.price +"/share, " + order.shares + "shares)");
+    });
 
     socket.on("eventNotif", (notification) => {
       alert("EVENT SUBSCRIPTION: " + notification.stock + " " + notification.type + " " + notification.change + " by " + notification.value + notification.param + ".");
     });
+
 
   }, []);
 
