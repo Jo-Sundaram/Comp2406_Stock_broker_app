@@ -458,16 +458,16 @@ const updateStockValue = async () => {
         }
         Stock.findOneAndUpdate(stocks[i].stockAbbreviation, {$set:{currentAsk: currentAsk}},{new:true}, function(err){
             if(err){
-                return res.status(400).send(err);
-            }
-            res.json({success: true});
+                return err;
+			}
+			console.log("success: true")
         });
 
         Stock.findOneAndUpdate(stocks[i].stockAbbreviation, {$set:{currentBid: currentBid}},{new:true}, function(err){
             if(err){
-                return res.status(400).send(err);
-            }
-            res.json({success: true});
+                return err;
+			}
+			console.log("success: true")
         });
     }
 }

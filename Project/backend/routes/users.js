@@ -3,6 +3,8 @@
 const express = require("express");
 let User = require('../models/user.model');
 const app = express.Router();
+const passport = require("passport")
+const jwt = require("jsonwebtoken")
 
 app.get("/", async(req,res) => {
     const stocks = await User.find();
@@ -65,34 +67,45 @@ app.get("/:id/ES", function(req,res){
 });
 
 //note: withdraw too much
-app.post("/:id/updateFunds", function(req,res){
-    User.findByIdAndUpdate(
-        req.params.id,
-        {$set: {userFunds: req.body.userFunds}},
-        function(err){
-            if(err){
-                return res.status(400).send(err);
-            }
-            res.json({success: true});
-        }
-    );
+app.post("/:id/updateFunds", passport.authenticate("jwt", { session: false }),function(req,res){
+	if(!req.user){
+		return res.status(401).send("Unauthorized");
+	} else {
+		User.findByIdAndUpdate(
+			req.params.id,
+			{$set: {userFunds: req.body.userFunds}},
+			function(err){
+				if(err){
+					return res.status(400).send(err);
+				}
+				res.json({success: true});
+			}
+		);
+	}
+    
 });
 
 //add an empty watchlist to collection
-app.post("/:id/watchlist/add", function(req,res){
-    User.findByIdAndUpdate(
-        req.params.id,{
-        $push: {watchlistCollection: {
-            name: req.body.name,
-            watchlist:[],
-        }}},
-        function(err){
-            if(err){
-                return res.status(400).send(err);
-            }
-            res.json({success: true});
-        }
-    );
+app.post("/:id/watchlist/add", passport.authenticate("jwt", { session: false }), function(req,res){
+	if(!req.user){
+		res.json({
+		  username: "nobody"
+		})
+	} else {
+		User.findByIdAndUpdate(
+			req.params.id,{
+			$push: {watchlistCollection: {
+				name: req.body.name,
+				watchlist:[],
+			}}},
+			function(err){
+				if(err){
+					return res.status(400).send(err);
+				}
+				res.json({success: true});
+			}
+		);
+	}
 });
 
 
@@ -111,77 +124,90 @@ app.get("/:id/watchlist/", async(req,res)=>{
 
 
 // // get single watchlist
-app.get('/:id/watchlist/:wid', async(req,res)=>{
-    // console.log(req.params);
-    const user = await User.findById(req.params.id)
-    .catch((err)=>{
-        return res.send("user not found");
-    })
-  
+app.get('/:id/watchlist/:wid', passport.authenticate("jwt", { session: false }), async function(req, res){
+	if(!req.user){
+		return res.status(401).send("Unauthorized");
+	} else {
+		const user = await User.findById(req.params.id)
+		.catch((err)=>{
+			return res.send("user not found");
+		})
+	
 
-    let collection = user.watchlistCollection;
+		let collection = user.watchlistCollection;
 
-    collection.forEach(element => {
-        if(element.name==req.params.wid){
+		collection.forEach(element => {
+			if(element.name==req.params.wid){
 
-            res.send(element);
-        }
-    
-    });
-    
-
+				res.send(element);
+			}
+		
+		});
+	}
 });
 
 // // add stock to a watchlist 
-app.post("/:id/watchlist/update/add", function(req, res){
-    User.updateMany(
-        {_id: req.params.id, 'watchlistCollection.name': req.body.name},
-        {$push:{'watchlistCollection.$.watchlist':
-            {stockID: req.body.stockID
-        }}},
-        function(err){
-            if(err){
-                return res.status(400).send(err);
-            }
-            res.json({success: true});
-        }
-    );
+app.post("/:id/watchlist/update/add", passport.authenticate("jwt", { session: false }), function(req, res){
+	if(!req.user){
+		return res.status(401).send("Unauthorized");
+	} else {
+		User.updateMany(
+			{_id: req.params.id, 'watchlistCollection.name': req.body.name},
+			{$push:{'watchlistCollection.$.watchlist':
+				{stockID: req.body.stockID
+			}}},
+			function(err){
+				if(err){
+					return res.status(400).send(err);
+				}
+				res.json({success: true});
+			}
+		);
+	}
 
 
 });
 
 // remove stock from a watchlist 
-app.delete("/:id/watchlist/update/remove", function(req,res){
-    // console.log(req.params);
-    User.updateMany(
-        {_id: req.params.id, 'watchlistCollection.name': req.body.name},
-        {$pull : {'watchlistCollection.$.watchlist' : 
-            {stockID: req.body.stockID
-        }}},
-        function(err){
-            if(err){
-                return res.status(400).send(err);
-            }
-            res.json({success: true});
-        }
-    );
+app.delete("/:id/watchlist/update/remove", passport.authenticate("jwt", { session: false }), function(req,res){
+	// console.log(req.params);
+	if(!req.user){
+		return res.status(401).send("Unauthorized");
+	} else {
+		User.updateMany(
+			{_id: req.params.id, 'watchlistCollection.name': req.body.name},
+			{$pull : {'watchlistCollection.$.watchlist' : 
+				{stockID: req.body.stockID
+			}}},
+			function(err){
+				if(err){
+					return res.status(400).send(err);
+				}
+				res.json({success: true});
+			}
+		);
+	}
 });
 
 
 // // remove a watchlist from the collection
-app.delete('/:id/watchlist/remove', function(req, res){
-    User.findByIdAndUpdate(
-        req.params.id,
-        {$pull: {watchlistCollection: {
-            name: req.body.name
-        }}},
-        function(err){
-            if(err){
-                return res.status(400).send(err);
-            }
-            res.json({success: true});
-        }
-    );
+app.delete('/:id/watchlist/remove', passport.authenticate("jwt", { session: false }), function(req, res){
+	if(!req.user){
+		return res.status(401).send("Unauthorized");
+	} else {
+		User.findByIdAndUpdate(
+			req.params.id,
+			{$pull: {watchlistCollection: {
+				name: req.body.name
+			}}},
+			function(err){
+				if(err){
+					return res.status(400).send(err);
+				}
+				res.json({success: true});
+			}
+		);
+	}
 });
        
 // module.exports = router;
