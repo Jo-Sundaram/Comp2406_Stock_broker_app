@@ -45,8 +45,6 @@ app.get("/", async(req,res)=>{
             });
         }
 
-       
-
         if(!stocks){
             res.send("No stock symbols found");
         }else{
@@ -68,8 +66,54 @@ app.get("/", async(req,res)=>{
 });
 
 app.get("/:stockAbbreviation", async(req,res) => {
-    const stock = await Stock.findOne({'stockAbbreviation' : req.params.stockAbbreviation});
-    res.send(stock);
+	const stock = await Stock.findOne({'stockAbbreviation' : req.params.stockAbbreviation});
+
+	console.log(req.query);
+    console.log(Object.keys(req.query).length);
+    if(Object.keys(req.query).length==0){
+        //const stocks = await Stock.find();
+        res.json({
+			lowestAsk: stock.currentAsk,
+			highestBid: stock.currentBid,
+			highestAsk: stock.currHighestAsk,
+			lowestBid: stock.currLowestBid
+		})
+	}
+	else{
+        let startday = 0;
+        let endday = 0;
+
+		let request = []
+   
+        //req.query.hasOwnProperty('symbol')?symbol=req.query['symbol']:''
+        req.query.hasOwnProperty('startday')?startday= parseInt(req.query['startday']):0;
+		req.query.hasOwnProperty('endday')?endday = parseInt(req.query['endday']):0;
+		
+		if(endday == 0 || endday<startday){
+			for(let i in stock.dailyHistory){
+				if(stock.dailyHistory[i].day >= startday){
+					request.push(stock.dailyHistory[i])
+				}
+			}
+		}
+		else if(endday>startday){
+			for(let i in stock.dailyHistory){
+				if(stock.dailyHistory[i].day >= startday && stock.dailyHistory[i].day <= endday){
+					request.push(stock.dailyHistory[i]);
+				}
+			}
+		}
+		else if (endday == startday){
+			for(let i in stock.dailyHistory){
+				if(stock.dailyHistory[i].day == startday){
+					request.push(stock.dailyHistory[i]);
+				}
+			}
+		}
+
+		res.json(request);
+	}
+    //res.send(stock);
 });
 
 app.get("/:stockAbbreviation/history", async(req,res) => {
