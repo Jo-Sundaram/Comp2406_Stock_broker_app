@@ -8,7 +8,9 @@ const stockSchema = new Schema({
     openingAsk: {type: Number, required: true},
     openingBid: {type: Number, required: true},
     currentAsk: {type: Number, required: true},
-    currentBid: {type: Number, required: true},
+	currentBid: {type: Number, required: true},
+	currHighestAsk: {type: Number, required: true},
+	currLowestBid: {type: Number, required: true},
     eventSubscriptions: [{
         subscriptionID: {type: String, required: true},
         userID: { type: String, required: true },
@@ -38,8 +40,16 @@ const stockSchema = new Schema({
         shares: {type: Number, required: true},
         soldFor: {type: Number, required: true},
         asked: {type: Number, required: true},
-        datetime: {type: String, required: true}
-    }],
+        datetime: {type: Number, required: true}
+	}],
+	dailyHistory: [{
+		day: {type: Number, required: true},
+		lowestAsk: {type: Number, required: true}, //(same thing as closing/current)
+		highestBid: {type: Number, required: true}, //(same thing as closing/current)
+		highestAsk: {type: Number, required: true},
+		lowestBid: {type: Number, required: true},
+		sharesSold: {type: Number, required: true}
+	}],
     fulfilledOrders: [{
         buyerID: {type: String, required: true},
         sellerID: {type: String, required: true},

@@ -706,6 +706,7 @@ app.get("/:stockAbbreviation/", async function(req, res){ //i wanna change :day 
         }
     );
 
+	let sharesSold = 0
     for (let i in completedOrders){
         Stock.findOneAndUpdate(
             {'stockAbbreviation' : req.params.stockAbbreviation},
@@ -738,7 +739,9 @@ app.get("/:stockAbbreviation/", async function(req, res){ //i wanna change :day 
                 }
                 
             }
-        );
+		);
+		
+		sharesSold = completedOrders[i].shares + sharesSold;
     }
 
     Stock.findOneAndUpdate(
@@ -763,6 +766,43 @@ app.get("/:stockAbbreviation/", async function(req, res){ //i wanna change :day 
         }
     );
 
+	let currentAsk = stock.currentAsk;
+	let currentBid = stock.currentBid;
+	Stock.findOneAndUpdate(stocks[i].stockAbbreviation, {$set:{openingAsk: currentAsk}},{new:true}, function(err){
+		if(err){
+			return err;
+		}
+		console.log("success: true")
+	});
+
+	Stock.findOneAndUpdate(stocks[i].stockAbbreviation, {$set:{openingBid: currentBid}},{new:true}, function(err){
+		if(err){
+			return err;
+		}
+		console.log("success: true")
+	});
+	
+	let lowestBid = stocks[i].currLowestBid;
+	let highestAsk = stocks[i].currHighestAsk;
+
+	Stock.findOneAndUpdate(
+		stocks[i].stockAbbreviation,
+		{$push: {
+			day: day,
+			lowestAsk: currentAsk,
+			highestBid: currentBid,
+			highestAsk: highestAsk,
+			lowestBid: lowestBid,
+			sharesSold: sharesSold
+		}},
+		function(err){
+			if(err){
+				console.log(err);
+				return err;
+			}
+			console.log("success: true");
+		}
+	);
     res.json({success: completedOrders});
 
 });

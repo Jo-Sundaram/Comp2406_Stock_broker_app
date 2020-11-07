@@ -134,7 +134,9 @@ io.on("connection", (client) => {
     client.on("simday", function(user){
         console.log(user);
         if(user.key == serverKey){
-            processStocks();
+			processStocks();
+			updateStockValue();
+			endDay();
         }
     })
 
@@ -419,7 +421,6 @@ const processStocks = async () => {
                 
             }
         );
-
         User.findByIdAndUpdate(
             users[j]._id,
             {$set: {unpSellOrders: []}},
@@ -439,11 +440,18 @@ const updateStockValue = async () => {
 
     for(var i in stocks){
         let currentAsk = 0;
-        let currentBid = 0;
+		let currentBid = 0;
+		let highestAsk = 0;
+		let lowestBid = 0;
 
         if(stocks[i].sellOrders.length >= 1){
             currentAsk = stocks[i].sellOrders[0].price;
+		}
+		
+		if(stocks[i].buyOrders.length >= 1){
+            lowestBid = stocks[i].buyOrders[0].price;
         }
+
 
         for(var j in stocks[i].buyOrders){
             if (stocks[i].buyOrders[j].price > currentBid){
@@ -455,7 +463,21 @@ const updateStockValue = async () => {
             if (stocks[i].sellOrders[j].price < currentAsk){
                 currentAsk = stocks[i].sellOrders[j].price;
             }
+		}
+
+		for(var j in stocks[i].buyOrders){
+            if (stocks[i].buyOrders[j].price < currentBid){
+                lowestBid = stocks[i].buyOrders[j].price;
+            }
         }
+
+        for(var j in stocks[i].sellOrders){
+            if (stocks[i].sellOrders[j].price > currentAsk){
+                highestAsk = stocks[i].sellOrders[j].price;
+            }
+		}
+
+
         Stock.findOneAndUpdate(stocks[i].stockAbbreviation, {$set:{currentAsk: currentAsk}},{new:true}, function(err){
             if(err){
                 return err;
@@ -468,7 +490,57 @@ const updateStockValue = async () => {
                 return err;
 			}
 			console.log("success: true")
+		});
+		
+		Stock.findOneAndUpdate(stocks[i].stockAbbreviation, {$set:{currHighestAsk: highestAsk}},{new:true}, function(err){
+            if(err){
+                return err;
+			}
+			console.log("success: true")
         });
+
+        Stock.findOneAndUpdate(stocks[i].stockAbbreviation, {$set:{currLowestBid: lowestBid}},{new:true}, function(err){
+            if(err){
+                return err;
+			}
+			console.log("success: true")
+        });
+    }
+}
+
+const endDay = async() => {
+	const stocks = await Stock.find();
+
+	for(var i in stocks){
+        let currentAsk = stocks[i].currentAsk;
+		let currentBid = stocks[i].currentBid;
+        Stock.findOneAndUpdate(stocks[i].stockAbbreviation, {$set:{openingAsk: currentAsk}},{new:true}, function(err){
+            if(err){
+                return err;
+			}
+			console.log("success: true")
+        });
+
+        Stock.findOneAndUpdate(stocks[i].stockAbbreviation, {$set:{openingBid: currentBid}},{new:true}, function(err){
+            if(err){
+                return err;
+			}
+			console.log("success: true")
+		});
+		
+		let lowestBid = stocks[i].currLowestBid;
+		let highestAsk = stocks[i].currHighestAsk;
+
+		Stock.findOneAndUpdate(
+			stocks[i].stockAbbreviation,
+			{$push: {
+				day: day,
+				lowestAsk: currentAsk,
+				highestBid: currentBid,
+				highestAsk: highestAsk,
+				lowestBid: lowestBid
+			}}
+		)
     }
 }
 
