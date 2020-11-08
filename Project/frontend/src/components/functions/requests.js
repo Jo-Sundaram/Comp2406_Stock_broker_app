@@ -8,7 +8,7 @@ const requests = {
 
 
     generateSellID: async function(stockID, userID){
-        const promise = axios.get('http://localhost:5000/stocks/'+stockID) //dummy user ID in place
+        const promise = axios.get('http://localhost:5000/stocks/'+stockID + '/info') //dummy user ID in place
         
         const dataPromise = await promise.then((response) => response.data.sellOrders)
 
@@ -46,7 +46,7 @@ const requests = {
     },
 
     generateBuyID: async function(stockID, userID){
-        const promise = axios.get('http://localhost:5000/stocks/'+stockID) //dummy user ID in place
+        const promise = axios.get('http://localhost:5000/stocks/'+stockID + '/info') //dummy user ID in place
         
         const dataPromise = await promise.then((response) => response.data.buyOrders)
 
@@ -82,7 +82,7 @@ const requests = {
     },
 
     generateESID: async function(stockID, userID){
-        const promise = axios.get('http://localhost:5000/stocks/'+stockID) //dummy user ID in place
+        const promise = axios.get('http://localhost:5000/stocks/'+stockID + '/info') //dummy user ID in place
         
         const dataPromise = await promise.then((response) => response.data.eventSubscriptions)
 
@@ -118,7 +118,7 @@ const requests = {
     },
 
     getHighestAsk: async function(stockID){
-        const promise = axios.get('http://localhost:5000/stocks/'+stockID) //dummy user ID in place
+        const promise = axios.get('http://localhost:5000/stocks/'+stockID+ '/info') //dummy user ID in place
         
         const dataPromise = await promise.then((response) => response.data.sellOrders)
 
@@ -138,7 +138,7 @@ const requests = {
     },
 
     getLowestBid: async function(stockID){
-        const promise = axios.get('http://localhost:5000/stocks/'+stockID) //dummy user ID in place
+        const promise = axios.get('http://localhost:5000/stocks/'+stockID+ '/info') //dummy user ID in place
         
         const dataPromise = await promise.then((response) => response.data.buyOrders)
 
@@ -190,8 +190,6 @@ const requests = {
 
 
         return list;
-
-
     },
 
 
@@ -202,8 +200,15 @@ const requests = {
         const dataPromise = await promise.then((response) => response.data.history);
 
         return dataPromise;
+	},
+	
+	getValueAllHistory: async function(stockID){
+        var list = [];
 
+        const promise = axios.get('http://localhost:5000/stocks/'+stockID + '?startday=' + 0); //dummy user ID in place
+        const dataPromise = await promise.then((response) => response.data);
 
+        return dataPromise;
     }
 }
   

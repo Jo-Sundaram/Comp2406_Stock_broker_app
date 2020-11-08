@@ -14,7 +14,7 @@ const requests = {
     // },
 
     generateSellID: async function(stockID, userID){
-        const promise = axios.get('http://localhost:5000/stocks/'+stockID) //dummy user ID in place
+        const promise = axios.get('http://localhost:5000/stocks/'+stockID + '/info') //dummy user ID in place
         
         const dataPromise = await promise.then((response) => response.data.sellOrders)
 

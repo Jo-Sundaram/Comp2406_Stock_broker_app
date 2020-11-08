@@ -19,10 +19,14 @@ export default class Search extends Component{
         this.onOrderSubmit = this.onOrderSubmit.bind(this);
         
         this.onChangeEsAmount = this.onChangeEsAmount.bind(this);
-        this.onChangeEsParameter = this.onChangeEsParameter.bind(this);
+		this.onChangeEsParameter = this.onChangeEsParameter.bind(this);
+		this.onChangeEsType = this.onChangeEsType.bind(this);
         this.onEsSubmit = this.onEsSubmit.bind(this);
         this.onAddWatchlist = this.onAddWatchlist.bind(this);
-        this.handleChange = this.handleChange.bind(this);
+		this.handleChange = this.handleChange.bind(this);
+		
+		this.onChangeValueStartDay = this.onChangeValueStartDay.bind(this);
+		this.onChangeValueEndDay = this.onChangeValueEndDay.bind(this);
 
         this.state = {
             userID: "",
@@ -35,12 +39,17 @@ export default class Search extends Component{
             watchlists: [],
             selectedList: null,
 
-            stockHistory: [],
+			stockHistory: [],
+			stockValueHistory: [],
+
+			valueHistoryStartDay: 0,
+			valueHistoryEndDay: 0,
 
             shares: 0,
             price: 0,
 
-            esParameter: '',
+			esParameter: '',
+			esType: '',
             esAmount: 0,
 
             ask: 'N/A',
@@ -161,6 +170,12 @@ export default class Search extends Component{
         this.setState({
             esParameter: e.target.value        
         });
+	}
+	
+	onChangeEsType(e){
+        this.setState({
+            esType: e.target.value        
+        });
     }
 
     onChangeEsAmount(e){
@@ -183,7 +198,9 @@ export default class Search extends Component{
                     subscriptionID: ID,
                     parameter: this.state.esParameter,
                     value: this.state.esAmount,
-                    triggerOrder: 0
+					triggerOrder: 0,
+					type: this.state.esType,
+					notifSent: 0
 				},
 				headers: {
 					Authorization: "Bearer " + localStorage.getItem("token")
@@ -230,18 +247,33 @@ export default class Search extends Component{
         else{
             alert('Invalid selection');
         }
-    }
+	}
+	
+	onChangeValueStartDay(e){
+		this.setState({
+            valueHistoryStartDay: e.target.value        
+        });
+	}
+
+	onChangeValueEndDay(e){
+		this.setState({
+            valueHistoryEndDay: e.target.value        
+        });
+	}
 
     handleChange = async (stockID) => {
         this.setState({ stockID });
 
         var highestAsk = await (requests.getHighestAsk(stockID));
         var lowestAsk = await (requests.getLowestBid(stockID));
-        var history = await (requests.getHistory(stockID));
+	   // var history = await (requests.getHistory(stockID));
+	   
+		var valueHistory = await (requests.getValueAllHistory(stockID));
         this.setState({
             ask: highestAsk,
-            bid: lowestAsk,
-            stockHistory: history
+			bid: lowestAsk,
+			stockValueHistory: valueHistory
+         //   stockHistory: history
         });
     }
 
@@ -289,6 +321,8 @@ export default class Search extends Component{
                         </div>
 
                         <div id = "stock-processed-history">
+						
+
                         <b> History of Processed Orders</b>
 
                             <table id = "stock-history">
@@ -311,6 +345,36 @@ export default class Search extends Component{
                                 ))}                    
                             </table>
                         </div>
+
+						<div id = "stock-value-history">
+							<input type="number" style={{ display: 'inline', float: 'left', marginLeft: '2px' }} />
+							<input type="number" style={{ display: 'inline', float: 'left', marginLeft: '2px' }} />
+                        <b> Stock Price History</b>
+							
+
+                            <table id = "stock-history">
+								
+								<th>Day</th>
+                                <th>Highest Ask</th>
+                                <th>Lowest Ask</th>
+                                <th>Highest Bid</th>
+                                <th>Lowest Bid</th>
+                                <th>Shares Sold</th>    
+
+                                {this.state.stockValueHistory.map((item,index)=>(
+                                    <tr>
+                                        <td>{item.day}</td>
+                                        <td>{item.highestAsk}</td>
+                                        <td>{item.lowestAsk}</td>
+                                        <td>{item.highestBid}</td>
+                                        <td>{item.lowestBid}</td>
+										<td>{item.sharesSold}</td>
+                                    </tr>
+                                ))}                    
+                            </table>
+                        </div>
+
+
                     <div id = "place-buy">
                         <form onSubmit={this.onOrderSubmit}>
                             <div className="formgroup">
@@ -348,6 +412,11 @@ export default class Search extends Component{
                                     <option value="decPrcnt">- %</option>
                                     <option value="incDollar">+ $</option>
                                     <option value="decDollar">- $</option>
+                                </select> <br/>
+
+								<select name="select" id = "select-params" value={this.state.type} onChange = {this.onChangeEsType}>
+                                    <option value="Bid">Bid</option>
+                                    <option value="Ask">Ask</option>
                                 </select> <br/>
 
                                 <label>Enter amount</label>

@@ -20,7 +20,16 @@ const helper = {
     },
 
     getStockItems: async function(userID, listname){
-        const promise = axios.get('http://localhost:5000/users/'+userID + '/watchlist/' + listname) //dummy user ID in place
+		const promise = axios({
+			method: 'get',
+			url: 'http://localhost:5000/users/'+userID + '/watchlist/' + listname, //dummy user
+			headers: {
+				Authorization: "Bearer " + localStorage.getItem("token")
+			}
+		})
+		
+		
+	//	axios.get('http://localhost:5000/users/'+userID + '/watchlist/' + listname) //dummy user ID in place
         
         const dataPromise = await promise.then((response) => response.data)
 

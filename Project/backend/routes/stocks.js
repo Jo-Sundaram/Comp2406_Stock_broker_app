@@ -145,6 +145,17 @@ app.get("/:stockAbbreviation/dailyHistory", async(req,res) => {
         });
 });
 
+app.get("/:symbol/info", async(req,res) => {
+    const stock = await Stock.findOne({'stockAbbreviation' : req.params.symbol})
+            .then((stock)=>{
+                res.send(stock);
+            })
+            .catch((err)=>{
+                res.send("Stock not found")
+            });
+
+});
+
 
 app.post("/add",function(req,res){
 
