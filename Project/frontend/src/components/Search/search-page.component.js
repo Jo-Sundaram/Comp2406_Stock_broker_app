@@ -27,6 +27,12 @@ export default class Search extends Component{
 		
 		this.onChangeValueStartDay = this.onChangeValueStartDay.bind(this);
 		this.onChangeValueEndDay = this.onChangeValueEndDay.bind(this);
+		this.onSubmitValueHistory = this.onSubmitValueHistory.bind(this);
+
+		this.onChangeStartDay = this.onChangeStartDay.bind(this);
+		this.onChangeEndDay = this.onChangeEndDay.bind(this);
+		this.onSubmitHistory = this.onSubmitHistory.bind(this);
+
 
         this.state = {
             userID: "",
@@ -44,6 +50,9 @@ export default class Search extends Component{
 
 			valueHistoryStartDay: 0,
 			valueHistoryEndDay: 0,
+
+			tranHistoryStartDay:0,
+			tranHistoryEndDay: 0,
 
             shares: 0,
             price: 0,
@@ -261,19 +270,52 @@ export default class Search extends Component{
         });
 	}
 
+	async onSubmitValueHistory(e){
+		e.preventDefault();
+		console.log('??');
+		var valueHistory = await (requests.getValueSomeHistory(this.state.stockID, this.state.valueHistoryStartDay, this.state.valueHistoryEndDay));
+		this.setState({
+			stockValueHistory: valueHistory
+         //   stockHistory: history
+        });
+	}
+
+	onChangeStartDay(e){
+		this.setState({
+            tranHistoryStartDay: e.target.value        
+        });
+	}
+
+	onChangeEndDay(e){
+		this.setState({
+            tranHistoryEndDay: e.target.value        
+        });
+	}
+
+	
+	async onSubmitHistory(e){
+		e.preventDefault();
+		console.log('??');
+		var valueHistory = await (requests.getSomeHistory(this.state.stockID, this.state.tranHistoryStartDay, this.state.tranHistoryEndDay));
+		this.setState({
+			stockHistory: valueHistory
+         //   stockHistory: history
+        });
+	}
+
     handleChange = async (stockID) => {
         this.setState({ stockID });
 
         var highestAsk = await (requests.getHighestAsk(stockID));
         var lowestAsk = await (requests.getLowestBid(stockID));
-	   // var history = await (requests.getHistory(stockID));
+	    var history = await (requests.getHistory(stockID));
 	   
 		var valueHistory = await (requests.getValueAllHistory(stockID));
         this.setState({
             ask: highestAsk,
 			bid: lowestAsk,
-			stockValueHistory: valueHistory
-         //   stockHistory: history
+			stockValueHistory: valueHistory,
+            stockHistory: history
         });
     }
 
@@ -322,23 +364,40 @@ export default class Search extends Component{
 
                         <div id = "stock-processed-history">
 						
+						<form onSubmit={this.onSubmitHistory}>
+							<input 
+								name="number"
+								min = "0"
+								value={this.state.tranHistoryStartDay} 
+								onChange = {this.onChangeStartDay}
+							/>
+							<input 
+								name="number" 
+								id = "0" 
+								value={this.state.tranHistoryEndDay} 
+								onChange = {this.onChangeEndDay}
+							/>
+							<input type="submit" value='Get History'></input>
+						</form>
 
                         <b> History of Processed Orders</b>
 
                             <table id = "stock-history">
+								<th>Day</th>
                                 <th>Sell Price</th>
-                                <th>Buy Price</th>
+                                <th>Seller Ask</th>
                                 <th>Shares</th>
                                 <th>Bidder Username</th>
                                 <th>Seller Username</th>    
 
                                 {this.state.stockHistory.map((item,index)=>(
                                     <tr>
-                                        <td>{item.seller}</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        <td>{item.day}</td>
+                                        <td>{item.soldFor}</td>
+                                        <td>{item.asked}</td>
+										<td>{item.shares}</td>
+                                        <td>{item.buyerID}</td>
+										<td>{item.sellerID}</td>
 
                                     </tr>
 
@@ -349,8 +408,22 @@ export default class Search extends Component{
 						
 						<div id = "stock-value-history">
 							<div>
-								<input name="number" id = "select-params" value={this.state.valueHistoryStartDay} onChange = {this.onChangeValueStartDay}/>
-								<input name="number" id = "select-params" value={this.state.valueHistoryEndDay} onChange = {this.onChangeValueEndDay}/>
+								<form onSubmit={this.onSubmitValueHistory}>
+									<input 
+										name="number"
+										min = "0"
+										value={this.state.valueHistoryStartDay} 
+										onChange = {this.onChangeValueStartDay}
+									/>
+									<input 
+										name="number" 
+										id = "0" 
+										value={this.state.valueHistoryEndDay} 
+										onChange = {this.onChangeValueEndDay}
+									/>
+									<input type="submit" value='Get History'></input>
+								</form>
+								
 							</div>
 							
                         <b> Stock Price History</b>

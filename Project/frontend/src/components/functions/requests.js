@@ -194,22 +194,37 @@ const requests = {
 
 
     getHistory: async function(stockID){
-        var list = [];
 
-        const promise = axios.get('http://localhost:5000/stocks/'+stockID) //dummy user ID in place
-        const dataPromise = await promise.then((response) => response.data.history);
+        const promise = axios.get('http://localhost:5000/stocks/'+stockID+'/history') //dummy user ID in place
+        const dataPromise = await promise.then((response) => response.data);
+
+        return dataPromise;
+	},
+
+	getSomeHistory: async function(stockID, startday, endday){
+
+        const promise = axios.get('http://localhost:5000/stocks/'+stockID+'/history' + '?startday=' + startday + '&endday=' + endday) //dummy user ID in place
+        const dataPromise = await promise.then((response) => response.data);
 
         return dataPromise;
 	},
 	
 	getValueAllHistory: async function(stockID){
-        var list = [];
 
         const promise = axios.get('http://localhost:5000/stocks/'+stockID + '?startday=' + 0); //dummy user ID in place
         const dataPromise = await promise.then((response) => response.data);
 
         return dataPromise;
-    }
+	},
+	
+	getValueSomeHistory: async function(stockID, startday, endday){
+
+		const promise = axios.get('http://localhost:5000/stocks/'+stockID + '?startday=' + startday + '&endday=' + endday); //dummy user ID in place
+		const dataPromise = await promise.then((response) => response.data);
+
+		return dataPromise;
+		
+	}
 }
   
 // Exporting the component 

@@ -128,35 +128,37 @@ app.get("/:stockAbbreviation/history", async(req,res) => {
     }else{
 
         let startday = 0;
-        let endday = Number.MAX_SAFE_INTEGER; 
+        let endday = 0; 
         var request=[];
         console.log(req.query);
 
         req.query.hasOwnProperty('startday') ? startday =parseInt(req.query['startday']) : 0;
-        req.query.hasOwnProperty('endday') ? endday = parseInt(req.query['endday']) : Number.MAX_SAFE_INTEGER; 
+        req.query.hasOwnProperty('endday') ? endday = parseInt(req.query['endday']) :0; 
 
         const stock = await Stock.findOne({
             'stockAbbreviation':req.params.stockAbbreviation,
-            })
+			})
             .then((stock)=>{
                 if(endday == 0 || endday<startday){
-                    for(let i in stock.dailyHistory){
-                        if(stock.dailyHistory[i].day >= startday){
-                            request.push(stock.dailyHistory[i])
+                    for(let i in stock.history){
+                        if(stock.history[i].day >= startday){
+							console.log('.');
+                            request.push(stock.history[i])
                         }
                     }
                 }
                 else if(endday>startday){
-                    for(let i in stock.dailyHistory){
-                        if(stock.dailyHistory[i].day >= startday && stock.dailyHistory[i].day <= endday){
-                            request.push(stock.dailyHistory[i]);
+                    for(let i in stock.history){
+                        if(stock.history[i].day >= startday && stock.history[i].day <= endday){
+							console.log(stock.dailyHistory[i].day);
+                            request.push(stock.history[i]);
                         }
                     }
                 }
                 else if (endday == startday){
-                    for(let i in stock.dailyHistory){
-                        if(stock.dailyHistory[i].day == startday){
-                            request.push(stock.dailyHistory[i]);
+                    for(let i in stock.history){
+                        if(stock.history[i].day == startday){
+                            request.push(stock.history[i]);
                         }
                     }
                 }
