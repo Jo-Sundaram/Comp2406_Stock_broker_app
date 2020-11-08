@@ -18,8 +18,9 @@ export default class EventSubs extends Component{
         this.state = {
             userID: "",
             eventSubscriptions: [],
-            stockID: 'IBM',
-            esParameter: "",
+            stockID: 'TSLA',
+			esParameter: "",
+			esType: "",
             esAmount: "15",
 
             editAmount :null,
@@ -111,8 +112,6 @@ export default class EventSubs extends Component{
             alert("Please fill out fields to edit");
         }
     }
-
-
 
     onRemove(e){
         e.preventDefault();

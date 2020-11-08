@@ -127,6 +127,17 @@ app.get("/:stockAbbreviation/history", async(req,res) => {
 
 });
 
+app.get("/:symbol/info", async(req,res) => {
+    const stock = await Stock.findOne({'stockAbbreviation' : req.params.symbol})
+            .then((stock)=>{
+                res.send(stock);
+            })
+            .catch((err)=>{
+                res.send("Stock not found")
+            });
+
+});
+
 
 
 // router.route('/add').post((req, res) => {

@@ -33,15 +33,13 @@ export default class Watchlist extends Component{
     
    componentDidMount() {
     console.log('reloaded /watchlist');
-
-    
     } 
 
     async componentWillReceiveProps(props){
 
         this.setState({
-         userID: props.user._id,
-          watchlistCollection: props.user.watchListCollection
+         	userID: props.user._id,
+          	watchlistCollection: props.user.watchListCollection
 
         })
 
