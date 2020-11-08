@@ -40,7 +40,7 @@ const stockSchema = new Schema({
         shares: {type: Number, required: true},
         soldFor: {type: Number, required: true},
         asked: {type: Number, required: true},
-        datetime: {type: Number, required: true}
+        day: {type: Number, required: true}
 	}],
 	dailyHistory: [{
 		day: {type: Number, required: true},
