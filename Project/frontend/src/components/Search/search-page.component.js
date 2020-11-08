@@ -346,9 +346,13 @@ export default class Search extends Component{
                             </table>
                         </div>
 
+						
 						<div id = "stock-value-history">
-							<input type="number" style={{ display: 'inline', float: 'left', marginLeft: '2px' }} />
-							<input type="number" style={{ display: 'inline', float: 'left', marginLeft: '2px' }} />
+							<div>
+								<input name="number" id = "select-params" value={this.state.valueHistoryStartDay} onChange = {this.onChangeValueStartDay}/>
+								<input name="number" id = "select-params" value={this.state.valueHistoryEndDay} onChange = {this.onChangeValueEndDay}/>
+							</div>
+							
                         <b> Stock Price History</b>
 							
 
@@ -412,7 +416,7 @@ export default class Search extends Component{
                                     <option value="decPrcnt">- %</option>
                                     <option value="incDollar">+ $</option>
                                     <option value="decDollar">- $</option>
-                                </select> <br/>
+                                </select>
 
 								<select name="select" id = "select-params" value={this.state.type} onChange = {this.onChangeEsType}>
                                     <option value="Bid">Bid</option>
