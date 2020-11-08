@@ -72,7 +72,7 @@ export default class Watchlist extends Component{
         console.log(e.target.value);
         console.log(this.state.listname);
         
-    }
+    }pu
     onRemoveStock(e){
         e.preventDefault();
         console.log(this.state.listname);
