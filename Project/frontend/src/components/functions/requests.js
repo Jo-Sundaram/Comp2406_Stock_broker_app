@@ -169,7 +169,8 @@ const requests = {
             parsedList.push({'name': dataPromise[key].name, 'value': dataPromise[key].name});
         }
 
-        return parsedList;
+		return parsedList;
+		console.log('');
     },
 
 
