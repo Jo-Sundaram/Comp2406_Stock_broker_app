@@ -45,16 +45,16 @@ function App() {
       
     socket.on("FromAPI", data => {
       setResponse(data);
-      socket.on("processedBuyOrder", (purchase, stockAbbreviation) => {
-        alert("You bought " + purchase.shares + ' shares of ' + stockAbbreviation + " for $" + purchase.soldFor + " from " + purchase.sellerID);
+      socket.on("processedBuyOrder", (purchase, symbol) => {
+        alert("You bought " + purchase.shares + ' shares of ' + symbol + " for $" + purchase.soldFor + " from " + purchase.sellerID);
       });
 
-    socket.on("processedSellOrder", (purchase, stockAbbreviation) => {
-      alert("You sold " + purchase.shares + ' shares of ' + stockAbbreviation + " for $" + purchase.soldFor + " to " + purchase.buyerID);
+    socket.on("processedSellOrder", (purchase, symbol) => {
+      alert("You sold " + purchase.shares + ' shares of ' + symbol + " for $" + purchase.soldFor + " to " + purchase.buyerID);
     });
 
-    socket.on("unprocessedOrder", (order, stockAbbreviation) => {
-      alert("Could not fulfill " + order.type + " order" + " for " + stockAbbreviation + " (" + order.price +"/share, " + order.shares + "shares)");
+    socket.on("unprocessedOrder", (order, symbol) => {
+      alert("Could not fulfill " + order.type + " order" + " for " + symbol + " (" + order.price +"/share, " + order.shares + "shares)");
     });
 
     socket.on("eventNotif", (notification) => {
@@ -70,8 +70,7 @@ console.log("CURRENT USER " + user.stockPortfolio)
 
 if(user.stockPortfolio!==undefined){
    console.log(Object.keys(user.stockPortfolio))
-console.log("Stock portfolio: " + Object.keys( user.stockPortfolio["0"]))
-
+	//console.log("Stock portfolio: " + Object.keys( user.stockPortfolio["0"]))
 }
 //
 

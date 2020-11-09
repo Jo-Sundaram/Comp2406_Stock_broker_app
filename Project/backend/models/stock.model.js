@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 const stockSchema = new Schema({
     stockFullName: {type: String, required: true, unique: true },
-    stockAbbreviation: {type: String, required: true },
+    symbol: {type: String, required: true },
     openingAsk: {type: Number, required: true},
     openingBid: {type: Number, required: true},
     currentAsk: {type: Number, required: true},

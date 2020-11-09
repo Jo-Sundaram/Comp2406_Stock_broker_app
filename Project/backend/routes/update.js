@@ -10,14 +10,14 @@ let sellOrderPlacement = 0;
 
 //Event Subscriptions
 
-app.post("/:id/:stockAbbreviation/ES/add", passport.authenticate("jwt", { session: false }), function(req,res){
+app.post("/:id/:symbol/ES/add", passport.authenticate("jwt", { session: false }), function(req,res){
 	if(!req.user){
 		return res.status(401).send("Unauthorized");
 	} else {
 		User.findByIdAndUpdate(req.params.id,{
 			$push: {eventSubscriptions: {
 				subscriptionID: req.body.subscriptionID,
-				stockID: req.params.stockAbbreviation,
+				stockID: req.params.symbol,
 				parameter: req.body.parameter,
 				value: req.body.value,
 				triggerOrder: req.body.triggerOrder
@@ -29,7 +29,7 @@ app.post("/:id/:stockAbbreviation/ES/add", passport.authenticate("jwt", { sessio
 			}
 		);
 
-		Stock.findOneAndUpdate({'stockAbbreviation' : req.params.stockAbbreviation},{
+		Stock.findOneAndUpdate({'symbol' : req.params.symbol},{
 			$push: {eventSubscriptions: {
 				subscriptionID: req.body.subscriptionID,
 				userID: req.params.id,
@@ -48,7 +48,7 @@ app.post("/:id/:stockAbbreviation/ES/add", passport.authenticate("jwt", { sessio
 });
 
 // Edit ES
-app.post("/:id/:stockAbbreviation/ES/update/:eid",  passport.authenticate("jwt", { session: false }), function(req,res){
+app.post("/:id/:symbol/ES/update/:eid",  passport.authenticate("jwt", { session: false }), function(req,res){
 	if(!req.user){
 		return res.status(401).send("Unauthorized");
 	} else {
@@ -62,7 +62,7 @@ app.post("/:id/:stockAbbreviation/ES/update/:eid",  passport.authenticate("jwt",
 			}
 		);
 		Stock.updateMany(
-			{"stockAbbreviation": req.params.stockAbbreviation, 'eventSubscriptions.subscriptionID' : req.params.eid},
+			{"symbol": req.params.symbol, 'eventSubscriptions.subscriptionID' : req.params.eid},
 			{$set: {'eventSubscriptions.$.value': req.body.value}},
 			function(err){
 				if(err){
@@ -75,7 +75,7 @@ app.post("/:id/:stockAbbreviation/ES/update/:eid",  passport.authenticate("jwt",
 });
 
 // Remove ES
-app.delete("/:id/:stockAbbreviation/ES/remove/:eid", passport.authenticate("jwt", { session: false }), function(req,res){
+app.delete("/:id/:symbol/ES/remove/:eid", passport.authenticate("jwt", { session: false }), function(req,res){
 	if(!req.user){
 		return res.status(401).send("Unauthorized");
 	} else {
@@ -90,7 +90,7 @@ app.delete("/:id/:stockAbbreviation/ES/remove/:eid", passport.authenticate("jwt"
 		);
 		
 		Stock.findOneAndUpdate(
-			{"stockAbbreviation": req.params.stockAbbreviation},
+			{"symbol": req.params.symbol},
 			{$pull: {'eventSubscriptions': {subscriptionID: req.params.eid}}},
 			function(err){
 				if(err){
@@ -104,7 +104,7 @@ app.delete("/:id/:stockAbbreviation/ES/remove/:eid", passport.authenticate("jwt"
 
 //Buy Orders
 
-app.post("/:id/:stockAbbreviation/buyorder/add", passport.authenticate("jwt", { session: false }), async function(req,res){
+app.post("/:id/:symbol/buyorder/add", passport.authenticate("jwt", { session: false }), async function(req,res){
 	if(!req.user){
 		return res.status(401).send("Unauthorized");
 	} else {
@@ -127,7 +127,7 @@ app.post("/:id/:stockAbbreviation/buyorder/add", passport.authenticate("jwt", { 
 				req.params.id,
 				{$push: {unpBuyOrders : {
 					orderID: req.body.orderID,
-					stockID: req.params.stockAbbreviation,
+					stockID: req.params.symbol,
 					shares: req.body.shares,
 					price: req.body.price
 				}},
@@ -139,7 +139,7 @@ app.post("/:id/:stockAbbreviation/buyorder/add", passport.authenticate("jwt", { 
 				}
 			);
 			Stock.findOneAndUpdate(
-				{'stockAbbreviation' : req.params.stockAbbreviation},
+				{'symbol' : req.params.symbol},
 				{$push: {buyOrders: {
 					orderID: req.body.orderID,
 					orderPlacement: buyOrderPlacement,
@@ -161,7 +161,7 @@ app.post("/:id/:stockAbbreviation/buyorder/add", passport.authenticate("jwt", { 
 	}
 });
 
-app.delete("/:id/:stockAbbreviation/buyorder/remove/:bid", passport.authenticate("jwt", { session: false }), async function(req,res){
+app.delete("/:id/:symbol/buyorder/remove/:bid", passport.authenticate("jwt", { session: false }), async function(req,res){
 	if(!req.user){
 		return res.status(401).send("Unauthorized");
 	} else {
@@ -215,7 +215,7 @@ app.delete("/:id/:stockAbbreviation/buyorder/remove/:bid", passport.authenticate
 		);
 
 		Stock.findOneAndUpdate(
-			{'stockAbbreviation' : req.params.stockAbbreviation},{
+			{'symbol' : req.params.symbol},{
 			$pull: {buyOrders: {
 				orderID: req.params.bid
 			}}},
@@ -231,7 +231,7 @@ app.delete("/:id/:stockAbbreviation/buyorder/remove/:bid", passport.authenticate
 
 //Sell Orders
 
-app.post("/:id/:stockAbbreviation/sellorder/add", passport.authenticate("jwt", { session: false }), async function(req,res){
+app.post("/:id/:symbol/sellorder/add", passport.authenticate("jwt", { session: false }), async function(req,res){
 	if(!req.user){
 		return res.status(401).send("Unauthorized");
 	} else {
@@ -243,7 +243,7 @@ app.post("/:id/:stockAbbreviation/sellorder/add", passport.authenticate("jwt", {
 					return res.status(400).send(err);
 				}
 				for (var i in result.stockPortfolio){
-					if(result.stockPortfolio[i].stockID == req.params.stockAbbreviation){
+					if(result.stockPortfolio[i].stockID == req.params.symbol){
 						shares = result.stockPortfolio[i].shares;
 					}
 				}
@@ -255,10 +255,10 @@ app.post("/:id/:stockAbbreviation/sellorder/add", passport.authenticate("jwt", {
 		if(shares>=req.body.shares){
 			sellOrderPlacement += 1;
 			User.updateMany(
-				{_id: req.params.id, 'stockPortfolio.stockID': req.params.stockAbbreviation},
+				{_id: req.params.id, 'stockPortfolio.stockID': req.params.symbol},
 				{$push: {unpSellOrders : {
 					orderID: req.body.orderID,
-					stockID: req.params.stockAbbreviation,
+					stockID: req.params.symbol,
 					shares: req.body.shares,
 					price: req.body.price
 				}},
@@ -270,7 +270,7 @@ app.post("/:id/:stockAbbreviation/sellorder/add", passport.authenticate("jwt", {
 				}
 			);
 			Stock.findOneAndUpdate(
-				{'stockAbbreviation' : req.params.stockAbbreviation},
+				{'symbol' : req.params.symbol},
 				{$push: {sellOrders: {
 					orderID: req.body.orderID,
 					orderPlacement: sellOrderPlacement,
@@ -292,7 +292,7 @@ app.post("/:id/:stockAbbreviation/sellorder/add", passport.authenticate("jwt", {
 	}
 });
 
-app.delete("/:id/:stockAbbreviation/sellorder/remove/:sid", passport.authenticate("jwt", { session: false }), async function(req,res){
+app.delete("/:id/:symbol/sellorder/remove/:sid", passport.authenticate("jwt", { session: false }), async function(req,res){
 	if(!req.user){
 		return res.status(401).send("Unauthorized");
 	} else {
@@ -305,7 +305,7 @@ app.delete("/:id/:stockAbbreviation/sellorder/remove/:sid", passport.authenticat
 					return res.status(400).send(err);
 				}
 				for (var i in result.stockPortfolio){
-					if(result.stockPortfolio[i].stockID == req.params.stockAbbreviation){
+					if(result.stockPortfolio[i].stockID == req.params.symbol){
 						shares = result.stockPortfolio[i].shares;
 					}
 				}
@@ -318,7 +318,7 @@ app.delete("/:id/:stockAbbreviation/sellorder/remove/:sid", passport.authenticat
 		);
 
 		User.updateMany(
-			{_id: req.params.id, 'stockPortfolio.stockID': req.params.stockAbbreviation},
+			{_id: req.params.id, 'stockPortfolio.stockID': req.params.symbol},
 			{$pull: {unpSellOrders: {
 				orderID: req.params.sid
 			}},
@@ -331,7 +331,7 @@ app.delete("/:id/:stockAbbreviation/sellorder/remove/:sid", passport.authenticat
 		);
 
 		Stock.findOneAndUpdate(
-			{'stockAbbreviation' : req.params.stockAbbreviation},{
+			{'symbol' : req.params.symbol},{
 			$pull: {sellOrders: {
 				orderID: req.params.sid
 			}}},
@@ -345,7 +345,7 @@ app.delete("/:id/:stockAbbreviation/sellorder/remove/:sid", passport.authenticat
 	}
 });
 
-app.get("/:stockAbbreviation/", async function(req, res){ //i wanna change :day to a query parameter
+app.get("/:symbol/", async function(req, res){ //i wanna change :day to a query parameter
     
     let day = parseInt(req.query['day']);
 
@@ -356,7 +356,7 @@ app.get("/:stockAbbreviation/", async function(req, res){ //i wanna change :day 
     let uncompletedOrders = [];
 
     const stock = await Stock.findOne(
-        {'stockAbbreviation' : req.params.stockAbbreviation},
+        {'symbol' : req.params.symbol},
         function(err, result){
             if(err){
                 return res.status(400).send(err);
@@ -534,7 +534,7 @@ app.get("/:stockAbbreviation/", async function(req, res){ //i wanna change :day 
         let currStocks = 0
         let hasStock = false;
         for (var stock in userPortfolio){
-            if (userPortfolio[stock].stockID == req.params.stockAbbreviation){
+            if (userPortfolio[stock].stockID == req.params.symbol){
                 currStocks = userPortfolio[stock].shares;
                 hasStock = true;
             }
@@ -543,7 +543,7 @@ app.get("/:stockAbbreviation/", async function(req, res){ //i wanna change :day 
         if(hasStock){
             console.log("here.")
             User.updateMany(
-                {_id: buyOrder.userID, 'stockPortfolio.stockID' : req.params.stockAbbreviation},
+                {_id: buyOrder.userID, 'stockPortfolio.stockID' : req.params.symbol},
                 {$set: {'stockPortfolio.$.shares': currStocks+shares}},
                 function(err){
                     if(err){
@@ -557,7 +557,7 @@ app.get("/:stockAbbreviation/", async function(req, res){ //i wanna change :day 
             User.findByIdAndUpdate(
                 buyOrder.userID,{
                 $push: {stockPortfolio: {
-                    stockID: req.params.stockAbbreviation,
+                    stockID: req.params.symbol,
                     shares: shares
                 }}}, 
                 function(err){
@@ -620,7 +620,7 @@ app.get("/:stockAbbreviation/", async function(req, res){ //i wanna change :day 
             let currStocks = 0
             let hasStock = false;
             for (let stock in userPortfolio){
-                if (userPortfolio[stock].stockID == req.params.stockAbbreviation){
+                if (userPortfolio[stock].stockID == req.params.symbol){
                     currStocks = userPortfolio[stock].shares;
                     hasStock = true;
                 }
@@ -629,7 +629,7 @@ app.get("/:stockAbbreviation/", async function(req, res){ //i wanna change :day 
             if(hasStock){
                 console.log("here.")
                 User.updateMany(
-                    {_id: sellOrders[i].userID, 'stockPortfolio.stockID' : req.params.stockAbbreviation},
+                    {_id: sellOrders[i].userID, 'stockPortfolio.stockID' : req.params.symbol},
                     {$set: {'stockPortfolio.$.shares': currStocks+sellOrders[i].shares}},
                     function(err){
                         if(err){
@@ -642,7 +642,7 @@ app.get("/:stockAbbreviation/", async function(req, res){ //i wanna change :day 
                 User.findByIdAndUpdate(
                     sellOrders[i].userID,{
                     $push: {stockPortfolio: {
-                        stockID: req.params.stockAbbreviation,
+                        stockID: req.params.symbol,
                         shares: sellOrders[i].shares
                     }}}, 
                     function(err){
@@ -695,7 +695,7 @@ app.get("/:stockAbbreviation/", async function(req, res){ //i wanna change :day 
     }
 
     Stock.findOneAndUpdate(
-        {'stockAbbreviation' : req.params.stockAbbreviation},
+        {'symbol' : req.params.symbol},
         {$set: {fulfilledOrders: completedOrders}},
 
         function(err){
@@ -709,7 +709,7 @@ app.get("/:stockAbbreviation/", async function(req, res){ //i wanna change :day 
 	let sharesSold = 0
     for (let i in completedOrders){
         Stock.findOneAndUpdate(
-            {'stockAbbreviation' : req.params.stockAbbreviation},
+            {'symbol' : req.params.symbol},
             {$push: {history: completedOrders[i]}},
     
             function(err){
@@ -745,7 +745,7 @@ app.get("/:stockAbbreviation/", async function(req, res){ //i wanna change :day 
     }
 
     Stock.findOneAndUpdate(
-        {'stockAbbreviation' : req.params.stockAbbreviation},
+        {'symbol' : req.params.symbol},
         {$set: {sellOrders: []}},
 
         function(err){
@@ -756,7 +756,7 @@ app.get("/:stockAbbreviation/", async function(req, res){ //i wanna change :day 
     );
 
     Stock.findOneAndUpdate(
-        {'stockAbbreviation' : req.params.stockAbbreviation},
+        {'symbol' : req.params.symbol},
         {$set: {buyOrders: []}},
 
         function(err){
@@ -768,14 +768,14 @@ app.get("/:stockAbbreviation/", async function(req, res){ //i wanna change :day 
 
 	let currentAsk = stock.currentAsk;
 	let currentBid = stock.currentBid;
-	Stock.findOneAndUpdate(stocks[i].stockAbbreviation, {$set:{openingAsk: currentAsk}},{new:true}, function(err){
+	Stock.findOneAndUpdate(stocks[i].symbol, {$set:{openingAsk: currentAsk}},{new:true}, function(err){
 		if(err){
 			return err;
 		}
 		console.log("success: true")
 	});
 
-	Stock.findOneAndUpdate(stocks[i].stockAbbreviation, {$set:{openingBid: currentBid}},{new:true}, function(err){
+	Stock.findOneAndUpdate(stocks[i].symbol, {$set:{openingBid: currentBid}},{new:true}, function(err){
 		if(err){
 			return err;
 		}
@@ -786,7 +786,7 @@ app.get("/:stockAbbreviation/", async function(req, res){ //i wanna change :day 
 	let highestAsk = stocks[i].currHighestAsk;
 
 	Stock.findOneAndUpdate(
-		stocks[i].stockAbbreviation,
+		stocks[i].symbol,
 		{$push: {
 			day: day,
 			lowestAsk: currentAsk,

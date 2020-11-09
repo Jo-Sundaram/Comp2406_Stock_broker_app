@@ -181,7 +181,7 @@ const requests = {
         const dataPromise = await promise.then((response) => response.data);
 
         for(var key in dataPromise){
-            list.push({'name':[dataPromise[key].stockFullName," (" + dataPromise[key].stockAbbreviation + ")"], 'value': dataPromise[key].stockAbbreviation})
+            list.push({'name':[dataPromise[key].stockFullName," (" + dataPromise[key].symbol + ")"], 'value': dataPromise[key].symbol})
 
         }
 

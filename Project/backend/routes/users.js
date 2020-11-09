@@ -48,6 +48,36 @@ app.post("/register", function(req,res) {
     });
 });
 
+app.post("/add", function(req,res) {
+    const newUser = new User({
+        username : req.body.username,
+        email: req.body.email,
+        password: req.body.password,
+        userFunds: 2000,
+        notifications: [],
+        eventSubscriptions: [],
+        watchlistCollection: [],
+        stockPortfolio: [],
+        unpBuyOrders: [],
+        pBuyOrders: [],
+        unpSellOrders: [],
+        pSellOrders: []
+    });
+
+    newUser.save(function(err){
+        if(err){
+            if (err.name === 'MongoError' && err.code === 11000) {
+                // Duplicate username/email
+                return res.status(400).send({ success: false, message: 'User/Email already exist!' });
+              }
+        
+              // Some other error
+              return res.status(400).send(err);
+            }
+        res.send(newUser);
+    });
+});
+
 app.post("/update/:id", function(req,res){
     User.findByIdAndUpdate(req.params.id, {$set:req.body},{new:true}, function(err){
         if(err){

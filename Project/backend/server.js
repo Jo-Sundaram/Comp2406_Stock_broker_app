@@ -178,14 +178,14 @@ const checkOutProcessedOrders = async client => {
                 if(stocks[i].fulfilledOrders[j].sellerID == users[k].userID){
                     console.log("pop!");
                     client = users[k].clientInfo;
-                    client.emit("processedSellOrder", stocks[i].fulfilledOrders[j], stocks[i].stockAbbreviation);
-                    pushNotification(stocks[i].fulfilledOrders[j].sellerID, ("You sold " + stocks[i].fulfilledOrders[j].shares + ' shares of ' + stocks[i].stockAbbreviation + " for $" + stocks[i].fulfilledOrders[j].soldFor + " to " + stocks[i].fulfilledOrders[j].buyerID));
+                    client.emit("processedSellOrder", stocks[i].fulfilledOrders[j], stocks[i].symbol);
+                    pushNotification(stocks[i].fulfilledOrders[j].sellerID, ("You sold " + stocks[i].fulfilledOrders[j].shares + ' shares of ' + stocks[i].symbol + " for $" + stocks[i].fulfilledOrders[j].soldFor + " to " + stocks[i].fulfilledOrders[j].buyerID));
                 }
                 if(stocks[i].fulfilledOrders[j].buyerID == users[k].userID){
                     console.log("pop!");
                     client = users[k].clientInfo;
-                    client.emit("processedBuyOrder", stocks[i].fulfilledOrders[j], stocks[i].stockAbbreviation);
-                    pushNotification(stocks[i].fulfilledOrders[j].buyerID, ("You bought " + stocks[i].fulfilledOrders[j].shares + ' shares of ' + stocks[i].stockAbbreviation + " for $" + stocks[i].fulfilledOrders[j].soldFor + " to " + stocks[i].fulfilledOrders[j].buyerID));
+                    client.emit("processedBuyOrder", stocks[i].fulfilledOrders[j], stocks[i].symbol);
+                    pushNotification(stocks[i].fulfilledOrders[j].buyerID, ("You bought " + stocks[i].fulfilledOrders[j].shares + ' shares of ' + stocks[i].symbol + " for $" + stocks[i].fulfilledOrders[j].soldFor + " to " + stocks[i].fulfilledOrders[j].buyerID));
                 }
             }
         }
@@ -195,8 +195,8 @@ const checkOutProcessedOrders = async client => {
                 if(stocks[i].unfulfilledOrders[j].userID == users[k].userID){
                     console.log("pop!");
                     client = users[k].clientInfo;
-                    client.emit("unprocessedOrder", stocks[i].unfulfilledOrders[j], stocks[i].stockAbbreviation);
-                    pushNotification(stocks[i].unfulfilledOrders[j].userID, ("Could not fulfill " + stocks[i].unfulfilledOrders[j].type + " order" + " for " + stocks[i].stockAbbreviation + " (" + stocks[i].unfulfilledOrders[j].price +"/share, " + stocks[i].unfulfilledOrders[j].shares + "shares)"));
+                    client.emit("unprocessedOrder", stocks[i].unfulfilledOrders[j], stocks[i].symbol);
+                    pushNotification(stocks[i].unfulfilledOrders[j].userID, ("Could not fulfill " + stocks[i].unfulfilledOrders[j].type + " order" + " for " + stocks[i].symbol + " (" + stocks[i].unfulfilledOrders[j].price +"/share, " + stocks[i].unfulfilledOrders[j].shares + "shares)"));
                 }
             }
         }
@@ -247,7 +247,7 @@ const checkMetES = async client => {
                         if (perAskChange >=  stocks[i].eventSubscriptions[k].value){
                             notification = {
                                 type: "ask",
-                                stock: stocks[i].stockAbbreviation,
+                                stock: stocks[i].symbol,
                                 change: "increased",
                                 value: stocks[i].eventSubscriptions[k].value,
                                 param: "%"
@@ -259,7 +259,7 @@ const checkMetES = async client => {
                         if (dollarAskChange >=  stocks[i].eventSubscriptions[k].value){
                             notification = {
                                 type: "ask",
-                                stock: stocks[i].stockAbbreviation,
+                                stock: stocks[i].symbol,
                                 change: "increased",
                                 stocks: stocks[i].eventSubscriptions[k].value,
                                 param: "$"
@@ -271,7 +271,7 @@ const checkMetES = async client => {
                         if (perAskChange >=  stocks[i].eventSubscriptions[k].value){
                             notification = {
                                 type: "ask",
-                                stock: stocks[i].stockAbbreviation,
+                                stock: stocks[i].symbol,
                                 change: "decreased",
                                 value: stocks[i].eventSubscriptions[k].value,
                                 param: "%"
@@ -283,7 +283,7 @@ const checkMetES = async client => {
                         if (dollarAskChange >=  stocks[i].eventSubscriptions[k].value){
                             notification = {
                                 type: "ask",
-                                stock: stocks[i].stockAbbreviation,
+                                stock: stocks[i].symbol,
                                 change: "decreased",
                                 value: stocks[i].eventSubscriptions[k].value,
                                 param: "$"
@@ -298,7 +298,7 @@ const checkMetES = async client => {
                         if (perBidChange >=  stocks[i].eventSubscriptions[k].value){
                             notification = {
                                 type: "bid",
-                                stock: stocks[i].stockAbbreviation,
+                                stock: stocks[i].symbol,
                                 change: "increased",
                                 value: stocks[i].eventSubscriptions[k].value,
                                 param: "%"
@@ -310,7 +310,7 @@ const checkMetES = async client => {
                         if (dollarBidChange >=  stocks[i].eventSubscriptions[k].value){
                             notification = {
                                 type: "bid",
-                                stock: stocks[i].stockAbbreviation,
+                                stock: stocks[i].symbol,
                                 change: "increased",
                                 value: stocks[i].eventSubscriptions[k].value,
                                 param: "$"
@@ -322,7 +322,7 @@ const checkMetES = async client => {
                         if (perBidChange >=  stocks[i].eventSubscriptions[k].value){
                             notification = {
                                 type: "bid",
-                                stock: stocks[i].stockAbbreviation,
+                                stock: stocks[i].symbol,
                                 change: "decreased",
                                 value: stocks[i].eventSubscriptions[k].value,
                                 param: "%"
@@ -334,7 +334,7 @@ const checkMetES = async client => {
                         if (dollarBidChange >=  stocks[i].eventSubscriptions[k].value){
                             notification = {
                                 type: "bid",
-                                stock: stocks[i].stockAbbreviation,
+                                stock: stocks[i].symbol,
                                 change: "decreased",
                                 value: stocks[i].eventSubscriptions[k].value,
                                 param: "$"
@@ -355,7 +355,7 @@ const checkMetES = async client => {
                         client.emit("eventNotif", notification);
 
                         Stock.updateMany(
-                            {"stockAbbreviation": stocks[i].stockAbbreviation, 'eventSubscriptions.subscriptionID' : stocks[i].eventSubscriptions[k].subscriptionID},
+                            {"symbol": stocks[i].symbol, 'eventSubscriptions.subscriptionID' : stocks[i].eventSubscriptions[k].subscriptionID},
                             {$set: {'eventSubscriptions.$.notifSent': 1}},
                             function(err){
                                 if(err){
@@ -404,7 +404,7 @@ const processStocks = async () => {
 
     for(let i in stocks){
         var xmlHttp = new XMLHttpRequest();
-        xmlHttp.open( "GET", "http://localhost:5000/update/" + stocks[i].stockAbbreviation + '?day=' + day, true ); // false for synchronous request
+        xmlHttp.open( "GET", "http://localhost:5000/update/" + stocks[i].symbol + '?day=' + day, true ); // false for synchronous request
         xmlHttp.send( null );
     }
 
@@ -478,28 +478,28 @@ const updateStockValue = async () => {
 		}
 
 
-        Stock.findOneAndUpdate(stocks[i].stockAbbreviation, {$set:{currentAsk: currentAsk}},{new:true}, function(err){
+        Stock.findOneAndUpdate(stocks[i].symbol, {$set:{currentAsk: currentAsk}},{new:true}, function(err){
             if(err){
                 return err;
 			}
 			console.log("success: true")
         });
 
-        Stock.findOneAndUpdate(stocks[i].stockAbbreviation, {$set:{currentBid: currentBid}},{new:true}, function(err){
+        Stock.findOneAndUpdate(stocks[i].symbol, {$set:{currentBid: currentBid}},{new:true}, function(err){
             if(err){
                 return err;
 			}
 			console.log("success: true")
 		});
 		
-		Stock.findOneAndUpdate(stocks[i].stockAbbreviation, {$set:{currHighestAsk: highestAsk}},{new:true}, function(err){
+		Stock.findOneAndUpdate(stocks[i].symbol, {$set:{currHighestAsk: highestAsk}},{new:true}, function(err){
             if(err){
                 return err;
 			}
 			console.log("success: true")
         });
 
-        Stock.findOneAndUpdate(stocks[i].stockAbbreviation, {$set:{currLowestBid: lowestBid}},{new:true}, function(err){
+        Stock.findOneAndUpdate(stocks[i].symbol, {$set:{currLowestBid: lowestBid}},{new:true}, function(err){
             if(err){
                 return err;
 			}
@@ -514,14 +514,14 @@ const endDay = async() => {
 	for(var i in stocks){
         let currentAsk = stocks[i].currentAsk;
 		let currentBid = stocks[i].currentBid;
-        Stock.findOneAndUpdate(stocks[i].stockAbbreviation, {$set:{openingAsk: currentAsk}},{new:true}, function(err){
+        Stock.findOneAndUpdate(stocks[i].symbol, {$set:{openingAsk: currentAsk}},{new:true}, function(err){
             if(err){
                 return err;
 			}
 			console.log("success: true")
         });
 
-        Stock.findOneAndUpdate(stocks[i].stockAbbreviation, {$set:{openingBid: currentBid}},{new:true}, function(err){
+        Stock.findOneAndUpdate(stocks[i].symbol, {$set:{openingBid: currentBid}},{new:true}, function(err){
             if(err){
                 return err;
 			}
@@ -532,7 +532,7 @@ const endDay = async() => {
 		let highestAsk = stocks[i].currHighestAsk;
 
 		Stock.findOneAndUpdate(
-			stocks[i].stockAbbreviation,
+			stocks[i].symbol,
 			{$push: {
 				day: day,
 				lowestAsk: currentAsk,

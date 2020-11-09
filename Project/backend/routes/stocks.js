@@ -29,7 +29,7 @@ app.get("/", async(req,res)=>{
         var stocks;
         if(symbol!=''){
             stocks = await Stock.find({
-            'stockAbbreviation': {'$regex': symbol, '$options': 'i'},
+            'symbol': {'$regex': symbol, '$options': 'i'},
             'currentAsk':{$gte:minprice, $lte: maxprice},
            });
         }else{
@@ -47,13 +47,13 @@ app.get("/", async(req,res)=>{
 
 });
 
-app.get("/:stockAbbreviation", async(req,res) => {
+app.get("/:symbol", async(req,res) => {
 
 	console.log(req.query);
     console.log(Object.keys(req.query).length);
     if(Object.keys(req.query).length==0){
         const stock = await Stock.findOne({
-          'stockAbbreviation' : req.params.stockAbbreviation
+          'symbol' : req.params.symbol
         })
         .then((stock)=>{
             res.json({
@@ -79,7 +79,7 @@ app.get("/:stockAbbreviation", async(req,res) => {
 		req.query.hasOwnProperty('endday')?endday = parseInt(req.query['endday']):0;
         
         const stock = await Stock.findOne({
-            'stockAbbreviation' : req.params.stockAbbreviation
+            'symbol' : req.params.symbol
           })
           .then((stock)=>{
 		if(endday == 0 || endday<startday){
@@ -114,9 +114,9 @@ app.get("/:stockAbbreviation", async(req,res) => {
 });
 
 
-app.get("/:stockAbbreviation/history", async(req,res) => {
+app.get("/:symbol/history", async(req,res) => {
     if(Object.keys(req.query)==0){
-        const stock = await Stock.findOne({'stockAbbreviation' : req.params.stockAbbreviation})
+        const stock = await Stock.findOne({'symbol' : req.params.symbol})
         .then((stock)=>{
             res.send(stock.history);
         })
@@ -136,7 +136,7 @@ app.get("/:stockAbbreviation/history", async(req,res) => {
         req.query.hasOwnProperty('endday') ? endday = parseInt(req.query['endday']) :0; 
 
         const stock = await Stock.findOne({
-            'stockAbbreviation':req.params.stockAbbreviation,
+            'symbol':req.params.symbol,
 			})
             .then((stock)=>{
                 if(endday == 0 || endday<startday){
@@ -172,7 +172,7 @@ app.get("/:stockAbbreviation/history", async(req,res) => {
 
 
 app.get("/:symbol/info", async(req,res) => {
-    const stock = await Stock.findOne({'stockAbbreviation' : req.params.symbol})
+    const stock = await Stock.findOne({'symbol' : req.params.symbol})
             .then((stock)=>{
                 res.send(stock);
             })
@@ -186,7 +186,7 @@ app.get("/:symbol/info", async(req,res) => {
 app.post("/add",function(req,res){
 
     const stockFullName = req.body.stockFullName;
-    const stockAbbreviation = req.body.stockAbbreviation;
+    const symbol = req.body.symbol;
     const openingAsk = req.body.openingAsk;
     const openingBid = req.body.openingBid;
     const currentAsk = req.body.currentAsk;
@@ -197,7 +197,7 @@ app.post("/add",function(req,res){
 
     const newStock = new Stock({
         stockFullName,
-        stockAbbreviation,
+        symbol,
         openingAsk,
         openingBid,
         currentAsk,
@@ -215,8 +215,8 @@ app.post("/add",function(req,res){
 
 
 
-app.post("/update/:stockAbbreviation", function(req,res){
-    Stock.findOneAndUpdate(req.params.stockAbbreviation, {$set:req.body},{new:true}, function(err){
+app.post("/update/:symbol", function(req,res){
+    Stock.findOneAndUpdate(req.params.symbol, {$set:req.body},{new:true}, function(err){
         if(err){
             return res.status(400).send(err);
         }
