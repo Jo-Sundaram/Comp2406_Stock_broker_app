@@ -69,7 +69,7 @@ select{
 #stock-value-history{
     flex-direction: column;
 	grid-column:1;
-	grid-row:3/4;
+	grid-row:5;
     /* text-align: center; */
     font-size: larger;
 }

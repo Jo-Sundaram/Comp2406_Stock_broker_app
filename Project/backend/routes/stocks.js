@@ -150,7 +150,6 @@ app.get("/:stockAbbreviation/history", async(req,res) => {
                 else if(endday>startday){
                     for(let i in stock.history){
                         if(stock.history[i].day >= startday && stock.history[i].day <= endday){
-							console.log(stock.dailyHistory[i].day);
                             request.push(stock.history[i]);
                         }
                     }
