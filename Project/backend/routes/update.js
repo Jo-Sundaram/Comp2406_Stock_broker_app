@@ -768,25 +768,25 @@ app.get("/:symbol/", async function(req, res){ //i wanna change :day to a query 
 
 	let currentAsk = stock.currentAsk;
 	let currentBid = stock.currentBid;
-	Stock.findOneAndUpdate(stocks[i].symbol, {$set:{openingAsk: currentAsk}},{new:true}, function(err){
+	Stock.findOneAndUpdate(stock.symbol, {$set:{openingAsk: currentAsk}},{new:true}, function(err){
 		if(err){
 			return err;
 		}
 		console.log("success: true")
 	});
 
-	Stock.findOneAndUpdate(stocks[i].symbol, {$set:{openingBid: currentBid}},{new:true}, function(err){
+	Stock.findOneAndUpdate(stock.symbol, {$set:{openingBid: currentBid}},{new:true}, function(err){
 		if(err){
 			return err;
 		}
 		console.log("success: true")
 	});
 	
-	let lowestBid = stocks[i].currLowestBid;
-	let highestAsk = stocks[i].currHighestAsk;
+	let lowestBid = stock.currLowestBid;
+	let highestAsk = stock.currHighestAsk;
 
 	Stock.findOneAndUpdate(
-		stocks[i].symbol,
+		stock.symbol,
 		{$push: {
 			day: day,
 			lowestAsk: currentAsk,
@@ -803,7 +803,7 @@ app.get("/:symbol/", async function(req, res){ //i wanna change :day to a query 
 			console.log("success: true");
 		}
 	);
-    res.json({success: completedOrders});
+    res.json({success: uncompletedOrders});
 
 });
 
