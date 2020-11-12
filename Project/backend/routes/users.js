@@ -80,6 +80,7 @@ app.post("/add", function(req,res) {
 });
 
 app.post("/update/:id", function(req,res){
+	console.log(req.body)
     User.findByIdAndUpdate(req.params.id, {$set:req.body},{new:true}, function(err){
         if(err){
             return res.status(400).send(err);

@@ -24,6 +24,7 @@ const stockSchema = new Schema({
         orderID: {type: String, required: true},
         orderPlacement: {type: Number, required: true},
         userID: { type: String, required: true },
+        username: { type: String, required: true },
         shares: {type: Number, required: true},
         price: {type: Number, required: true},
     }],
@@ -31,6 +32,7 @@ const stockSchema = new Schema({
         orderID: {type: String, required: true},
         orderPlacement: {type: Number, required: true},
         userID: { type: String, required: true },
+        username: { type: String, required: true },
         shares: {type: Number, required: true},
         price: {type: Number, required: true}
     }],

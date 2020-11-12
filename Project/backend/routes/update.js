@@ -3,7 +3,8 @@ let User = require('../models/user.model');
 let Stock = require('../models/stock.model');
 const app = express.Router();
 const passport = require("passport")
-const jwt = require("jsonwebtoken")
+const jwt = require("jsonwebtoken");
+const { Mongoose } = require("mongoose");
 
 let buyOrderPlacement = 0;
 let sellOrderPlacement = 0;
@@ -143,7 +144,8 @@ app.post("/:id/:symbol/buyorder/add", passport.authenticate("jwt", { session: fa
 				{$push: {buyOrders: {
 					orderID: req.body.orderID,
 					orderPlacement: buyOrderPlacement,
-					userID: req.params.id,
+                    userID: req.params.id,
+                    uername:user.username,
 					shares: req.body.shares,
 					price: req.body.price
 				}}},
@@ -250,7 +252,8 @@ app.post("/:id/:symbol/sellorder/add", passport.authenticate("jwt", { session: f
 			}
 		);
 
-		console.log(shares);
+        console.log(shares);
+        console.log(req.body.shares)
 
 		if(shares>=req.body.shares){
 			sellOrderPlacement += 1;
@@ -274,7 +277,7 @@ app.post("/:id/:symbol/sellorder/add", passport.authenticate("jwt", { session: f
 				{$push: {sellOrders: {
 					orderID: req.body.orderID,
 					orderPlacement: sellOrderPlacement,
-					userID: req.params.id,
+                    userID: req.params.id,
 					shares: req.body.shares,
 					price: req.body.price
 				}}},
@@ -525,7 +528,10 @@ app.get("/:symbol/", async function(req, res){ //i wanna change :day to a query 
             buyOrder.userID,
             function(err, res){
                 if(err){
-                    return res.status(400).send(err);
+                    console.log("error");
+                    console.log(buyOrder.userID)
+
+                    
                 }
                 userPortfolio = res.stockPortfolio;
                 console.log(res)
@@ -596,9 +602,10 @@ app.get("/:symbol/", async function(req, res){ //i wanna change :day to a query 
     }
 
     async function addToFulfilled(sellOrder, buyOrder, shares){
-        completedOrders.push({
-            buyerID: buyOrder.userID,
-            sellerID: sellOrder.userID,
+
+            completedOrders.push({
+            buyerID: buyOrder.username,
+            sellerID: sellOrder.username,
             shares: shares,
             soldFor: buyOrder.price,
             asked: sellOrder.price,

@@ -120,11 +120,11 @@ let serverKey = "jomama";
 let day = 0;
 
 io.on("connection", (client) => {
-    console.log("New client connected");
-    console.log('Client ID:' + client.id);
+    // console.log("New client connected");
+    // console.log('Client ID:' + client.id);
 
     client.on("connected", function(user){
-        console.log('UserID:' + user);
+        // console.log('UserID:' + user);
         users.push({userID: user, clientInfo: client})
         //console.log(users);
 
@@ -132,7 +132,7 @@ io.on("connection", (client) => {
     });
 
     client.on("simday", function(user){
-        console.log(user);
+        // console.log(user);
         if(user.key == serverKey){
 			processStocks();
 			updateStockValue();
@@ -149,14 +149,14 @@ io.on("connection", (client) => {
     interval = setInterval(() => updateStockValue(), 150000);
 
     client.on("disconnect", () => {
-        console.log("Client disconnected");
+        // console.log("Client disconnected");
 
         for(var i in users){
             if (users[i].clientInfo == client){
                 users.splice(i,1);
             }
         }
-        console.log(users);
+        // console.log(users);
         clearInterval(interval);
     });
 });
