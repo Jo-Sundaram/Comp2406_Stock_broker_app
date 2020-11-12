@@ -528,6 +528,8 @@ app.get("/:symbol/", async function(req, res){ //i wanna change :day to a query 
                     return res.status(400).send(err);
                 }
                 userPortfolio = res.stockPortfolio;
+                console.log(res)
+
             }
         );
     

@@ -12,6 +12,8 @@ app.get("/", async(req,res)=>{
 
     console.log(req.query);
     console.log(Object.keys(req.query).length);
+
+
     if(Object.keys(req.query).length==0){
         const stocks = await Stock.find();
         res.send(stocks);
@@ -24,7 +26,7 @@ app.get("/", async(req,res)=>{
    
         req.query.hasOwnProperty('symbol')?symbol=req.query['symbol']:''
         req.query.hasOwnProperty('minprice')?minprice= parseInt(req.query['minprice']):0;
-        req.query.hasOwnProperty('maxprice')?maxprice = req.query['maxprice']:Number.MAX_SAFE_INTEGER;
+        req.query.hasOwnProperty('maxprice')?maxprice = parseInt(req.query['maxprice']):Number.MAX_SAFE_INTEGER;
 
         var stocks;
         if(symbol!=''){
@@ -233,7 +235,7 @@ app.post("/update/:symbol", function(req,res){
         if(err){
             return res.status(400).send(err);
         }
-        res.json({success: true});
+        // res.json({success: true});
     });
 });
 

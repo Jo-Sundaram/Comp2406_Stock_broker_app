@@ -176,13 +176,13 @@ const checkOutProcessedOrders = async client => {
         for (var j in stocks[i].fulfilledOrders){
             for(var k in users){
                 if(stocks[i].fulfilledOrders[j].sellerID == users[k].userID){
-                    console.log("pop!");
+                    // console.log("pop!");
                     client = users[k].clientInfo;
                     client.emit("processedSellOrder", stocks[i].fulfilledOrders[j], stocks[i].symbol);
                     pushNotification(stocks[i].fulfilledOrders[j].sellerID, ("You sold " + stocks[i].fulfilledOrders[j].shares + ' shares of ' + stocks[i].symbol + " for $" + stocks[i].fulfilledOrders[j].soldFor + " to " + stocks[i].fulfilledOrders[j].buyerID));
                 }
                 if(stocks[i].fulfilledOrders[j].buyerID == users[k].userID){
-                    console.log("pop!");
+                    // console.log("pop!");
                     client = users[k].clientInfo;
                     client.emit("processedBuyOrder", stocks[i].fulfilledOrders[j], stocks[i].symbol);
                     pushNotification(stocks[i].fulfilledOrders[j].buyerID, ("You bought " + stocks[i].fulfilledOrders[j].shares + ' shares of ' + stocks[i].symbol + " for $" + stocks[i].fulfilledOrders[j].soldFor + " to " + stocks[i].fulfilledOrders[j].buyerID));
@@ -193,7 +193,7 @@ const checkOutProcessedOrders = async client => {
         for(var k in stocks[i].unfulfilledOrders){
             for(var k in users){
                 if(stocks[i].unfulfilledOrders[j].userID == users[k].userID){
-                    console.log("pop!");
+                    // console.log("pop!");
                     client = users[k].clientInfo;
                     client.emit("unprocessedOrder", stocks[i].unfulfilledOrders[j], stocks[i].symbol);
                     pushNotification(stocks[i].unfulfilledOrders[j].userID, ("Could not fulfill " + stocks[i].unfulfilledOrders[j].type + " order" + " for " + stocks[i].symbol + " (" + stocks[i].unfulfilledOrders[j].price +"/share, " + stocks[i].unfulfilledOrders[j].shares + "shares)"));
@@ -482,28 +482,28 @@ const updateStockValue = async () => {
             if(err){
                 return err;
 			}
-			console.log("success: true")
+			// console.log("success: true")
         });
 
         Stock.findOneAndUpdate(stocks[i].symbol, {$set:{currentBid: currentBid}},{new:true}, function(err){
             if(err){
                 return err;
 			}
-			console.log("success: true")
+			// console.log("success: true")
 		});
 		
 		Stock.findOneAndUpdate(stocks[i].symbol, {$set:{currHighestAsk: highestAsk}},{new:true}, function(err){
             if(err){
                 return err;
 			}
-			console.log("success: true")
+			// console.log("success: true")
         });
 
         Stock.findOneAndUpdate(stocks[i].symbol, {$set:{currLowestBid: lowestBid}},{new:true}, function(err){
             if(err){
                 return err;
 			}
-			console.log("success: true")
+			// console.log("success: true")
         });
     }
 }

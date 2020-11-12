@@ -151,7 +151,7 @@ export default class Search extends Component{
   
             ])
             .then(res => {
-                console.log(res.data)
+                // console.log(res.data)
                 //i want a function for this.
                 alert('ORDER: \n' +
                 this.state.stockID + ' \n' + 
@@ -317,6 +317,8 @@ export default class Search extends Component{
 			stockValueHistory: valueHistory,
             stockHistory: history
         });
+
+
     }
 
     handleChangeWatchlist = async (selectedList) => {
@@ -363,7 +365,7 @@ export default class Search extends Component{
                         </div>
 
                         <div id = "stock-processed-history">
-						
+						<b> History of Processed Orders</b>
 						<form onSubmit={this.onSubmitHistory}>
 							<input 
 								name="number"
@@ -380,7 +382,7 @@ export default class Search extends Component{
 							<input type="submit" value='Get History'></input>
 						</form>
 
-                        <b> History of Processed Orders</b>
+                        
 
                             <table id = "stock-history">
 								<th>Day</th>
@@ -407,6 +409,7 @@ export default class Search extends Component{
 
 						
 						<div id = "stock-value-history">
+                        <b> Stock Price History</b>
 							<div>
 								<form onSubmit={this.onSubmitValueHistory}>
 									<input 
@@ -426,7 +429,7 @@ export default class Search extends Component{
 								
 							</div>
 							
-                        <b> Stock Price History</b>
+                        
 							
 
                             <table id = "stock-history">

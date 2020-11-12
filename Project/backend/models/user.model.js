@@ -16,7 +16,11 @@ const userSchema = new Schema({
      watchlistCollection: [{
          name: {type: String, required: true},
          watchlist:[{
-            stockID: { type: String, required: true }
+            stockID: { type: String, required: true },
+            stockName: { type: String, required: true },
+            sharesOwned: { type: String, required: true },
+            avgBid: { type: Number, required: true },
+            currAsk: { type: Number, required: true },
          }]
     }],
 

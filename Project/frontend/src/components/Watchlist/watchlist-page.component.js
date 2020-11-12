@@ -70,7 +70,7 @@ export default class Watchlist extends Component{
         console.log(e.target.value);
         console.log(this.state.listname);
         
-    }pu
+    }
     onRemoveStock(e){
         e.preventDefault();
         console.log(this.state.listname);
@@ -105,29 +105,34 @@ export default class Watchlist extends Component{
     onAddList(e){
         e.preventDefault();   
         console.log(this.state.newname)
-       axios({
-            method: 'post',
-            url: 'http://localhost:5000/users/' + this.state.userID+'/watchlist/add', //dummy user
-            data: {
-                name: this.state.newname
-            },
-			headers: {
-				Authorization: "Bearer " + localStorage.getItem("token")
-			}
-        })
-        .then(res => {
-            console.log(res.data)
-            //i want a function for this.
-            alert('New Watchlist Added!')
+        if(this.state.newname=="" || this.state.newname==null){
+            alert("Please enter a watchlist name")
+        }
+        else{
+        axios({
+                method: 'post',
+                url: 'http://localhost:5000/users/' + this.state.userID+'/watchlist/add', //dummy user
+                data: {
+                    name: this.state.newname
+                },
+                headers: {
+                    Authorization: "Bearer " + localStorage.getItem("token")
+                }
+            })
+            .then(res => {
+                console.log(res.data)
+                //i want a function for this.
+                alert('New Watchlist Added!')
 
-            window.location.reload(false);
-        })
-        .catch(res => {
-            console.log(res)
-            alert('Something went wrong! Please try again later.')
-            window.location.reload(false);
-        }); 
+                window.location.reload(false);
+            })
+            .catch(res => {
+                console.log(res)
+                alert('Something went wrong! Please try again later.')
+                window.location.reload(false);
+            }); 
 
+        }
 
     }
 
@@ -213,10 +218,11 @@ export default class Watchlist extends Component{
                             <tr>
                                 <td><input type="radio" name="Remove" value={[item.stockID]} onChange = {this.onSelectStock}/></td>
                                 <td>{item.stockID}</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td>{item.name}</td>
+                                <td>{item.shares}</td>
+                                <td>{item.avgBid}</td>
+                                <td>{item.currVal}</td>
+                              
                             </tr>
                         ))}
                     </table>
