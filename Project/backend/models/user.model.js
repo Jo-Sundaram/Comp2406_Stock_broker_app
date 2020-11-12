@@ -47,9 +47,12 @@ const userSchema = new Schema({
         price: {type: Number, required: true} //users price to sell
     }],
 
-    pBuyOrders: [{  
+    pBuyOrders: [{
+		day: {type: Number, required: true},  
         buyerID: {type: String, required: true},
-        sellerID: { type: String, required: true },
+		sellerID: { type: String, required: true },
+		buyerName: {type: String, required: true},
+		sellerName: {type: String, required: true},
         shares: {type: Number, required: true},
         soldFor: {type: Number, required: true},
         asked: {type: Number, required: true},
@@ -57,8 +60,11 @@ const userSchema = new Schema({
     }], 
 
     pSellOrders: [{
+		day: {type: Number, required: true},
         buyerID: {type: String, required: true},
-        sellerID: { type: String, required: true },
+		sellerID: { type: String, required: true },
+		buyerName: {type: String, required: true},
+		sellerName: {type: String, required: true},
         shares: {type: Number, required: true},
         soldFor: {type: Number, required: true},
         asked: {type: Number, required: true},

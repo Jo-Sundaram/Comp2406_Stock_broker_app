@@ -594,9 +594,35 @@ app.get("/:symbol/", async function(req, res){ //i wanna change :day to a query 
     }
 
     async function addToFulfilled(sellOrder, buyOrder, shares){
+
+		sellerName = ''
+		const seller = await User.findById(
+            sellOrder.userID,
+            function(err, res){
+                if(err){
+                    console.log("err");
+                }
+                sellerName = res.username;
+            }
+        );
+
+		buyerName = ''
+		const buyer = await User.findById(
+            buyOrder.userID,
+            function(err, res){
+                if(err){
+                    console.log("err");
+                }
+                buyerName = res.username;
+            }
+        );
+
         completedOrders.push({
+			day: day,
             buyerID: buyOrder.userID,
-            sellerID: sellOrder.userID,
+			sellerID: sellOrder.userID,
+			buyerName: buyerName,
+			sellerName: sellerName,
             shares: shares,
             soldFor: buyOrder.price,
             asked: sellOrder.price,
