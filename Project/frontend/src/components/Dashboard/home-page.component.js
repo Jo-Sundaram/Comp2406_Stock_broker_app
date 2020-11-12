@@ -109,7 +109,7 @@ export default class Home extends Component{
         this.setState({
             shares: e.target.value
         });
-        console.log(this.state.stockID);
+        console.log("Shares: " + this.state.shares);
     }
 
     onChangeOrderPrice(e){
@@ -125,14 +125,15 @@ export default class Home extends Component{
               
             var newUserStockP = this.state.stockPortfolio;
             var objIndex = this.state.stockPortfolio.findIndex((obj => obj.stockID == this.state.stockID));
-            console.log(objIndex);
+            console.log("objIndex: "+ this.state.shares);
             if(newUserStockP[objIndex].shares >= Number(this.state.shares)){
 
                 var ID = await (requests.generateSellID(this.state.stockID, this.state.userID));
 
                 newUserStockP[objIndex].shares = newUserStockP[objIndex].shares - Number(this.state.shares);
+                console.log(this.state.shares)
                 axios.all([    
-                    axios({
+                  /*   axios({
                         method: 'post',
                         url: 'http://localhost:5000/users/update/'+this.state.userID, 
                         data: {
@@ -141,7 +142,7 @@ export default class Home extends Component{
 						headers: {
 							Authorization: "Bearer " + localStorage.getItem("token")
 						}
-                    }),
+                    }), */
                     axios({
                         method: 'post',
                         url: 'http://localhost:5000/update/'+this.state.userID + '/'+this.state.stockID+'/sellorder/add',

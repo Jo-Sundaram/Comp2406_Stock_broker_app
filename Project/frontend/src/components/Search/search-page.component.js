@@ -112,65 +112,70 @@ export default class Search extends Component{
 
     async onOrderSubmit(e){
         e.preventDefault();
-        
-        var orderTotal = Number(this.state.price)*Number(this.state.shares);
-        
-        console.log("User funds: " + this.state.userFunds)
 
-        if (this.state.userFunds >= orderTotal && this.state.price > 0 && this.state.shares > 0){
-            var newUserFunds = Number(this.state.userFunds) - orderTotal;
-            console.log("Order Total: "+ orderTotal);
-            var ID = await (requests.generateBuyID(this.state.stockID, this.state.userID));
+        if(this.state.stockID==null || this.state.stockID==""){
+            alert("Please select a stock")
+        }else{
+            
+            var orderTotal = Number(this.state.price)*Number(this.state.shares);
+            
+            console.log("User funds: " + this.state.userFunds)
 
-            console.log("Stock on order: " + this.state.stockID);
+            if (this.state.userFunds >= orderTotal && this.state.price > 0 && this.state.shares > 0){
+                var newUserFunds = Number(this.state.userFunds) - orderTotal;
+                console.log("Order Total: "+ orderTotal);
+                var ID = await (requests.generateBuyID(this.state.stockID, this.state.userID));
 
-            axios.all([
-                axios({
-                    method: 'post',
-                    url: 'http://localhost:5000/users/update/' + this.state.userID, 
-                    data: {
-                        userFunds: newUserFunds,
-					},
-					headers: {
-						Authorization: "Bearer " + localStorage.getItem("token")
-					}
-                }),
-                axios({
-                    method: 'post',
-                    url: 'http://localhost:5000/update/' + this.state.userID + "/" + this.state.stockID+"/buyorder/add", 
-                    data: {
-                        orderID: ID,
-                        stockID: this.state.stockID,
-                        shares: Number(this.state.shares),
-                        price: Number(this.state.price)
-					},
-					headers: {
-						Authorization: "Bearer " + localStorage.getItem("token")
-					}
-                }),
-  
-            ])
-            .then(res => {
-                // console.log(res.data)
-                //i want a function for this.
-                alert('ORDER: \n' +
-                this.state.stockID + ' \n' + 
-                '$' + this.state.price +'/Share \n' +
-                'Shares: ' + this.state.shares + '\n' +
-                'Placed Successfully!')
+                console.log("Stock on order: " + this.state.stockID);
 
-                window.location.reload(false);
-            })
-            .catch(res => {
-                console.log(res)
-                alert('Something went wrong! Please try again later.')
-                window.location.reload(false);
-            });
+                axios.all([
+                    /* axios({
+                        method: 'post',
+                        url: 'http://localhost:5000/users/update/' + this.state.userID, 
+                        data: {
+                            userFunds: newUserFunds,
+                        },
+                        headers: {
+                            Authorization: "Bearer " + localStorage.getItem("token")
+                        }
+                    }), */
+                    axios({
+                        method: 'post',
+                        url: 'http://localhost:5000/update/' + this.state.userID + "/" + this.state.stockID+"/buyorder/add", 
+                        data: {
+                            orderID: ID,
+                            stockID: this.state.stockID,
+                            shares: Number(this.state.shares),
+                            price: Number(this.state.price)
+                        },
+                        headers: {
+                            Authorization: "Bearer " + localStorage.getItem("token")
+                        }
+                    }),
+    
+                ])
+                .then(res => {
+                    // console.log(res.data)
+                    //i want a function for this.
+                    alert('ORDER: \n' +
+                    this.state.stockID + ' \n' + 
+                    '$' + this.state.price +'/Share \n' +
+                    'Shares: ' + this.state.shares + '\n' +
+                    'Placed Successfully!')
 
-        }
-        else{
-            if(this.state.userFunds < orderTotal){
-                alert("you broke. go home");
+                    window.location.reload(false);
+                })
+                .catch(res => {
+                    console.log(res)
+                    alert('Something went wrong! Please try again later.')
+                    window.location.reload(false);
+                });
+
+            }
+            else{
+                if(this.state.userFunds < orderTotal){
+                    alert("you broke. go home");
+                }
             }
         }
     }
@@ -398,8 +403,8 @@ export default class Search extends Component{
                                         <td>{item.soldFor}</td>
                                         <td>{item.asked}</td>
 										<td>{item.shares}</td>
-                                        <td>{item.buyerID}</td>
-										<td>{item.sellerID}</td>
+                                        <td>{item.buyerName}</td>
+										<td>{item.sellerName}</td>
 
                                     </tr>
 
