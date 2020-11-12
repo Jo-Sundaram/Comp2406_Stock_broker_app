@@ -29,8 +29,6 @@ const helper = {
 		})
 		
 		
-	//	axios.get('http://localhost:5000/users/'+userID + '/watchlist/' + listname) //dummy user ID in place
-        
         const dataPromise = await promise.then((response) => response.data)
 
         console.log(dataPromise);
@@ -38,7 +36,9 @@ const helper = {
         var stocks = []
 
         for(var key in dataPromise.watchlist){
-            stocks.push({'stockID': dataPromise.watchlist[key].stockID});
+            stocks.push({'stockID': dataPromise.watchlist[key].stockID,'name':dataPromise.watchlist[key].stockName, 
+                        'shares':dataPromise.watchlist[key].sharesOwned, 'avgBid':dataPromise.watchlist[key].avgBid,
+                        'currVal':dataPromise.watchlist[key].currAsk});
         }
         return stocks;
     }    

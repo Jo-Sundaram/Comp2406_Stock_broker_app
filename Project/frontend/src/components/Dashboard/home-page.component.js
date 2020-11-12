@@ -1,12 +1,12 @@
 import React, { Component, useContext } from 'react';
-import {Link} from 'react-router-dom';
 import axios from 'axios';
 import Navbar from "../NavBar/navbar.component";
 import "./home-page.css"
 import requests from '../functions/requests.js';
-import thisUser from '../../App';
-import userHook from '../../UserContext';
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import helper from "../functions/helper.js"
+import SelectSearch from 'react-select-search';
+
+
 
 
     
@@ -40,6 +40,9 @@ export default class Home extends Component{
             userSellOrders: [],
             userBuyOrders: [],
             eventSubscriptions: [],
+            watchlistCollection:[],
+            parsedLists: [],
+            WLitems: [],
             
             stockID: null,
             shares: 0,
@@ -63,15 +66,12 @@ export default class Home extends Component{
     }
 
 
-
     componentDidMount() {
         console.log('reloaded /home');
-   
      
     }  
-
   
-    componentWillReceiveProps(props){ //this is called to before render method
+    async componentWillReceiveProps(props){ //this is called to before render method
         this.setState({
             user : props.user.username,
             userID: props.user._id,
@@ -80,9 +80,22 @@ export default class Home extends Component{
             userSellOrders: props.user.unpSellOrders,
             userBuyOrders: props.user.unpBuyOrders,
             eventSubscriptions: props.user.eventSubscriptions,
+          	watchlistCollection: props.user.watchListCollection
+
          }) 
 
          console.log("this user in props: " + this.state.userID);
+
+         var parsedList = []
+         try {
+             parsedList = await (helper.parseListItems(props.user._id));            
+         }
+           catch(e) {
+             console.log('Catch an error: ', e)
+         }
+         
+         this.setState({parsedLists:parsedList});
+
     }
 
 
@@ -148,8 +161,8 @@ export default class Home extends Component{
                     alert("Successfully created sell order"),
                     window.location.reload(false)
                 )
-                .catch(res => {
-                    console.log(res)
+                .catch(err => {
+                    console.log(err)
                     alert("Sell Order creation failed. Please try again.")
                     window.location.reload(false)
                 });
@@ -308,25 +321,19 @@ export default class Home extends Component{
     }
 
 
+    handleListChange = async (listname) => {
+        this.setState({ listname });
+    
+        var stocksInWL = await (helper.getStockItems(this.state.userID, listname));
+        this.setState({
+            WLitems: stocksInWL
+        });
+
+        console.log(stocksInWL);
+    }
+
     render() {
-        if(this.state.user==null){
-            console.log("user is null");
-            setTimeout(()=>{
-
-                return(
-
-                    <div>
-                        loading...
-                    </div>
-                )
-
-            },5000)
-        }else{
-            console.log("user exists")
-        }
-
-
-
+  
         console.log("portfolio: " + this.props.user.stockPortfolio);
 
         console.log("This user in render: " + this.state.userID);
@@ -459,19 +466,29 @@ export default class Home extends Component{
 
                 <div id = "watchlist" class = "view">
                     <h2>Watchlist</h2>
+                    <SelectSearch 
+                    options={this.state.parsedLists} 
+                    search
+                    onChange = {this.handleListChange}
+                    name="stocks" 
+                    placeholder="Select a watchlist" />
+
                     <table>
                         <th>Symbol</th>
                         <th>Name</th>
                         <th>$ / Share</th>
                         <th>Avg $ paid</th>
                         <th>Current value</th>
-                        <tr>
-                            <td>AAPL</td>
-                            <td>Apple</td>
-                            <td>$10</td>
-                            <td>$40</td>
-                            <td>$100</td>
-                        </tr>
+                        {this.state.WLitems.map((item,index)=>(
+                            <tr>
+                                <td>{item.stockID}</td>
+                                <td>{item.name}</td>
+                                <td>{item.shares}</td>
+                                <td>{item.avgBid}</td>
+                                <td>{item.currVal}</td>
+                              
+                            </tr>
+                        ))}
                     </table>
                 </div>
                 <form onSubmit={this.onCancelES}>

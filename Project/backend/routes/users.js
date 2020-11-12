@@ -2,6 +2,7 @@
 //const { watch } = require('../models/user.model');
 const express = require("express");
 let User = require('../models/user.model');
+let Stock = require('../models/stock.model');
 const app = express.Router();
 const passport = require("passport")
 const jwt = require("jsonwebtoken")
@@ -177,22 +178,38 @@ app.get('/:id/watchlist/:wid', passport.authenticate("jwt", { session: false }),
 });
 
 // // add stock to a watchlist 
-app.post("/:id/watchlist/update/add", passport.authenticate("jwt", { session: false }), function(req, res){
+app.post("/:id/watchlist/update/add", passport.authenticate("jwt", { session: false }), async(req, res)=>{
 	if(!req.user){
 		return res.status(401).send("Unauthorized");
 	} else {
-		User.updateMany(
-			{_id: req.params.id, 'watchlistCollection.name': req.body.name},
-			{$push:{'watchlistCollection.$.watchlist':
-				{stockID: req.body.stockID
-			}}},
-			function(err){
-				if(err){
-					return res.status(400).send(err);
+
+		const stock  = await Stock.findOne({'symbol':req.body.stockID})
+			.then((stock)=>{
+				console.log("this stock: " + stock.stockFullName)
+				
+
+
+			User.updateMany(
+				{_id: req.params.id, 'watchlistCollection.name': req.body.name},
+				{$push:{'watchlistCollection.$.watchlist':
+					{
+						stockID: req.body.stockID,
+						stockName: stock.stockFullName,
+						sharesOwned:0,
+						avgBid:stock.currentBid,
+						currAsk : stock.currHighestAsk
+				
+					}
+			}},
+				function(err){
+					if(err){
+						return res.status(400).send(err);
+					}
+					res.json({success: true});
 				}
-				res.json({success: true});
-			}
-		);
+			);
+
+		});
 	}
 
 
@@ -200,7 +217,6 @@ app.post("/:id/watchlist/update/add", passport.authenticate("jwt", { session: fa
 
 // remove stock from a watchlist 
 app.delete("/:id/watchlist/update/remove", passport.authenticate("jwt", { session: false }), function(req,res){
-	// console.log(req.params);
 	if(!req.user){
 		return res.status(401).send("Unauthorized");
 	} else {
