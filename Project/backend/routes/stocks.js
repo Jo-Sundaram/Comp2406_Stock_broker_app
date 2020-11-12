@@ -191,10 +191,17 @@ app.post("/add",function(req,res){
     const symbol = req.body.symbol;
     const openingAsk = req.body.openingAsk;
     const openingBid = req.body.openingBid;
-    const currentAsk = req.body.currentAsk;
-    const currentBid = req.body.currentBid;
-    const currHighestAsk = req.body.currHighestAsk;
-    const currLowestBid = req.body.currLowestBid;
+    const currentAsk = 0;
+    const currentBid = 0;
+    const currHighestAsk = 0;
+	const currLowestBid = 0;
+	const eventSubscriptions = [];
+	const sellOrders = [];
+	const buyOrders = [];
+	const history = [];
+	const dailyHistory = [];
+	const fulfilledOrders = [];
+	const unfulfilledOrders = [];
 
 
     const newStock = new Stock({
@@ -205,8 +212,14 @@ app.post("/add",function(req,res){
         currentAsk,
         currentBid,
         currHighestAsk,
-        currLowestBid
-
+		currLowestBid,
+		eventSubscriptions,
+		sellOrders,
+		buyOrders,
+		history,
+		dailyHistory,
+		fulfilledOrders,
+		unfulfilledOrders
     });
 
     newStock.save()
