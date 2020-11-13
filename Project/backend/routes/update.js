@@ -278,6 +278,7 @@ app.post("/:id/:symbol/sellorder/add", passport.authenticate("jwt", { session: f
 					orderID: req.body.orderID,
 					orderPlacement: sellOrderPlacement,
                     userID: req.params.id,
+                    uername:user.username,
 					shares: req.body.shares,
 					price: req.body.price
 				}}},
