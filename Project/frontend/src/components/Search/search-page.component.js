@@ -201,7 +201,7 @@ export default class Search extends Component{
 
     async onEsSubmit(e){
         e.preventDefault();
-        if(this.state.esParameter !=null && this.state.esAmount != null && this.state.esAmount != 0 || this.state.stockID != null || this.state.stockID != ''){
+        if(this.state.esParameter !=null && this.state.esAmount != null && this.state.esAmount != 0 && this.state.stockID != null && this.state.stockID != ''){
             
             var ID = await (requests.generateESID(this.state.stockID, this.state.userID));
 
