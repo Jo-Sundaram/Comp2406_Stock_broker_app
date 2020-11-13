@@ -701,7 +701,7 @@ app.get("/:symbol/", async function(req, res){ //i wanna change :day to a query 
 				
                     if(err){
 						console.log(buyOrders[i]);
-                        return res.status(400).send(err);
+                        return 0;
                     }
                     funds = result.userFunds;
                 }
