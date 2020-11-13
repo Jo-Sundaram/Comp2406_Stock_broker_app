@@ -692,7 +692,8 @@ app.get("/:symbol/", async function(req, res){ //i wanna change :day to a query 
 
     for(let i in buyOrders){
         if(buyOrders[i].shares != 0){
-            let funds;
+			let funds;
+			console.log(buyOrders[i].userID);
             const user = await User.findById(
                 buyOrders[i].userID,
                 async function(err,result){
