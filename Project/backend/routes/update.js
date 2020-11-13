@@ -174,30 +174,30 @@ app.delete("/:id/:symbol/buyorder/remove/:bid", passport.authenticate("jwt", { s
 					return res.status(400).send(err);
 				}
 				funds = result.userFunds;
-				for(var i in result.unpBuyOrders){
-					if(result.unpBuyOrders[i].orderID = req.params.bid){
-						orderTotal = result.unpBuyOrders[i].shares*result.unpBuyOrders[i].price
-					}
-				}        if(this.state.cancelOrderID != null && this.state.cancelStockID !=null){
-					axios.all([
-						axios({
-							method: 'delete',
-							url: 'http://localhost:5000/update/'+this.state.userID+'/'+this.state.cancelStockID+'/'+this.state.cancelType+'/remove/' +this.state.cancelOrderID, //dummy user
-							data: {
-								orderID: this.state.cancelOrderID
-							}
-						})
-					])
-					.then(res => {
-						console.log(res.data)
-						alert("Successfully cancelled buy order.")
-						window.location.reload(false);
-					})
-					.catch(res => {
-						console.log(res)
-						alert("Cancellation failed. Please try again later.");
-					})
-				}
+				// for(var i in result.unpBuyOrders){
+				// 	if(result.unpBuyOrders[i].orderID = req.params.bid){
+				// 		orderTotal = result.unpBuyOrders[i].shares*result.unpBuyOrders[i].price
+				// 	}
+				// }        if(this.state.cancelOrderID != null && this.state.cancelStockID !=null){
+				// 	axios.all([
+				// 		axios({
+				// 			method: 'delete',
+				// 			url: 'http://localhost:5000/update/'+this.state.userID+'/'+this.state.cancelStockID+'/'+this.state.cancelType+'/remove/' +this.state.cancelOrderID, //dummy user
+				// 			data: {
+				// 				orderID: this.state.cancelOrderID
+				// 			}
+				// 		})
+				// 	])
+				// 	.then(res => {
+				// 		console.log(res.data)
+				// 		alert("Successfully cancelled buy order.")
+				// 		window.location.reload(false);
+				// 	})
+				// 	.catch(res => {
+				// 		console.log(res)
+				// 		alert("Cancellation failed. Please try again later.");
+				// 	})
+				// }
 			}
 		);
 
