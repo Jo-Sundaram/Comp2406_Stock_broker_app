@@ -699,12 +699,16 @@ app.get("/:symbol/", async function(req, res){ //i wanna change :day to a query 
 
     for(let i in buyOrders){
         if(buyOrders[i].shares != 0){
-            let funds;
+			let funds;
+			
             const user = await User.findById(
                 buyOrders[i].userID,
                 async function(err,result){
+					console.log("is there a problem?")
+					console.log(buyOrders[i]);
                     if(err){
-                        return res.status(400).send(err);
+						console.log(buyOrders[i]);
+                        return 0;
                     }
                     funds = result.userFunds;
                 }
