@@ -3,8 +3,7 @@ let User = require('../models/user.model');
 let Stock = require('../models/stock.model');
 const app = express.Router();
 const passport = require("passport")
-const jwt = require("jsonwebtoken");
-const { Mongoose } = require("mongoose");
+const jwt = require("jsonwebtoken")
 
 let buyOrderPlacement = 0;
 let sellOrderPlacement = 0;
@@ -144,8 +143,7 @@ app.post("/:id/:symbol/buyorder/add", passport.authenticate("jwt", { session: fa
 				{$push: {buyOrders: {
 					orderID: req.body.orderID,
 					orderPlacement: buyOrderPlacement,
-                    userID: req.params.id,
-                    uername:user.username,
+					userID: req.params.id,
 					shares: req.body.shares,
 					price: req.body.price
 				}}},
@@ -252,8 +250,7 @@ app.post("/:id/:symbol/sellorder/add", passport.authenticate("jwt", { session: f
 			}
 		);
 
-        console.log(shares);
-        console.log(req.body.shares)
+		console.log(shares);
 
 		if(shares>=req.body.shares){
 			sellOrderPlacement += 1;
@@ -277,8 +274,7 @@ app.post("/:id/:symbol/sellorder/add", passport.authenticate("jwt", { session: f
 				{$push: {sellOrders: {
 					orderID: req.body.orderID,
 					orderPlacement: sellOrderPlacement,
-                    userID: req.params.id,
-                    uername:user.username,
+					userID: req.params.id,
 					shares: req.body.shares,
 					price: req.body.price
 				}}},
@@ -529,10 +525,7 @@ app.get("/:symbol/", async function(req, res){ //i wanna change :day to a query 
             buyOrder.userID,
             function(err, res){
                 if(err){
-                    console.log("error");
-                    console.log(buyOrder.userID)
-
-                    
+                    return res.status(400).send(err);
                 }
                 userPortfolio = res.stockPortfolio;
                 console.log(res)
@@ -705,10 +698,9 @@ app.get("/:symbol/", async function(req, res){ //i wanna change :day to a query 
                 buyOrders[i].userID,
                 async function(err,result){
 					console.log("is there a problem?")
-					console.log(buyOrders[i]);
+				
                     if(err){
-						console.log(buyOrders[i]);
-                        return 0;
+                        return res.status(400).send(err);
                     }
                     funds = result.userFunds;
                 }

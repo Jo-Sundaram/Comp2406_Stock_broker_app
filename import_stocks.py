@@ -33,8 +33,180 @@ json_data = '''[{
       "notifSent": 1
     }
   ],
-  "buyOrders": [],
-  "sellOrders": [],
+  "buyOrders": [
+    {
+      "_id": {
+        "$oid": "5f99abb6b0575273fccc4d70"
+      },
+      "orderID": "1",
+      "userID": "5f99a6fecf30786874cdde76",
+      "orderPlacement": 1,
+      "shares": 12,
+      "price": 75
+    },
+    {
+      "_id": {
+        "$oid": "5f99abe9b0575273fccc4d72"
+      },
+      "orderID": "6",
+      "orderPlacement": 6,
+      "userID": "5f99a70acf30786874cdde78",
+      "shares": 18,
+      "price": 32
+    },
+    {
+      "_id": {
+        "$oid": "5f99ac04b0575273fccc4d74"
+      },
+      "orderID": "3",
+      "userID": "5f99a76bb0575273fccc4d64",
+      "orderPlacement": 3,
+      "shares": 5,
+      "price": 34
+    },
+    {
+      "_id": {
+        "$oid": "5f99ac32b0575273fccc4d76"
+      },
+      "orderID": "2",
+      "orderPlacement": 2,
+      "userID": "5f99a78fb0575273fccc4d67",
+      "shares": 12,
+      "price": 32
+    },
+    {
+      "_id": {
+        "$oid": "5f99ac48b0575273fccc4d78"
+      },
+      "orderID": "5",
+      "orderPlacement": 5,
+      "userID": "5f99a7a1b0575273fccc4d69",
+      "shares": 7,
+      "price": 20
+    },
+    {
+      "_id": {
+        "$oid": "5f99ac61b0575273fccc4d7a"
+      },
+      "orderID": "4",
+      "orderPlacement": 4,
+      "userID": "5f99a7acb0575273fccc4d6b",
+      "shares": 6,
+      "price": 32
+    },
+    {
+      "_id": {
+        "$oid": "5f99ac80b0575273fccc4d7c"
+      },
+      "orderID": "7",
+      "orderPlacement": 7,
+      "userID": "5f99a7c0b0575273fccc4d6d",
+      "shares": 9,
+      "price": 21
+    },
+    {
+      "_id": {
+        "$oid": "5f99ac91b0575273fccc4d7e"
+      },
+      "orderID": "8",
+      "orderPlacement": "8",
+      "userID": "5f99a7ceb0575273fccc4d6e",
+      "shares": 2,
+      "price": 18
+    },
+    {
+      "_id": {
+        "$oid": "5fa5bcd938ca40416ceef119"
+      },
+      "orderID": "hbdGVW8bY2zk",
+      "orderPlacement": 1,
+      "userID": "5f999d97b697054d9cbffbbe",
+      "shares": 5,
+      "price": 5
+    },
+    {
+      "_id": {
+        "$oid": "5fa5bce838ca40416ceef11b"
+      },
+      "orderID": "AXxKidaXNLLW",
+      "orderPlacement": 2,
+      "userID": "5f999d97b697054d9cbffbbe",
+      "shares": 5,
+      "price": 5
+    }
+  ],
+  "sellOrders": [
+    {
+      "_id": {
+        "$oid": "5f99a1cccf30786874cdde6b"
+      },
+      "orderID": "4",
+      "userID": "5f999d70b697054d9cbffbbc",
+      "orderPlacement": 4,
+      "shares": 15,
+      "price": 32
+    },
+    {
+      "_id": {
+        "$oid": "5f99a20ecf30786874cdde6d"
+      },
+      "orderID": "2",
+      "userID": "5f999d97b697054d9cbffbbe",
+      "orderPlacement": 2,
+      "shares": 18,
+      "price": 16
+    },
+    {
+      "_id": {
+        "$oid": "5f99a23dcf30786874cdde6f"
+      },
+      "orderID": "3",
+      "userID": "5f999da7b697054d9cbffbc0",
+      "orderPlacement": 3,
+      "shares": 12,
+      "price": 19
+    },
+    {
+      "_id": {
+        "$oid": "5f99a255cf30786874cdde71"
+      },
+      "orderID": "1",
+      "userID": "5f999db8b697054d9cbffbc2",
+      "orderPlacement": 1,
+      "shares": 19,
+      "price": 32
+    },
+    {
+      "_id": {
+        "$oid": "5f99a2aecf30786874cdde73"
+      },
+      "orderID": "5",
+      "userID": "5f999dcbb697054d9cbffbc4",
+      "orderPlacement": 5,
+      "shares": 7,
+      "price": 65
+    },
+    {
+      "_id": {
+        "$oid": "5f99a2cccf30786874cdde75"
+      },
+      "orderID": "6",
+      "userID": "5f999ddeb697054d9cbffbc6",
+      "orderPlacement": 6,
+      "shares": 10,
+      "price": 16
+    },
+    {
+      "_id": {
+        "$oid": "5fa5be8a38ca40416ceef11e"
+      },
+      "orderID": "CNai1sB5KDaU",
+      "orderPlacement": 1,
+      "userID": "5f999d97b697054d9cbffbbe",
+      "shares": 5,
+      "price": 5
+    }
+  ],
   "createdAt": {
     "$date": "2020-10-17T14:48:43.085Z"
   },
@@ -106,236 +278,8 @@ json_data = '''[{
   "currLowestBid": 0,
   "symbol": "TSLA",
   "fulfilledOrders": [
-    {
-      "_id": {
-        "$oid": "5fa9a62f561a305f20bd2fc9"
-      },
-      "buyerID": "5f99a6fecf30786874cdde76",
-      "sellerID": "5f999dcbb697054d9cbffbc4",
-      "shares": 7,
-      "soldFor": 75
-    },
-    {
-      "_id": {
-        "$oid": "5fa9a62f561a305f20bd2fca"
-      },
-      "buyerID": "5f99a6fecf30786874cdde76",
-      "sellerID": "5f999db8b697054d9cbffbc2",
-      "shares": 5,
-      "soldFor": 75
-    },
-    {
-      "_id": {
-        "$oid": "5fa9a62f561a305f20bd2fcb"
-      },
-      "buyerID": "5f99a76bb0575273fccc4d64",
-      "sellerID": "5f999db8b697054d9cbffbc2",
-      "shares": 5,
-      "soldFor": 34
-    },
-    {
-      "_id": {
-        "$oid": "5fa9a62f561a305f20bd2fcc"
-      },
-      "buyerID": "5f99a78fb0575273fccc4d67",
-      "sellerID": "5f999db8b697054d9cbffbc2",
-      "shares": 9,
-      "soldFor": 32
-    },
-    {
-      "_id": {
-        "$oid": "5fa9a62f561a305f20bd2fcd"
-      },
-      "buyerID": "5f99a78fb0575273fccc4d67",
-      "sellerID": "5f999d70b697054d9cbffbbc",
-      "shares": 3,
-      "soldFor": 32
-    },
-    {
-      "_id": {
-        "$oid": "5fa9a62f561a305f20bd2fce"
-      },
-      "buyerID": "5f99a7acb0575273fccc4d6b",
-      "sellerID": "5f999d70b697054d9cbffbbc",
-      "shares": 6,
-      "soldFor": 32
-    },
-    {
-      "_id": {
-        "$oid": "5fa9a62f561a305f20bd2fcf"
-      },
-      "buyerID": "5f99a70acf30786874cdde78",
-      "sellerID": "5f999d70b697054d9cbffbbc",
-      "shares": 6,
-      "soldFor": 32
-    },
-    {
-      "_id": {
-        "$oid": "5fa9a62f561a305f20bd2fd0"
-      },
-      "buyerID": "5f99a70acf30786874cdde78",
-      "sellerID": "5f999da7b697054d9cbffbc0",
-      "shares": 12,
-      "soldFor": 32
-    },
-    {
-      "_id": {
-        "$oid": "5fa9a62f561a305f20bd2fd1"
-      },
-      "buyerID": "5f99a7c0b0575273fccc4d6d",
-      "sellerID": "5f999d97b697054d9cbffbbe",
-      "shares": 9,
-      "soldFor": 21
-    },
-    {
-      "_id": {
-        "$oid": "5fa9a62f561a305f20bd2fd2"
-      },
-      "buyerID": "5f99a7a1b0575273fccc4d69",
-      "sellerID": "5f999d97b697054d9cbffbbe",
-      "shares": 7,
-      "soldFor": 20
-    },
-    {
-      "_id": {
-        "$oid": "5fa9a62f561a305f20bd2fd3"
-      },
-      "buyerID": "5f99a7ceb0575273fccc4d6e",
-      "sellerID": "5f999d97b697054d9cbffbbe",
-      "shares": 2,
-      "soldFor": 18
-    },
-    {
-      "_id": {
-        "$oid": "5fa9a62f561a305f20bd2fd4"
-      },
-      "buyerID": "5f999d97b697054d9cbffbbe",
-      "sellerID": "5f999d97b697054d9cbffbbe",
-      "shares": 5,
-      "soldFor": 5
-    }
   ],
   "history": [
-    {
-      "_id": {
-        "$oid": "5fa9a62f561a305f20bd2fd5"
-      },
-      "buyerID": "5f99a6fecf30786874cdde76",
-      "sellerID": "5f999dcbb697054d9cbffbc4",
-      "shares": 7,
-      "soldFor": 75,
-      "asked": 65
-    },
-    {
-      "_id": {
-        "$oid": "5fa9a62f561a305f20bd2fd8"
-      },
-      "buyerID": "5f99a6fecf30786874cdde76",
-      "sellerID": "5f999db8b697054d9cbffbc2",
-      "shares": 5,
-      "soldFor": 75,
-      "asked": 32
-    },
-    {
-      "_id": {
-        "$oid": "5fa9a62f561a305f20bd2fdb"
-      },
-      "buyerID": "5f99a76bb0575273fccc4d64",
-      "sellerID": "5f999db8b697054d9cbffbc2",
-      "shares": 5,
-      "soldFor": 34,
-      "asked": 32
-    },
-    {
-      "_id": {
-        "$oid": "5fa9a62f561a305f20bd2fde"
-      },
-      "buyerID": "5f99a78fb0575273fccc4d67",
-      "sellerID": "5f999db8b697054d9cbffbc2",
-      "shares": 9,
-      "soldFor": 32,
-      "asked": 32
-    },
-    {
-      "_id": {
-        "$oid": "5fa9a62f561a305f20bd2fe1"
-      },
-      "buyerID": "5f99a78fb0575273fccc4d67",
-      "sellerID": "5f999d70b697054d9cbffbbc",
-      "shares": 3,
-      "soldFor": 32,
-      "asked": 32
-    },
-    {
-      "_id": {
-        "$oid": "5fa9a62f561a305f20bd2fe4"
-      },
-      "buyerID": "5f99a7acb0575273fccc4d6b",
-      "sellerID": "5f999d70b697054d9cbffbbc",
-      "shares": 6,
-      "soldFor": 32,
-      "asked": 32
-    },
-    {
-      "_id": {
-        "$oid": "5fa9a62f561a305f20bd2fe7"
-      },
-      "buyerID": "5f99a70acf30786874cdde78",
-      "sellerID": "5f999d70b697054d9cbffbbc",
-      "shares": 6,
-      "soldFor": 32,
-      "asked": 32
-    },
-    {
-      "_id": {
-        "$oid": "5fa9a62f561a305f20bd2fea"
-      },
-      "buyerID": "5f99a70acf30786874cdde78",
-      "sellerID": "5f999da7b697054d9cbffbc0",
-      "shares": 12,
-      "soldFor": 32,
-      "asked": 19
-    },
-    {
-      "_id": {
-        "$oid": "5fa9a62f561a305f20bd2fed"
-      },
-      "buyerID": "5f99a7c0b0575273fccc4d6d",
-      "sellerID": "5f999d97b697054d9cbffbbe",
-      "shares": 9,
-      "soldFor": 21,
-      "asked": 16
-    },
-    {
-      "_id": {
-        "$oid": "5fa9a62f561a305f20bd2ff0"
-      },
-      "buyerID": "5f99a7a1b0575273fccc4d69",
-      "sellerID": "5f999d97b697054d9cbffbbe",
-      "shares": 7,
-      "soldFor": 20,
-      "asked": 16
-    },
-    {
-      "_id": {
-        "$oid": "5fa9a62f561a305f20bd2ff3"
-      },
-      "buyerID": "5f99a7ceb0575273fccc4d6e",
-      "sellerID": "5f999d97b697054d9cbffbbe",
-      "shares": 2,
-      "soldFor": 18,
-      "asked": 16
-    },
-    {
-      "_id": {
-        "$oid": "5fa9a62f561a305f20bd2ff6"
-      },
-      "buyerID": "5f999d97b697054d9cbffbbe",
-      "sellerID": "5f999d97b697054d9cbffbbe",
-      "shares": 5,
-      "soldFor": 5,
-      "asked": 5
-    }
   ],
   "unfulfilledOrders": []
 },{
