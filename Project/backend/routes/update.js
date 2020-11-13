@@ -174,10 +174,11 @@ app.delete("/:id/:symbol/buyorder/remove/:bid", passport.authenticate("jwt", { s
 					return res.status(400).send(err);
 				}
 				funds = result.userFunds;
-				// for(var i in result.unpBuyOrders){
-				// 	if(result.unpBuyOrders[i].orderID = req.params.bid){
-				// 		orderTotal = result.unpBuyOrders[i].shares*result.unpBuyOrders[i].price
-				// 	}
+				for(var i in result.unpBuyOrders){
+					if(result.unpBuyOrders[i].orderID = req.params.bid){
+						orderTotal = result.unpBuyOrders[i].shares*result.unpBuyOrders[i].price
+					}
+				}
 				// }        if(this.state.cancelOrderID != null && this.state.cancelStockID !=null){
 				// 	axios.all([
 				// 		axios({
