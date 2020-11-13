@@ -698,7 +698,7 @@ app.get("/:symbol/", async function(req, res){ //i wanna change :day to a query 
                 buyOrders[i].userID,
                 async function(err,result){
 					console.log("is there a problem?")
-				
+					console.log(buyOrders[i]);
                     if(err){
 						console.log(buyOrders[i]);
                         return 0;

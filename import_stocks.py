@@ -353,16 +353,6 @@ json_data = '''[{
   "eventSubscriptions": [],
   "sellOrders": [],
   "buyOrders": [
-    {
-      "_id": {
-        "$oid": "5fad8ada20a6a35614010900"
-      },
-      "orderID": "1nsB6y38HeI9",
-      "orderPlacement": 1,
-      "userID": "5fa9544adbfaa13bd8bb2475",
-      "shares": 5,
-      "price": 5
-    }
   ],
   "history": [],
   "dailyHistory": [],
@@ -464,16 +454,6 @@ json_data = '''[{
   "eventSubscriptions": [],
   "sellOrders": [],
   "buyOrders": [
-    {
-      "_id": {
-        "$oid": "5fad8b1620a6a35614010902"
-      },
-      "orderID": "yO6yF4ACPJhW",
-      "orderPlacement": 2,
-      "userID": "5fa9544adbfaa13bd8bb2475",
-      "shares": 9,
-      "price": 32
-    }
   ],
   "history": [],
   "dailyHistory": [],
