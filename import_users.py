@@ -8,6 +8,8 @@ myclient = MongoClient("mongodb://localhost:27017/")
    
 # database  
 db = myclient["webdevproject"] 
+
+db.drop_collection("users")
    
 # Created or Switched to collection  
 # names: GeeksForGeeks 

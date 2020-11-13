@@ -4,10 +4,15 @@ from bson.json_util import loads
   
   
 # Making Connection 
-myclient = MongoClient("mongodb://localhost:27017/")  
+myclient = MongoClient("mongodb://localhost:27017/")
+
+
    
 # database  
 db = myclient["webdevproject"] 
+
+db.drop_collection("stocks")
+
    
 # Created or Switched to collection  
 # names: GeeksForGeeks 
