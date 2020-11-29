@@ -43,7 +43,10 @@ export default class Home extends Component{
             watchlistCollection:[],
             parsedLists: [],
             WLitems: [],
-            
+			
+			fullfilledBOrders: [],
+			fullfilledSOrders: [],
+
             stockID: null,
             shares: 0,
             price: 0,
@@ -80,7 +83,10 @@ export default class Home extends Component{
             userSellOrders: props.user.unpSellOrders,
             userBuyOrders: props.user.unpBuyOrders,
             eventSubscriptions: props.user.eventSubscriptions,
-          	watchlistCollection: props.user.watchListCollection
+          	watchlistCollection: props.user.watchListCollection,
+
+			fullfilledBOrders: props.user.pBuyOrders,
+			fullfilledSOrders: props.user.pSellOrders,
 
          }) 
 
@@ -533,7 +539,56 @@ export default class Home extends Component{
                         <input type="submit" value='Cancel Subscription'></input>
 					</form>  
 				</div>    
-                     
+                
+				<div id = "sellhistory" class = "view">
+					<br/>
+					<b>User Sell Transaction History</b>
+					<br/>
+					<table>
+						<thead>
+							<th>Day</th>
+							<th>Sell Price</th>
+							<th>Seller Ask</th>
+							<th>Shares</th>
+							<th>Bidder Username</th>
+							<th>Seller Username</th>      
+						</thead>
+						{this.state.fullfilledSOrders.map((item,index)=>(
+							<tr>
+								<td>{item.day}</td>
+								<td>{item.soldFor}</td>
+								<td>{item.asked}</td>
+								<td>{item.shares}</td>
+								<td>{item.buyerName}</td>
+								<td>{item.sellerName}</td>
+							</tr>
+						))}                    
+					</table>
+
+					<br/>
+					<b>User Buy Transaction History</b>
+					<br/>
+					<table>
+						<thead>
+							<th>Day</th>
+							<th>Sell Price</th>
+							<th>Seller Ask</th>
+							<th>Shares</th>
+							<th>Bidder Username</th>
+							<th>Seller Username</th>      
+						</thead>
+						{this.state.fullfilledBOrders.map((item,index)=>(
+							<tr>
+								<td>{item.day}</td>
+								<td>{item.soldFor}</td>
+								<td>{item.asked}</td>
+								<td>{item.shares}</td>
+								<td>{item.buyerName}</td>
+								<td>{item.sellerName}</td>
+							</tr>
+						))}                    
+					</table>
+				</div>
             </div>
         </div>
         )

@@ -1,0 +1,152 @@
+Project: Stock Broker Application
+CHECK-IN November 13
+-----
+Samee Shahood 101143479
+Jothika Sundaram 101147833
+
+3.
+We implemented MongoDB into our application as one of our extensions, and have connected all API routes to the MongoDB that are related to the Stock object and the User object. In order to have the server communicate with 
+the MongoDB, we used the Mongoose library to get and update information inside objects in the MongoDB.
+
+For the frontend we used React to create the application. Along with having React running, all of the API routes and functionality that involve User-Server communication, such as sending buy orders, or adding event 
+subscriptions, etc. have been implemented on the React application.
+
+----
+4. 
+One of the key things the website needed was an order processing system, along with a system to simulate the order processing per day. This would require creating a working algorithm that fairly processes all buy 
+orders and sell orders in order to attempt to maximize the number of fulfilled orders per day. The algorithm follows the following pseudocode.
+
+for each stock:
+	sort all sell orders by ask (highest to lowest), then sort orders with the same price by priority (first come first serve)
+	sort all buy orders by bid (highest to lowest), then sort orders with the same price by priority (first come first serve)
+
+	for each buy order:
+		for each sell order:
+			if buy order shares<sell order shares:
+				Fulfill buy order, partial fulfill sell order
+			if sell order shares<buy order shares
+				Fulfill sell order, partial fulfill buy order
+			if sell shares = buy shares
+				Fulfill both buy order and sell order
+	for each unfulfilled order:
+		Return funds (for unfulfilled buy order) or shares (for unfulfilled sell order) to user	
+
+	push notification for all fulfilled orders and unfulfilled orders
+
+What this algorithm allows for is to ensure that as many orders as possible are fairly fulfilled. For example, if there is one buy order of A: $75, and two sell orders valued at B: $65 and C: $19, the orders A and B will be 
+matched together, meaning user B will receive $75/stock. This system is to ensure that buyers will pay for sell orders that are closest to their asks, and sellers will sell shares for bids not far off from their ask.
+
+For this project, implementing a notification system required some sort of method to push notifications from the server side to the receiving client in real time, particularly when notifying users of event subscriptions being 
+met, as well notifying users of buy and sell orders being processed. Following both of us completing the lecture on SocketIO, and going through the SocketIO tutorial, we decided on using socketIO in order to send notifications 
+to users connected to the website. For event subscriptions, we would have to check all event subscriptions that exist under a stock, and compare any changes in value to what the user is notified for, on a set interval (currently
+5 minutes). If an event subscription is met, the server would check if the user is connected to the server, and if they are, the event subscription notification would be sent in real time to the users client and be displayed on 
+their page.
+In the case of sending users real time notifications on fulfilled buy orders and sell orders, once orders are indeed processed, each processed and unprocessed order would be looped through, and if the users related to each 
+order were connected to the server, socketIO would emit a real time notification to the user.
+In the cases where there is no user client connected to the server, the notification would be pushed to the user object for the user to access upon logging into the website.
+
+Along with implementing the real time push notifications, and the actual order processing algorithm per stock, a system where a day can be simulated needs to be created, in order to process all orders placed in the day, and 
+move to the next day. The system we came up with is a route on the backend named “superuser”, whose login system returns a token which is used to verify if the super user actually exists, using socket IO. When the super user 
+clicks the day sim button, a function is emitted on server.js through socket.io, which does a for loop through each stock and processes the orders in that stock, and sends the notifications for fulfilled orders. It would also 
+increment the day.
+
+For the react application, we need to implement sessions in order to have an actual login system, where multiple users can log in to the website with their own account on their own client securely (using their own username and 
+password). In order to implement a session system, we installed passport.js on the backend and frontend. How passport.js works to store sessions is: upon a user logging in, if the login is valid with the data inside the user 
+database, the API request will return a special token which is matched to that specific users account to the client. This token will be stored on the clients local storage for that particular website. With this token, the 
+client will make requests using the token as the header, and what will return is the user account associated with the token and all the data stored in the user object. Upon logging out of the website, the token is cleared, 
+meaning the client can no longer access the user account data associated with the token.
+Another use for the tokens used by passport.js is that it serves as good security for post routes. For example, if a user would like to authenticate their funds, the token is required to be sent in the API request in order to 
+ensure that the user is authorized to change his own data. Without the tokens, users would be at risk of having their account tampered with as there would be no security associated with API requests such as posting updates to 
+userFunds, or adding orders to the user.
+
+---
+5. 
+Our Openstack Instance and Usage
+Our openstack instance is named: SameeShahood_JothikaSundaram 
+hosted on the floating IP: 134.117.129.69
+
+Username: student
+Password: jomama123 
+
+---
+6.
+Launch Instructions:
+
+Open a terminal and login to our instance using SSH by typing ssh student@134.117.129.69, and enter “jomama123” as the password.
+
+Initializing database:
+Open a terminal
+cd Project/Comp2406_Stock_broker_app/Project
+Run command: python import_stocks.py 
+Run command: python import_users.py
+
+Open a terminal 
+cd Project/Comp2406_Stock_broker_app/Project
+cd backend/
+node server
+
+Open a second terminal, keeping the previous terminal open
+cd Project/Comp2406_Stock_broker_app/Project
+cd frontend/
+npm start
+
+Open a third terminal, and tunnel to the backend using 
+ssh -L 5000:localhost:5000 student@134.117.129.69
+Login with “jomama123”
+
+Open a fourth terminal, tunnel to the frontend using 
+ssh -L 3000:localhost:3000 student@134.117.129.69
+
+
+Open a browser and go to localhost:3000/login
+Login with the credentials:jo@admin.com
+		password: badpassword
+		
+Or login to: anwar@admin.com
+Password: badpassword
+
+Or, look through all the users by getting them with the route: localhost:5000/users
+
+After logging in, you should be redirected to the home page at the URL: /home
+
+Homepage contents: /home
+This page serves as a dashboard that provides a summary of the user’s portfolio, current unprocessed orders and event subscriptions. The user can then cancel orders, create sell orders and cancel event subscriptions.
+
+Search stocks: /search
+Search page is where users can search for stocks. The user can select a specific stock and see a summary of its details, including its current value and history of processed orders. The ‘Highest Bid’ and ‘Ask’ sections will 
+show ‘N/A’ if no orders have been created for the selected stock. The user can then place a buy order by specifying the offer per share and the number of shares. The ‘Highest Bid’ should then update. They can also create an 
+event subscriptionship for that stock by specifying the notification trigger parameter and value. They can also add this stock to an existing watchlist. Currently, opening bid and opening asks are not displayed, as well as 
+lowest bid and highest ask on the frontend.
+CHOOSE TESLA (TSLA) TO VIEW HOW ORDER PROCESS HISTORY IS DISPLAYED
+
+Watchlist page : /watchlist
+The user can manage all their current watchlists, as well as create new watchlists, delete stocks off of existing watchlists as well as delete an entire watchlist. 
+
+Event subscriptions: /eventsubs
+Similar to watchlists, the user can manage their current subscriptions by deleting subscriptions, or editing the notification parameter for any of their existing subscriptions.
+
+Account: /account
+Currently only displays the logged in user’s information, such as email and username. There is also a logout button that will terminate the session and redirect the user to the login page.
+There is no functionality implemented yet for changing passwords.
+
+Super User: localhost:5000/superuser
+This page is where the day sim button is located. In order to access it, you must login with the username “car”, password “lol”. To sim a day, click the “sim day” button. This will process all the sell orders and match them.
+
+---
+
+API Routes that are not yet implemented on the frontend:
+These routes can still be tested using Postman @ localhost:5000
+
+/stocks?symbol={id} → returns all stocks with symbol containing the given id (substring)
+/stocks?minprice={price} → returns all stocks with currentAsk greater than the given minprice
+/stocks?maxprice={price} → returns all stocks with currentAsk greater than the given maxprice
+
+These query parameters can be combined together in postman requests. 
+
+---
+
+Bugs Not Yet Fixed:
+/watchlist: The user can add duplicate items to a watchlist, and if they choose to remove one of the duplicated items, all duplicates will be removed. We have not yet implemented a way to prevent the user from adding duplicates 
+to a watchlist. 
+
+/home: The user’s stock portfolio will store duplicated stocks with if multiple buy orders were made for that stock. We have not yet implemented a way to merge all orders on one stock in their portfolio
