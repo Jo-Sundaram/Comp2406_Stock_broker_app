@@ -171,8 +171,6 @@ app.get("/:symbol/history", async(req,res) => {
     }
 });
 
-
-
 app.get("/:symbol/info", async(req,res) => {
     const stock = await Stock.findOne({'symbol' : req.params.symbol})
             .then((stock)=>{
@@ -184,6 +182,35 @@ app.get("/:symbol/info", async(req,res) => {
 
 });
 
+app.get("/array/0", async(req,res) => {
+	console.log("???");
+	if(Object.keys(req.query)==0){
+        const stock = await Stock.findOne({'symbol' : req.params.symbol})
+        .then((stock)=>{
+            res.send("Nothing to get");
+        })
+        .catch((err)=>{
+            res.send("No data for this stoceeeeeeeeeeeeek");
+        });
+        return;
+       
+    }else{
+		let allStocks = [];
+		req.query.hasOwnProperty('array') ? allStocks =JSON.parse(req.query.array) : 0;
+		console.log(allStocks);
+		let returnStocks = []
+		for(var i in allStocks){
+			console.log(allStocks[i]);
+			let stock = await Stock.findOne({'symbol' : allStocks[i]});
+			returnStocks.push({
+				symbol: stock.symbol,
+				currentAsk: stock.currentAsk,
+				currentBid: stock.currentBid,
+			});
+		}
+		res.send({stocks: returnStocks});
+	}
+})
 
 app.post("/add",function(req,res){
 

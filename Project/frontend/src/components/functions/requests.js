@@ -117,7 +117,7 @@ const requests = {
         return result;
     },
 
-    getHighestAsk: async function(stockID){
+    getLowestAsk: async function(stockID){
         const promise = axios.get('http://localhost:5000/stocks/'+stockID+ '/info') //dummy user ID in place
         
         const dataPromise = await promise.then((response) => response.data.sellOrders)
@@ -125,35 +125,35 @@ const requests = {
         console.log(dataPromise);
 
 
-        var highestAsk = 'N/A';
+        var lowestAsk = 'N/A';
         for (var key in dataPromise){
-            if(dataPromise[key].price > highestAsk || highestAsk == 'N/A')
+            if(dataPromise[key].price < lowestAsk || lowestAsk == 'N/A')
             {
-                highestAsk = dataPromise[key].price;
+                lowestAsk = dataPromise[key].price;
             }
             
         }
 
-        return highestAsk;
+        return lowestAsk;
     },
 
-    getLowestBid: async function(stockID){
+    getHighestBid: async function(stockID){
         const promise = axios.get('http://localhost:5000/stocks/'+stockID+ '/info') //dummy user ID in place
         
         const dataPromise = await promise.then((response) => response.data.buyOrders)
 
         console.log(dataPromise);
 
-
-        var lowestBid = 'N/A';
+        var highestBid = 'N/A';
         for (var key in dataPromise){
-            if(dataPromise[key].price > lowestBid || lowestBid == 'N/A')
+			console.log(dataPromise[key].price);
+            if(dataPromise[key].price > highestBid || highestBid == 'N/A')
             {
-                lowestBid = dataPromise[key].price;
+                highestBid = dataPromise[key].price;
             }
         }
 
-        return lowestBid;
+        return highestBid;
     },
 
     parseListItems: async function(userID){

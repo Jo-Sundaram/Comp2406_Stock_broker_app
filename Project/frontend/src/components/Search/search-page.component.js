@@ -57,8 +57,8 @@ export default class Search extends Component{
             shares: 0,
             price: 0,
 
-			esParameter: '',
-			esType: '',
+			esParameter: 'incPrcnt',
+			esType: 'Bid',
             esAmount: 0,
 
             ask: 'N/A',
@@ -204,7 +204,7 @@ export default class Search extends Component{
         if(this.state.esParameter !=null && this.state.esAmount != null && this.state.esAmount != 0 && this.state.stockID != null && this.state.stockID != ''){
             
             var ID = await (requests.generateESID(this.state.stockID, this.state.userID));
-
+			console.log(this.state.esType);
             axios({
                 method: 'post',
                 url: 'http://localhost:5000/update/'+this.state.userID+'/'+this.state.stockID+'/ES/add', //dummy user
@@ -212,7 +212,7 @@ export default class Search extends Component{
                     subscriptionID: ID,
                     parameter: this.state.esParameter,
                     value: this.state.esAmount,
-					triggerOrder: 0,
+					triggerOrder: true,
 					type: this.state.esType,
 					notifSent: 0
 				},
@@ -314,14 +314,14 @@ export default class Search extends Component{
     handleChange = async (stockID) => {
         this.setState({ stockID });
 
-        var highestAsk = await (requests.getHighestAsk(stockID));
-        var lowestAsk = await (requests.getLowestBid(stockID));
+        var highestBid = await (requests.getHighestBid(stockID));
+        var lowestAsk = await (requests.getLowestAsk(stockID));
 	    var history = await (requests.getHistory(stockID));
 	   
 		var valueHistory = await (requests.getValueAllHistory(stockID));
         this.setState({
-            ask: highestAsk,
-			bid: lowestAsk,
+            ask: lowestAsk,
+			bid: highestBid,
 			stockValueHistory: valueHistory,
             stockHistory: history
         });

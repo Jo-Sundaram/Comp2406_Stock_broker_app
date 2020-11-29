@@ -14,12 +14,14 @@ export default class EventSubs extends Component{
         this.onEdit = this.onEdit.bind(this);
         this.onChangeEsAmount = this.onChangeEsAmount.bind(this);
 
+		this.onChangeEsNotification = this.onChangeEsNotification.bind(this);
+		this.onChangeEsParameter = this.onChangeEsParameter.bind(this);
     
         this.state = {
             userID: "",
             eventSubscriptions: [],
             stockID: 'TSLA',
-			esParameter: "",
+			esParameter: "incPrcnt",
 			esType: "",
             esAmount: "15",
 
@@ -27,8 +29,9 @@ export default class EventSubs extends Component{
             editStockID :null,
             editSubID :null,
 
-            submitButton : 0
+            submitButton : 0,
 
+			notification: true
         }
     }
 
@@ -46,7 +49,7 @@ export default class EventSubs extends Component{
 
         })
         console.log(this.props)
-     
+		console.log(props.user.eventSubscriptions);
     }
 
 
@@ -63,7 +66,20 @@ export default class EventSubs extends Component{
         this.setState({
             editAmount: e.target.value        
         });
+	}
+	
+	onChangeEsParameter(e){
+        this.setState({
+            esParameter: e.target.value        
+        });
+	}
+	
+	onChangeEsNotification(e){
+        this.setState({
+            notification: e.target.value        
+        });
     }
+
 
 
     onSubmit(e){
@@ -91,7 +107,7 @@ export default class EventSubs extends Component{
                     data: {
                         parameter: this.state.esParameter,
                         value: this.state.editAmount,
-                        triggerOrder: 0
+                        triggerOrder: this.state.notification
                     },
 					headers: {
 						Authorization: "Bearer " + localStorage.getItem("token")
@@ -157,18 +173,23 @@ export default class EventSubs extends Component{
 							<thead>
 								<th>Select</th>
 								<th>Symbol</th>
-								<th>Name</th>
-								<th>Current value</th>
+								<th>Parameter</th>
+								<th>Value</th>
 								<th>Trigger</th>
 							</thead>
                             {this.state.eventSubscriptions.map((item =>
                                 <tr>
                                     <td><input type="radio" name="select" value={[item.value, item.stockID, item.subscriptionID]} onChange = {this.onSelectEdit}/></td>
                                     <td>{item.stockID}</td>
-                                    <td>{item.name}</td>
-                                    <td>{item.value}</td>
-
-                                    <td>False</td>
+                                    <td>{item.parameter}</td>
+									<td>{item.value}</td>
+									{item.triggerOrder == false &&
+										<td>Off</td>
+									}
+									{item.triggerOrder == true &&
+										<td>On</td>
+									}
+									
                                 </tr>
                                 ))}
                         </table>
@@ -191,6 +212,12 @@ export default class EventSubs extends Component{
                                     placeholder="%10"/>
                             
                                 <div>
+
+								<label>Turn On Notification</label>
+                                <select name="select" id = "select-params" value={this.state.notification} onChange = {this.onChangeEsNotification}>
+                                    <option value="true">On</option>
+                                    <option value="false">Off</option>
+                                </select> 
                                 <button onClick = {this.onEdit}>Edit Subscription</button>
                                 <button onClick = {this.onRemove}>Remove Subscription</button>
                                 </div>

@@ -280,149 +280,151 @@ const checkMetES = async client => {
         let perBidChange = Math.abs(dollarBidChange/openingBid)*100;
 
         for (var k in stocks[i].eventSubscriptions){
-            let notifSent = 0;
-            let notification = {};
+			if(stocks[i].eventSubscriptions.triggerOrder == true){
+				let notifSent = 0;
+				let notification = {};
 
-            if(stocks[i].eventSubscriptions[k].notifSent == 0){
-                
-                if(stocks[i].eventSubscriptions[k].type == "Ask"){
-                    if( stocks[i].eventSubscriptions[k].parameter == "incPrcnt"){
-                        if (perAskChange >=  stocks[i].eventSubscriptions[k].value){
-                            notification = {
-                                type: "ask",
-                                stock: stocks[i].symbol,
-                                change: "increased",
-                                value: stocks[i].eventSubscriptions[k].value,
-                                param: "%"
-                            }
-                            notifSent = 1;
-                        }
-                    }
-                    if(stocks[i].eventSubscriptions[k].parameter == "incDollar"){
-                        if (dollarAskChange >=  stocks[i].eventSubscriptions[k].value){
-                            notification = {
-                                type: "ask",
-                                stock: stocks[i].symbol,
-                                change: "increased",
-                                stocks: stocks[i].eventSubscriptions[k].value,
-                                param: "$"
-                            }
-                            notifSent = 1;
-                        }
-                    }
-                    if(stocks[i].eventSubscriptions[k].parameter == "decPrcnt"){
-                        if (perAskChange >=  stocks[i].eventSubscriptions[k].value){
-                            notification = {
-                                type: "ask",
-                                stock: stocks[i].symbol,
-                                change: "decreased",
-                                value: stocks[i].eventSubscriptions[k].value,
-                                param: "%"
-                            }
-                            notifSent = 1;
-                        }
-                    }
-                    if(stocks[i].eventSubscriptions[k].parameter == "decDollar"){
-                        if (dollarAskChange >=  stocks[i].eventSubscriptions[k].value){
-                            notification = {
-                                type: "ask",
-                                stock: stocks[i].symbol,
-                                change: "decreased",
-                                value: stocks[i].eventSubscriptions[k].value,
-                                param: "$"
-                            }
-                            notifSent = 1;
-                        }
-                    }
-                }
+				if(stocks[i].eventSubscriptions[k].notifSent == 0){
+					
+					if(stocks[i].eventSubscriptions[k].type == "Ask"){
+						if( stocks[i].eventSubscriptions[k].parameter == "incPrcnt"){
+							if (perAskChange >=  stocks[i].eventSubscriptions[k].value){
+								notification = {
+									type: "ask",
+									stock: stocks[i].symbol,
+									change: "increased",
+									value: stocks[i].eventSubscriptions[k].value,
+									param: "%"
+								}
+								notifSent = 1;
+							}
+						}
+						if(stocks[i].eventSubscriptions[k].parameter == "incDollar"){
+							if (dollarAskChange >=  stocks[i].eventSubscriptions[k].value){
+								notification = {
+									type: "ask",
+									stock: stocks[i].symbol,
+									change: "increased",
+									stocks: stocks[i].eventSubscriptions[k].value,
+									param: "$"
+								}
+								notifSent = 1;
+							}
+						}
+						if(stocks[i].eventSubscriptions[k].parameter == "decPrcnt"){
+							if (perAskChange >=  stocks[i].eventSubscriptions[k].value){
+								notification = {
+									type: "ask",
+									stock: stocks[i].symbol,
+									change: "decreased",
+									value: stocks[i].eventSubscriptions[k].value,
+									param: "%"
+								}
+								notifSent = 1;
+							}
+						}
+						if(stocks[i].eventSubscriptions[k].parameter == "decDollar"){
+							if (dollarAskChange >=  stocks[i].eventSubscriptions[k].value){
+								notification = {
+									type: "ask",
+									stock: stocks[i].symbol,
+									change: "decreased",
+									value: stocks[i].eventSubscriptions[k].value,
+									param: "$"
+								}
+								notifSent = 1;
+							}
+						}
+					}
 
-                if(stocks[i].eventSubscriptions[k].type == "Bid"){
-                    if( stocks[i].eventSubscriptions[k].parameter == "incPrcnt"){
-                        if (perBidChange >=  stocks[i].eventSubscriptions[k].value){
-                            notification = {
-                                type: "bid",
-                                stock: stocks[i].symbol,
-                                change: "increased",
-                                value: stocks[i].eventSubscriptions[k].value,
-                                param: "%"
-                            }
-                            notifSent = 1;
-                        }
-                    }
-                    if(stocks[i].eventSubscriptions[k].parameter == "incDollar"){
-                        if (dollarBidChange >=  stocks[i].eventSubscriptions[k].value){
-                            notification = {
-                                type: "bid",
-                                stock: stocks[i].symbol,
-                                change: "increased",
-                                value: stocks[i].eventSubscriptions[k].value,
-                                param: "$"
-                            }
-                            notifSent = 1;
-                        }
-                    }
-                    if(stocks[i].eventSubscriptions[k].parameter == "decPrcnt"){
-                        if (perBidChange >=  stocks[i].eventSubscriptions[k].value){
-                            notification = {
-                                type: "bid",
-                                stock: stocks[i].symbol,
-                                change: "decreased",
-                                value: stocks[i].eventSubscriptions[k].value,
-                                param: "%"
-                            }
-                            notifSent = 1;
-                        }
-                    }
-                    if(stocks[i].eventSubscriptions[k].parameter == "decDollar"){
-                        if (dollarBidChange >=  stocks[i].eventSubscriptions[k].value){
-                            notification = {
-                                type: "bid",
-                                stock: stocks[i].symbol,
-                                change: "decreased",
-                                value: stocks[i].eventSubscriptions[k].value,
-                                param: "$"
-                            }
-                            notifSent = 1;
-                        }
-                    }
-                }
-                
-            }
+					if(stocks[i].eventSubscriptions[k].type == "Bid"){
+						if( stocks[i].eventSubscriptions[k].parameter == "incPrcnt"){
+							if (perBidChange >=  stocks[i].eventSubscriptions[k].value){
+								notification = {
+									type: "bid",
+									stock: stocks[i].symbol,
+									change: "increased",
+									value: stocks[i].eventSubscriptions[k].value,
+									param: "%"
+								}
+								notifSent = 1;
+							}
+						}
+						if(stocks[i].eventSubscriptions[k].parameter == "incDollar"){
+							if (dollarBidChange >=  stocks[i].eventSubscriptions[k].value){
+								notification = {
+									type: "bid",
+									stock: stocks[i].symbol,
+									change: "increased",
+									value: stocks[i].eventSubscriptions[k].value,
+									param: "$"
+								}
+								notifSent = 1;
+							}
+						}
+						if(stocks[i].eventSubscriptions[k].parameter == "decPrcnt"){
+							if (perBidChange >=  stocks[i].eventSubscriptions[k].value){
+								notification = {
+									type: "bid",
+									stock: stocks[i].symbol,
+									change: "decreased",
+									value: stocks[i].eventSubscriptions[k].value,
+									param: "%"
+								}
+								notifSent = 1;
+							}
+						}
+						if(stocks[i].eventSubscriptions[k].parameter == "decDollar"){
+							if (dollarBidChange >=  stocks[i].eventSubscriptions[k].value){
+								notification = {
+									type: "bid",
+									stock: stocks[i].symbol,
+									change: "decreased",
+									value: stocks[i].eventSubscriptions[k].value,
+									param: "$"
+								}
+								notifSent = 1;
+							}
+						}
+					}
+					
+				}
 
-            if(notifSent == 1){      
-                for(var f in users){
-                    if(stocks[i].eventSubscriptions[k].userID == users[f].userID){
-                        console.log("prrrrrrrrrrrrraaaaaaappaapap");
-                        client = users[f].clientInfo;
-                        
-                        client.emit("eventNotif", notification);
+				if(notifSent == 1){      
+					for(var f in users){
+						if(stocks[i].eventSubscriptions[k].userID == users[f].userID){
+							console.log("prrrrrrrrrrrrraaaaaaappaapap");
+							client = users[f].clientInfo;
+							
+							client.emit("eventNotif", notification);
 
-                        Stock.updateMany(
-                            {"symbol": stocks[i].symbol, 'eventSubscriptions.subscriptionID' : stocks[i].eventSubscriptions[k].subscriptionID},
-                            {$set: {'eventSubscriptions.$.notifSent': 1}},
-                            function(err){
-                                if(err){
-                                    console.log(err);
-                                }
-                            }
-                        );
-                    }
-                }
+							Stock.updateMany(
+								{"symbol": stocks[i].symbol, 'eventSubscriptions.subscriptionID' : stocks[i].eventSubscriptions[k].subscriptionID},
+								{$set: {'eventSubscriptions.$.notifSent': 1}},
+								function(err){
+									if(err){
+										console.log(err);
+									}
+								}
+							);
+						}
+					}
 
-                User.findByIdAndUpdate(
-                    stocks[i].eventSubscriptions[k].userID,
-                    {$push: {notifications: {
-                        notification: ("EVENT SUBSCRIPTION: " + notification.stock + " " + notification.type + " " + notification.change + " by " + notification.value + notification.param + ".")
-                    }}},
-                    function(err){
-                        if(err){
-                            console.log(err);
-                        }
-                    }
-                );
+					User.findByIdAndUpdate(
+						stocks[i].eventSubscriptions[k].userID,
+						{$push: {notifications: {
+							notification: ("EVENT SUBSCRIPTION: " + notification.stock + " " + notification.type + " " + notification.change + " by " + notification.value + notification.param + ".")
+						}}},
+						function(err){
+							if(err){
+								console.log(err);
+							}
+						}
+					);
 
-            }
-        }
+				}
+			}
+		}
     }
 }
 

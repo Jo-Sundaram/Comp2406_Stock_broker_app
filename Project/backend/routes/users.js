@@ -198,8 +198,7 @@ app.post("/:id/watchlist/update/add", passport.authenticate("jwt", { session: fa
 						stockName: stock.stockFullName,
 						sharesOwned:0,
 						avgBid:stock.currentBid,
-						currAsk : stock.currHighestAsk
-				
+						currAsk : stock.currHighestAsk,
 					}
 			}},
 				function(err){

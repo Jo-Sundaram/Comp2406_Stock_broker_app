@@ -20,6 +20,7 @@ app.post("/:id/:symbol/ES/add", passport.authenticate("jwt", { session: false })
 				stockID: req.params.symbol,
 				parameter: req.body.parameter,
 				value: req.body.value,
+				type: req.body.type,
 				triggerOrder: req.body.triggerOrder
 			}}}, 
 			function(err){
@@ -54,7 +55,12 @@ app.post("/:id/:symbol/ES/update/:eid",  passport.authenticate("jwt", { session:
 	} else {
 		User.updateMany(
 			{_id: req.params.id, 'eventSubscriptions.subscriptionID' : req.params.eid},
-			{$set: {'eventSubscriptions.$.value': req.body.value}},
+			{$set: 
+				{'eventSubscriptions.$.value': req.body.value,
+				'eventSubscriptions.$.parameter': req.body.parameter,
+				'eventSubscriptions.$.triggerOrder': req.body.triggerOrder
+				}
+			},
 			function(err){
 				if(err){
 					return res.status(422).send(err);
@@ -63,7 +69,12 @@ app.post("/:id/:symbol/ES/update/:eid",  passport.authenticate("jwt", { session:
 		);
 		Stock.updateMany(
 			{"symbol": req.params.symbol, 'eventSubscriptions.subscriptionID' : req.params.eid},
-			{$set: {'eventSubscriptions.$.value': req.body.value}},
+			{$set: 
+				{'eventSubscriptions.$.value': req.body.value,
+				'eventSubscriptions.$.parameter': req.body.parameter,
+				'eventSubscriptions.$.triggerOrder': req.body.triggerOrder
+				}
+			},
 			function(err){
 				if(err){
 					return res.status(422).send(err);
@@ -120,8 +131,18 @@ app.post("/:id/:symbol/buyorder/add", passport.authenticate("jwt", { session: fa
 			}
 		);
 
+		let currStock = await Stock.findOne({'symbol' : req.params.symbol});
 		
 		if(funds>=orderTotal){
+
+			var highestBid = req.body.price;
+			for (var key in currStock.buyOrders){
+				if(currStock.buyOrders[key].price > highestBid || highestBid == 0)
+				{
+					highestBid = currStock.buyOrders[key].price;
+				}
+				
+			}
 			buyOrderPlacement += 1
 			User.findByIdAndUpdate(
 				req.params.id,
@@ -138,7 +159,7 @@ app.post("/:id/:symbol/buyorder/add", passport.authenticate("jwt", { session: fa
 					}
 				}
 			);
-			Stock.findOneAndUpdate(
+			Stock.updateMany(
 				{'symbol' : req.params.symbol},
 				{$push: {buyOrders: {
 					orderID: req.body.orderID,
@@ -146,7 +167,9 @@ app.post("/:id/:symbol/buyorder/add", passport.authenticate("jwt", { session: fa
 					userID: req.params.id,
 					shares: req.body.shares,
 					price: req.body.price
-				}}},
+				}},
+				$set:{currentBid: highestBid}
+			},
 				function(err){
 					if(err){
 						return res.status(400).send(err);
@@ -251,9 +274,20 @@ app.post("/:id/:symbol/sellorder/add", passport.authenticate("jwt", { session: f
 			}
 		);
 
-		console.log(shares);
+		let currStock = await Stock.findOne({'symbol' : req.params.symbol});
+
+		
 
 		if(shares>=req.body.shares){
+
+			var lowestAsk = req.body.price;
+			for (var key in currStock.sellOrders){
+				if(currStock.sellOrders[key].price < lowestAsk || lowestAsk == "N/A")
+				{
+					lowestAsk = currStock.sellOrders[key].price;
+				}
+			}
+
 			sellOrderPlacement += 1;
 			User.updateMany(
 				{_id: req.params.id, 'stockPortfolio.stockID': req.params.symbol},
@@ -270,7 +304,7 @@ app.post("/:id/:symbol/sellorder/add", passport.authenticate("jwt", { session: f
 					}
 				}
 			);
-			Stock.findOneAndUpdate(
+			Stock.updateMany(
 				{'symbol' : req.params.symbol},
 				{$push: {sellOrders: {
 					orderID: req.body.orderID,
@@ -278,10 +312,12 @@ app.post("/:id/:symbol/sellorder/add", passport.authenticate("jwt", { session: f
 					userID: req.params.id,
 					shares: req.body.shares,
 					price: req.body.price
-				}}},
+				}},
+				$set:{currentAsk: lowestAsk}
+				},
 				function(err){
 					if(err){
-						return res.status(400).send(err);
+						console.log(err);
 					}
 				}
 			);

@@ -74,12 +74,32 @@ export default class Home extends Component{
      
     }  
   
-    async componentWillReceiveProps(props){ //this is called to before render method
+	async componentWillReceiveProps(props){ //this is called to before render method
+		
+		let stockList = props.user.stockPortfolio;
+		let stocksOwned = []
+		for(var i in stockList){
+			stocksOwned.push('"'+stockList[i].stockID+'"');
+		}
+
+		const promise = axios.get('http://localhost:5000/stocks/array/0?array=['+ stocksOwned +']'); //dummy user ID in place
+        
+		const dataPromise = await promise.then((response) => response.data.stocks);
+		
+		for(var j in stockList){
+			for(var k in dataPromise){
+				if(dataPromise[k].symbol == stockList[j].stockID){
+					stockList[j]["currentAsk"] = dataPromise[k].currentAsk;
+					stockList[j]["currentBid"] = dataPromise[k].currentBid;
+				}
+			}
+		}
+
         this.setState({
             user : props.user.username,
             userID: props.user._id,
             userFunds: props.user.userFunds,
-            stockPortfolio: props.user.stockPortfolio,
+            stockPortfolio: stockList,
             userSellOrders: props.user.unpSellOrders,
             userBuyOrders: props.user.unpBuyOrders,
             eventSubscriptions: props.user.eventSubscriptions,
@@ -101,7 +121,6 @@ export default class Home extends Component{
          }
          
          this.setState({parsedLists:parsedList});
-
     }
 
 
@@ -331,7 +350,30 @@ export default class Home extends Component{
     handleListChange = async (listname) => {
         this.setState({ listname });
     
-        var stocksInWL = await (helper.getStockItems(this.state.userID, listname));
+		var stocksInWL = await (helper.getStockItems(this.state.userID, listname));
+		let stocks = [];
+
+		for(var i in stocksInWL){
+			stocks.push('"'+stocksInWL[i].stockID+'"');
+		}
+
+		console.log('http://localhost:5000/stocks/array/0?array=['+ stocks +']');
+		const promise = axios.get('http://localhost:5000/stocks/array/0?array=['+ stocks +']'); //dummy user ID in place
+        
+		const dataPromise = await promise.then((response) => response.data.stocks);
+		
+		console.log(dataPromise);
+
+		for(var j in stocksInWL){
+			for(var k in dataPromise){
+				if(dataPromise[k].symbol == stocksInWL[j].stockID){
+					stocksInWL[j]["currentAsk"] = dataPromise[k].currentAsk;
+					stocksInWL[j]["currentBid"] = dataPromise[k].currentBid;
+					console.log("?!!!")
+				}
+			}
+		}
+
         this.setState({
             WLitems: stocksInWL
         });
@@ -392,16 +434,16 @@ export default class Home extends Component{
 								<th>Select</th>
 								<th>Symbol</th>
 								<th>Shares Owned</th>
-								<th>AVG price paid</th>
-								<th>Current value</th>
+								<th>Current Ask</th>
+								<th>Current Bid</th>
 							</thead>
                             {this.state.stockPortfolio.map((item =>
                             <tr>
                                 <td><input type="radio" name="Sell" value={item.stockID} onChange = {this.onChangeOrderStock}/></td>
                                 <td>{item.stockID}</td>
                                 <td>{item.shares}</td>
-                                <td>50</td>
-                                <td>45</td>
+                                <td>{item.currentAsk}</td>
+                                <td>{item.currentBid}</td>
                             </tr>
                             ))}
                         </table>
@@ -496,17 +538,15 @@ export default class Home extends Component{
 						<thead>
 							<th>Symbol</th>
 							<th>Name</th>
-							<th>$ / Share</th>
-							<th>Avg $ paid</th>
-							<th>Current value</th>
+							<th>Current Ask</th>
+							<th>Current Bid</th>
 						</thead>
                         {this.state.WLitems.map((item,index)=>(
                             <tr>
                                 <td>{item.stockID}</td>
                                 <td>{item.name}</td>
-                                <td>{item.shares}</td>
-                                <td>{item.avgBid}</td>
-                                <td>{item.currVal}</td>
+                                <td>{item.currentAsk}</td>
+                                <td>{item.currentBid}</td>
                               
                             </tr>
                         ))}

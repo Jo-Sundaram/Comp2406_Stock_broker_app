@@ -139,12 +139,35 @@ export default class Watchlist extends Component{
     handleChange = async (listname) => {
         this.setState({ listname });
     
-        var stocksInWL = await (helper.getStockItems(this.state.userID, listname));
+		var stocksInWL = await (helper.getStockItems(this.state.userID, listname));
+		let stocks = [];
+
+		for(var i in stocksInWL){
+			stocks.push('"'+stocksInWL[i].stockID+'"');
+		}
+
+		const promise = axios.get('http://localhost:5000/stocks/array/0?array=['+ stocks +']'); //dummy user ID in place
+        
+		const dataPromise = await promise.then((response) => response.data.stocks);
+		
+		console.log(dataPromise);
+
+		for(var j in stocksInWL){
+			for(var k in dataPromise){
+				if(dataPromise[k].symbol == stocksInWL[j].stockID){
+					stocksInWL[j]["currentAsk"] = dataPromise[k].currentAsk;
+					stocksInWL[j]["currentBid"] = dataPromise[k].currentBid;
+					console.log("?!!!")
+				}
+			}
+		}
+
         this.setState({
             stockItems: stocksInWL
         });
 
         console.log(stocksInWL);
+
     }
 
     onRemoveList(e){
@@ -215,18 +238,16 @@ export default class Watchlist extends Component{
 							<th>Remove</th>
 							<th>Symbol</th>
 							<th>Name</th>
-							<th>Shares Owned</th>
-							<th>AVG price paid</th>
-							<th>Current value</th>
+							<th>Current Ask</th>
+							<th>Current Bid</th>
 						</thead>
                         {this.state.stockItems.map((item,index)=>(
                             <tr>
                                 <td><input type="radio" name="Remove" value={[item.stockID]} onChange = {this.onSelectStock}/></td>
                                 <td>{item.stockID}</td>
                                 <td>{item.name}</td>
-                                <td>{item.shares}</td>
-                                <td>{item.avgBid}</td>
-                                <td>{item.currVal}</td>
+                                <td>{item.currentAsk}</td>
+                                <td>{item.currentBid}</td>
                               
                             </tr>
                         ))}
@@ -236,10 +257,6 @@ export default class Watchlist extends Component{
                 <button onClick = {this.onRemoveList}>Delete Entire List</button>            
                 </div>
 				</div>
-
-            
-                
-
 
             </div>
 
