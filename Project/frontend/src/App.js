@@ -11,6 +11,7 @@ import Account from "./components/Account/account.component"
 import Watchlist from "./components/Watchlist/watchlist-page.component"
 import EventSubscriptions from "./components/EventSubscriptions/event-subs.component"
 import Secret from "./Secret";
+import Notification from "./components/Notifications/notification.component"
 import { UserContext } from './UserContext';
 
 
@@ -97,6 +98,7 @@ if(user.stockPortfolio!==undefined){
 
           <Route path="/eventsubs" render = {(routeProps) => (<EventSubscriptions {...routeProps} user = {user}/>)}/>
 
+		  <Route path="/notifications" render = {(routeProps) => (<Notification {...routeProps} user = {user}/>)}/>
 
           <Route path="/secret" component={Secret} />
         </Switch>

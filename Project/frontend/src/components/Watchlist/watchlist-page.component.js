@@ -182,9 +182,14 @@ export default class Watchlist extends Component{
 
             <div>
                 <Navbar/>
-                <h2>Your Watchlists</h2>
+				<div class="topnav">
+					<p>Your Watchlists</p>
+				</div>
+                
+				<br></br>
 
-                <div id = "select">
+				<div class = "selectlist">
+					<label>Select a watchlist</label>
                 <form onSubmit = {this.onAddList}>
 
                     <SelectSearch 
@@ -193,27 +198,27 @@ export default class Watchlist extends Component{
                     onChange = {this.handleChange}
                     name="stocks" 
                     placeholder="Select a watchlist" />
-
-                
-
+	
+				<br/>
               
                 <button id = "submit">Create List</button>
 
                 <input type = "text" onChange = {this.handleInput}/>
 
                 </form>
-                </div>
 
-            
-                <div className = "watchlist">
+			<br></br>
+				<div className = "watch-list">
                     <h2></h2>                    
                     <table>
-                        <th>Remove</th>
-                        <th>Symbol</th>
-                        <th>Name</th>
-                        <th>Shares Owned</th>
-                        <th>AVG price paid</th>
-                        <th>Current value</th>
+						<thead>
+							<th>Remove</th>
+							<th>Symbol</th>
+							<th>Name</th>
+							<th>Shares Owned</th>
+							<th>AVG price paid</th>
+							<th>Current value</th>
+						</thead>
                         {this.state.stockItems.map((item,index)=>(
                             <tr>
                                 <td><input type="radio" name="Remove" value={[item.stockID]} onChange = {this.onSelectStock}/></td>
@@ -230,6 +235,10 @@ export default class Watchlist extends Component{
                 <button onClick ={this.onRemoveStock}>Remove Stock</button>            
                 <button onClick = {this.onRemoveList}>Delete Entire List</button>            
                 </div>
+				</div>
+
+            
+                
 
 
             </div>

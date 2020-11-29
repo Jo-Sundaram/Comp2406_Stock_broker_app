@@ -48,11 +48,11 @@ export default class Search extends Component{
 			stockHistory: [],
 			stockValueHistory: [],
 
-			valueHistoryStartDay: 0,
-			valueHistoryEndDay: 0,
+			valueHistoryStartDay: '',
+			valueHistoryEndDay: '',
 
-			tranHistoryStartDay:0,
-			tranHistoryEndDay: 0,
+			tranHistoryStartDay:'',
+			tranHistoryEndDay: '',
 
             shares: 0,
             price: 0,
@@ -338,16 +338,18 @@ export default class Search extends Component{
         return(
                 <div>
                     <Navbar/>
-                    <div id = "top-nav" >
-                        <div>
+                    <div class = "stopnav" >
+					<p>Search Stocks</p>
                             <SelectSearch 
                             options={this.state.stockList} 
                             search
                             onChange = {this.handleChange}
                             name="stocks" 
                             placeholder="Search for a stock" />
-                        </div>
+							
+							
                     </div>
+					
                     <div id = "main-body" class = "main">
                         <div id = "recent-asks">
                             <div id =" stock-name">
@@ -376,13 +378,15 @@ export default class Search extends Component{
 						<b> History of Processed Orders</b>
 						<form onSubmit={this.onSubmitHistory}>
 							<input 
-								name="number"
+								placeholder="Start Day"
+								type="number"
 								min = "0"
 								value={this.state.tranHistoryStartDay} 
 								onChange = {this.onChangeStartDay}
 							/>
 							<input 
-								name="number" 
+								placeholder="End Day"
+								type="number" 
 								id = "0" 
 								value={this.state.tranHistoryEndDay} 
 								onChange = {this.onChangeEndDay}
@@ -393,13 +397,14 @@ export default class Search extends Component{
                         
 
                             <table id = "stock-history">
-								<th>Day</th>
-                                <th>Sell Price</th>
-                                <th>Seller Ask</th>
-                                <th>Shares</th>
-                                <th>Bidder Username</th>
-                                <th>Seller Username</th>    
-
+								<thead>
+									<th>Day</th>
+									<th>Sell Price</th>
+									<th>Seller Ask</th>
+									<th>Shares</th>
+									<th>Bidder Username</th>
+									<th>Seller Username</th>    
+								</thead>
                                 {this.state.stockHistory.map((item,index)=>(
                                     <tr>
                                         <td>{item.day}</td>
@@ -421,14 +426,17 @@ export default class Search extends Component{
 							<div>
 								<form onSubmit={this.onSubmitValueHistory}>
 									<input 
-										name="number"
+										placeholder = "Start Day"
+										type="number"
 										min = "0"
 										value={this.state.valueHistoryStartDay} 
 										onChange = {this.onChangeValueStartDay}
+										
 									/>
 									<input 
-										name="number" 
-										id = "0" 
+										placeholder = "End Day"	
+										type="number" 
+										min = "0" 
 										value={this.state.valueHistoryEndDay} 
 										onChange = {this.onChangeValueEndDay}
 									/>
@@ -441,14 +449,14 @@ export default class Search extends Component{
 							
 
                             <table id = "stock-history">
-								
+								<thead>
 								<th>Day</th>
                                 <th>Highest Ask</th>
                                 <th>Lowest Ask</th>
                                 <th>Highest Bid</th>
                                 <th>Lowest Bid</th>
                                 <th>Shares Sold</th>    
-
+								</thead>
                                 {this.state.stockValueHistory.map((item,index)=>(
                                     <tr>
                                         <td>{item.day}</td>

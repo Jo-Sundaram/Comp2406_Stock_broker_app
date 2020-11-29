@@ -2,10 +2,39 @@
  * Main wrapper
  */
  .select-search {
-    width: 300px;
-    position: relative;
+	width: 300px;
+	position: relative;
     font-family: 'Nunito Sans', sans-serif;
-    box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+ .stopnav {
+	background-color: rgb(88, 82, 116);
+	overflow: visible;
+	align-items:left;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-left: 7%;
+  }
+  
+  /* Style the links inside the navigation bar */
+  .stopnav p {
+	float: right;
+	color: #f2f2f2;
+	text-align: center;
+	padding-right: 30px;
+	margin-bottom: 1px;
+	text-decoration: none;
+	font-size: 17px;
+  } */
+
+.stopnav .select-search {
+	width: 30%;
+	height: 45px;
+	position: relative;
+    font-family: 'Nunito Sans', sans-serif;
+	box-sizing: border-box;
+	
 }
 
 .select-search *,

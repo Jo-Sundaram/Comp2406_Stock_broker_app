@@ -147,15 +147,20 @@ export default class EventSubs extends Component{
 
             <div>
                 <Navbar/>
-                <h2>Your Event Subscriptions</h2>
-                <div className = "list-container">
-                    <div id = "event-subscriptions" class = "view">
+				<div class="topnav">
+					<p>Your Event Subscriptions</p>
+				</div>
+				<br>
+				</br>
+                    <div class = "eventsubscriptions">
                         <table>
-                            <th>Select</th>
-                            <th>Symbol</th>
-                            <th>Name</th>
-                            <th>Current value</th>
-                            <th>Trigger</th>
+							<thead>
+								<th>Select</th>
+								<th>Symbol</th>
+								<th>Name</th>
+								<th>Current value</th>
+								<th>Trigger</th>
+							</thead>
                             {this.state.eventSubscriptions.map((item =>
                                 <tr>
                                     <td><input type="radio" name="select" value={[item.value, item.stockID, item.subscriptionID]} onChange = {this.onSelectEdit}/></td>
@@ -196,7 +201,6 @@ export default class EventSubs extends Component{
                   
                 </div>
                 
-            </div>
         );
     }
 }

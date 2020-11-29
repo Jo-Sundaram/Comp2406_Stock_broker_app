@@ -341,23 +341,26 @@ export default class Home extends Component{
         return(
             
            <div>
-            <div id = "top-nav" class = "view">Welcome {this.state.user}</div>
+            <div class = "topnav">
+				<p>Welcome {this.state.user}</p></div>
             <Navbar/>
             <div id = "dashboard-body" class = "dashboard">
                 <div id = "user-funds" class = "view">
                     <h2>User Funds</h2>
-                    <h4 id = "balance">Cash balance: ${this.state.userFunds}</h4>
-                    <h4 id = "total-value">Total portfolio value: $100</h4>
+                    <b id = "balance">Cash balance: ${this.state.userFunds}</b>
+                    <b id = "total-value">Total portfolio value: $100</b>
                     
+					<br></br>
                     <div>
                         <form onSubmit={this.onSubmitDep}>
                             <label for="">Deposit Funds</label><br/>
                             <input 
-                                type="number" min="0"
+								type="number" min="0"
+								class="fundsBoxes"
                                 value={this.state.depAmount}
                                 onChange = {this.onChangeDep}
                             />
-                            <input type="submit" value='Deposit'></input>
+                            <input type="submit" class="fundsButton" value='Deposit'></input>
                         </form>
                     </div>
                     
@@ -365,10 +368,12 @@ export default class Home extends Component{
                         <form onSubmit={this.onSubmitWith}>
                             <label for="">Widthdraw Funds</label><br/>
                             <input 
-                                type="number" min="0"
+								type="number" min="0"
+								class="fundsBoxes"
+
                                 value={this.state.withAmount}
                                 onChange = {this.onChangeWith} />
-                            <input type="submit" value='Withdraw'></input>
+                            <input type="submit" class="fundsButton" value='Withdraw'></input>
                         </form>
                     </div>
                 </div>
@@ -377,11 +382,13 @@ export default class Home extends Component{
                     <form onSubmit={this.onSellOrderSubmit}>
                         <h2>Stocks Owned</h2>
                         <table>
-                            <th>Select</th>
-                            <th>Symbol</th>
-                            <th>Shares Owned</th>
-                            <th>AVG price paid</th>
-                            <th>Current value</th>
+							<thead>
+								<th>Select</th>
+								<th>Symbol</th>
+								<th>Shares Owned</th>
+								<th>AVG price paid</th>
+								<th>Current value</th>
+							</thead>
                             {this.state.stockPortfolio.map((item =>
                             <tr>
                                 <td><input type="radio" name="Sell" value={item.stockID} onChange = {this.onChangeOrderStock}/></td>
@@ -394,14 +401,14 @@ export default class Home extends Component{
                         </table>
 
                         <div>
-                            <label>Enter Sell Price/Share: $</label>
+                            <br/><label>Enter Sell Price/Share: $</label><br/>
                             <input type="number" min="0"
                                 id="sellPrice-input"
                                 value={this.state.price}
                                 onChange = {this.onChangeOrderPrice}
                             /> 
                             <br/>
-                            <label>Enter # Shares: </label>
+                            <label>Enter # Shares: </label><br/>
                             <input type="number" min="0"
                                 id="sell-shares"
                                 value={this.state.shares}
@@ -414,17 +421,19 @@ export default class Home extends Component{
                     </form>
                 </div>
 
-                <form onSubmit={this.onCancelOrder}>
-                    <div id = "unprocessed-buy-orders" class = "view">
-                        
+				<div id = "unprocessed-orders" class = "view">
+					<form onSubmit={this.onCancelOrder}>
+
                         <h2>Unprocessed Buy Orders</h2>
                         <table>
-                            <th>Select</th>	
-                            <th>Symbol</th>
-                            <th>Type</th>
-                            <th>Price per share</th>
-                            <th>Shares</th>
-                            <th>Fulfilled</th>
+							<thead>
+								<th>Select</th>	
+								<th>Symbol</th>
+								<th>Type</th>
+								<th>Price per share</th>
+								<th>Shares</th>
+								<th>Fulfilled</th>
+							</thead>
                             {this.state.userBuyOrders.map((item =>
                             <tr>
                                 <td><input type="radio" name="Sell" value={[item.stockID, item.orderID,"buyorder"]} onChange = {this.onSelectCancel}/></td>
@@ -436,18 +445,19 @@ export default class Home extends Component{
                             </tr>
                             ))}
                         </table>
+						<br></br>
                         <input type="submit" value='Cancel Order'></input>
-                    </div>
-                    <div id = "processed-buy-orders" class = "view">
-                        
+					                        
                         <h2>Unprocessed Sell Orders</h2>
                         <table>
-                            <th>Select</th>	
-                            <th>Symbol</th>
-                            <th>Type</th>
-                            <th>Price per share</th>
-                            <th>Shares</th>
-                            <th>Fulfilled</th>
+							<thead>
+								<th>Select</th>	
+								<th>Symbol</th>
+								<th>Type</th>
+								<th>Price per share</th>
+								<th>Shares</th>
+								<th>Fulfilled</th>
+							</thead>
                             {this.state.userSellOrders.map((item =>
                             <tr>
                                 <td><input type="radio" name="Sell" value={[item.stockID, item.orderID,"sellorder"]} onChange = {this.onSelectCancel}/></td>
@@ -459,9 +469,11 @@ export default class Home extends Component{
                             </tr>
                             ))}
                         </table>
+						<br></br>
                         <input type="submit" value='Cancel Order'></input>
-                    </div>
-                </form>
+					</form>
+
+				</div>
 
 
 
@@ -475,11 +487,13 @@ export default class Home extends Component{
                     placeholder="Select a watchlist" />
 
                     <table>
-                        <th>Symbol</th>
-                        <th>Name</th>
-                        <th>$ / Share</th>
-                        <th>Avg $ paid</th>
-                        <th>Current value</th>
+						<thead>
+							<th>Symbol</th>
+							<th>Name</th>
+							<th>$ / Share</th>
+							<th>Avg $ paid</th>
+							<th>Current value</th>
+						</thead>
                         {this.state.WLitems.map((item,index)=>(
                             <tr>
                                 <td>{item.stockID}</td>
@@ -492,16 +506,19 @@ export default class Home extends Component{
                         ))}
                     </table>
                 </div>
-                <form onSubmit={this.onCancelES}>
-                    <div id = "event-subscriptions" class = "view">
+                
+				<div id = "event-subscriptions" class = "view">
+					<form onSubmit={this.onCancelES}>
                         <h2>Event Subscriptions</h2>
                         <table>
-                            <th>Select</th>
-                            <th>Symbol</th>
-                            {/* <th>$ / Share</th> */}
-                            <th>AVG price paid</th>
-                            <th>Current value</th>
-                            <th>Trigger</th>
+							<thead>
+								<th>Select</th>
+								<th>Symbol</th>
+								{/* <th>$ / Share</th> */}
+								<th>AVG price paid</th>
+								<th>Current value</th>
+								<th>Trigger</th>
+							</thead>
                             {this.state.eventSubscriptions.map((item =>
                                 <tr>
                                     <td><input type="radio" name="ES" value={[item.stockID, item.subscriptionID]} onChange = {this.onSelectRemove}/></td>
@@ -512,10 +529,11 @@ export default class Home extends Component{
                                 </tr>
                             ))}
                         </table>
+						<br></br>
                         <input type="submit" value='Cancel Subscription'></input>
-
-                    </div>    
-                </form>       
+					</form>  
+				</div>    
+                     
             </div>
         </div>
         )

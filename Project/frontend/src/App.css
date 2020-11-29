@@ -10,11 +10,10 @@
 
 body {
   color: black;
-  background-color: white;
+  background-color: rgb(242, 244, 248);
   margin: 0;
   padding: 0;
-  font-family: Arial, Helvetica, sans-serif;
-
+  font-family: Verdana, Geneva, sans-serif	
 }
 
 /* START OF NAVBAR CSS */
@@ -201,22 +200,29 @@ main{
 }
 
 /* END OF NAVBAR CSS */
-#top-nav{
-  width: 100%;
-  margin-left: 5rem;
-  height: 3rem;
-  border: 2px solid #141418;
-  background-color:  #c4f5e4;
-  font-size: 2rem;
+/* Add a black background color to the top navigation */
+/* Add a black background color to the top navigation */
+.topnav {
+	background-color: rgb(88, 82, 116);
+	overflow: hidden;
+	align-items:left;
+  }
+  
+  /* Style the links inside the navigation bar */
+  .topnav p {
+	float: right;
+	color: #f2f2f2;
+	text-align: center;
+	padding-right: 30px;
+	text-decoration: none;
+	font-size: 17px;
+  }
 
-  padding-top: 1rem;
-  padding-left: 2rem;
-
-}
+  
 .dashboard{
 
   position: relative;
-  margin-left: 10rem;
+  margin-left: 6rem;
   margin-top: 3em;
   width: auto;
   height: auto;
@@ -237,78 +243,55 @@ main{
   display: flex;
   background-color:white;
   padding: 1em;
-  border: 2px solid #141418;
+  border: 0px solid #141418;
   /* min-width: 40%; */
   max-width: 90%;
   height: auto;
 }
 
-#user-funds{
-  flex-direction: column;
-  grid-column: 1/1;
-  grid-row: 1/1;
-  
-}
-
-#stocks-owned{
-  flex-direction: column;
-  grid-column: 2/3;
-  grid-row: 1/2
-}
 
 
-#unprocessed-orders{
-  flex-direction: column;
-  grid-column: 1/2;
-  grid-row: 2/3;
-}
-
-
-#watchlist{
-  flex-direction: column;
-  grid-column: 2/3;
-  grid-row: 2/4;
-}
-
-
-#event-subscriptions{
-  flex-direction: column;
-
-  grid-column: 1/2;
-  grid-row: 3/5;
-
-
-}
-
-h2{
+/* h2{
     position: relative;
-    text-align: center;
+    text-align: left;
 }
 
 h4{
   margin: 0.5rem;
   font-size: large;
-}
+} */
 
 
 table {
-  font-family: arial, sans-serif;
-  table-layout: fixed;
-  width: 100%;
-  
-  /* border-collapse: collapse; */
-  
-}
-
-th {
-  border: 1px solid #dddddd;
-  font-size: 12;
-  padding-bottom: 5px;
-  width: 100%;
-  word-wrap: break-word;
-}
-
-
-tr:nth-child(even) {
-  background-color: #dddddd;
-}  
+	border: 0px solid #1C6EA4;
+	background-color: #c7c8f7;
+	width: 100%;
+	text-align: left;
+	border-collapse: collapse;
+  }
+  table td, table th {
+	border: 0px solid #AAAAAA;
+	padding: 3px 2px;
+	padding-left:5px;
+  }
+  table tbody td {
+	font-size: 13px;
+  }
+  table tr:nth-child(even) {
+	background: #e3ecff;
+  }
+  table thead {
+	background: #1D1048;
+	border-bottom: 2px solid #444444;
+	
+  }
+  table thead th {
+	font-size: 14px;
+	padding-left:5px;
+	font-weight: bold;
+	color: #FFFFFF;
+	border-left: 0px solid #D0E4F5;
+  }
+  table thead th:first-child {
+	border-left: none;
+  }
