@@ -37,20 +37,18 @@ function App() {
         .then((user) => {
             console.log("User connected" + user);
             setUser(user);
-            socket.emit("connected", user._id);
-
+			socket.emit("connected", user._id);
         })
         .catch((err) => {
             console.log(err);
         });
       
-    socket.on("FromAPI", data => {
-      setResponse(data);
       socket.on("processedBuyOrder", (purchase, symbol) => {
         alert("You bought " + purchase.shares + ' shares of ' + symbol + " for $" + purchase.soldFor + " from " + purchase.sellerID);
       });
 
     socket.on("processedSellOrder", (purchase, symbol) => {
+		console.log("?");
       alert("You sold " + purchase.shares + ' shares of ' + symbol + " for $" + purchase.soldFor + " to " + purchase.buyerID);
     });
 
@@ -60,10 +58,12 @@ function App() {
 
     socket.on("eventNotif", (notification) => {
       alert("EVENT SUBSCRIPTION: " + notification.stock + " " + notification.type + " " + notification.change + " by " + notification.value + notification.param + ".");
-    });
-
-
-  }, []);
+	});
+	
+	socket.on("hellow", () => {
+		console.log("hi!");
+		socket.emit("wtf");
+	});
 
   },[]);
 console.log("CURRENT USER " + user.email)

@@ -125,7 +125,9 @@ io.on("connection", (client) => {
 
     client.on("connected", function(user){
         // console.log('UserID:' + user);
-        users.push({userID: user, clientInfo: client})
+		users.push({userID: user, clientInfo: client})
+		checkMetES(client);
+		checkOutProcessedOrders(client);
         //console.log(users);
 
         //checkOutProcessedOrders(client);
@@ -174,20 +176,61 @@ const checkOutProcessedOrders = async client => {
     
     for(var i in stocks){
         for (var j in stocks[i].fulfilledOrders){
-            for(var k in users){
-                if(stocks[i].fulfilledOrders[j].sellerID == users[k].userID){
-                    // console.log("pop!");
-                    client = users[k].clientInfo;
-                    client.emit("processedSellOrder", stocks[i].fulfilledOrders[j], stocks[i].symbol);
-                    pushNotification(stocks[i].fulfilledOrders[j].sellerID, ("You sold " + stocks[i].fulfilledOrders[j].shares + ' shares of ' + stocks[i].symbol + " for $" + stocks[i].fulfilledOrders[j].soldFor + " to " + stocks[i].fulfilledOrders[j].buyerID));
-                }
-                if(stocks[i].fulfilledOrders[j].buyerID == users[k].userID){
-                    // console.log("pop!");
-                    client = users[k].clientInfo;
-                    client.emit("processedBuyOrder", stocks[i].fulfilledOrders[j], stocks[i].symbol);
-                    pushNotification(stocks[i].fulfilledOrders[j].buyerID, ("You bought " + stocks[i].fulfilledOrders[j].shares + ' shares of ' + stocks[i].symbol + " for $" + stocks[i].fulfilledOrders[j].soldFor + " to " + stocks[i].fulfilledOrders[j].buyerID));
-                }
-            }
+
+			if(stocks[i].fulfilledOrders[j].sellerID == "" && stocks[i].fulfilledOrders[j].buyerID == ""){
+				console.log("yeah?");
+				Stock.findOneAndUpdate(
+					{'symbol' : stocks[i].symbol},
+					{$pull: {fulfilledOrders: {
+						_id: stocks[i].fulfilledOrders[j].id
+					}}},
+					function(err){
+						if(err){
+							console.log("error");
+						}
+					}
+				);
+			}
+			else{
+				for(var k in users){
+					if(stocks[i].fulfilledOrders[j].sellerID == users[k].userID){
+						// console.log("pop!");
+						client = users[k].clientInfo;
+						client.emit("processedSellOrder", stocks[i].fulfilledOrders[j], stocks[i].symbol);
+						pushNotification(stocks[i].fulfilledOrders[j].sellerID, ("You sold " + stocks[i].fulfilledOrders[j].shares + ' shares of ' + stocks[i].symbol + " for $" + stocks[i].fulfilledOrders[j].soldFor + " to " + stocks[i].fulfilledOrders[j].buyerID));
+						Stock.updateMany(
+							{'symbol' : stocks[i].symbol, "fulfilledOrders._id": stocks[i].fulfilledOrders[j].id},{
+							$set: {"fulfilledOrders.$.sellerID": 
+								""
+							}},
+							function(err){
+								if(err){
+									console.log("error");
+								}
+							}
+						);
+					
+					}
+					if(stocks[i].fulfilledOrders[j].buyerID == users[k].userID){
+						// console.log("pop!");
+						client = users[k].clientInfo;
+						client.emit("processedBuyOrder", stocks[i].fulfilledOrders[j], stocks[i].symbol);
+						pushNotification(stocks[i].fulfilledOrders[j].buyerID, ("You bought " + stocks[i].fulfilledOrders[j].shares + ' shares of ' + stocks[i].symbol + " for $" + stocks[i].fulfilledOrders[j].soldFor + " to " + stocks[i].fulfilledOrders[j].buyerID));
+						
+						Stock.updateMany(
+							{'symbol' : stocks[i].symbol, "fulfilledOrders._id": stocks[i].fulfilledOrders[j]._id},{
+							$set: {"fulfilledOrders.$.buyerID": 
+								""
+							}},
+							function(err){
+								if(err){
+									return res.status(400).send(err);
+								}
+							}
+						);
+					}
+				}
+			}
         }
 
         for(var k in stocks[i].unfulfilledOrders){
