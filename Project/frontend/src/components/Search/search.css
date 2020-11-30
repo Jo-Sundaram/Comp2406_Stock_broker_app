@@ -30,6 +30,33 @@
     height: auto;
   }
 
+  .ticker-wrap .newsbar {
+	background-color: rgb(209, 206, 226);
+	overflow: visible;
+	align-items:left;
+	height:100px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-left: 7%;
+  }
+
+  .ticker-wrap a:link {
+	color:  rgb(209, 206, 226);
+	text-decoration: none;
+  }
+  
+  .ticker-wrap a:visited {
+	color:  rgb(209, 206, 226);
+	text-decoration: none;
+  }
+  
+  .ticker-wrap a:hover {
+	text-decoration: underline;
+  }
+  
+  .ticker-wrap a:active {
+	text-decoration: underline;
+  }
 #recent-asks{
 
     display: flex;

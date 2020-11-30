@@ -244,7 +244,7 @@ export default class Watchlist extends Component{
                         {this.state.stockItems.map((item,index)=>(
                             <tr>
                                 <td><input type="radio" name="Remove" value={[item.stockID]} onChange = {this.onSelectStock}/></td>
-                                <td>{item.stockID}</td>
+                                <td><a href={"http://localhost:3000/search?stock="+item.stockID}>{item.stockID}</a></td>
                                 <td>{item.name}</td>
                                 <td>{item.currentAsk}</td>
                                 <td>{item.currentBid}</td>

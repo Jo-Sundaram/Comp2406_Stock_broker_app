@@ -41,29 +41,29 @@ function App() {
         })
         .catch((err) => {
             console.log(err);
-        });
-      
-      socket.on("processedBuyOrder", (purchase, symbol) => {
-        alert("You bought " + purchase.shares + ' shares of ' + symbol + " for $" + purchase.soldFor + " from " + purchase.sellerID);
-      });
+		});
+		
+		socket.on("processedBuyOrder", (purchase, symbol) => {
+			alert("You bought " + purchase.shares + ' shares of ' + symbol + " for $" + purchase.soldFor + " from " + purchase.sellerID);
+		});
 
-    socket.on("processedSellOrder", (purchase, symbol) => {
-		console.log("?");
-      alert("You sold " + purchase.shares + ' shares of ' + symbol + " for $" + purchase.soldFor + " to " + purchase.buyerID);
-    });
+		socket.on("processedSellOrder", (purchase, symbol) => {
+			console.log("?");
+		alert("You sold " + purchase.shares + ' shares of ' + symbol + " for $" + purchase.soldFor + " to " + purchase.buyerID);
+		});
 
-    socket.on("unprocessedOrder", (order, symbol) => {
-      alert("Could not fulfill " + order.type + " order" + " for " + symbol + " (" + order.price +"/share, " + order.shares + "shares)");
-    });
+		socket.on("unprocessedOrder", (order, symbol) => {
+		alert("Could not fulfill " + order.type + " order" + " for " + symbol + " (" + order.price +"/share, " + order.shares + "shares)");
+		});
 
-    socket.on("eventNotif", (notification) => {
-      alert("EVENT SUBSCRIPTION: " + notification.stock + " " + notification.type + " " + notification.change + " by " + notification.value + notification.param + ".");
-	});
-	
-	socket.on("hellow", () => {
-		console.log("hi!");
-		socket.emit("wtf");
-	});
+		socket.on("eventNotif", (notification) => {
+		alert("EVENT SUBSCRIPTION: " + notification.stock + " " + notification.type + " " + notification.change + " by " + notification.value + notification.param + ".");
+		});
+		
+		socket.on("hellow", () => {
+			console.log("hi!");
+			socket.emit("wtf");
+		});
 
   },[]);
 console.log("CURRENT USER " + user.email)

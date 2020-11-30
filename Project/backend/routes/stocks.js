@@ -255,8 +255,6 @@ app.post("/add",function(req,res){
 
 })
 
-
-
 app.post("/update/:symbol", function(req,res){
     Stock.findOneAndUpdate(req.params.symbol, {$set:req.body},{new:true}, function(err){
         if(err){

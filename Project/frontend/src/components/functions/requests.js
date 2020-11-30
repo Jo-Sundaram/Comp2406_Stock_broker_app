@@ -1,7 +1,7 @@
 // Importing combination 
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
-import axios from 'axios';
+import axios from 'axios';	
 
   
 const requests = {
@@ -200,6 +200,14 @@ const requests = {
 
         const promise = axios.get('http://localhost:5000/stocks/'+stockID+'/history') //dummy user ID in place
         const dataPromise = await promise.then((response) => response.data);
+
+        return dataPromise;
+	},
+
+	getName: async function(stockID){
+
+        const promise = axios.get('http://localhost:5000/stocks/'+stockID+'/info') //dummy user ID in place
+        const dataPromise = await promise.then((response) => response.data.stockFullName);
 
         return dataPromise;
 	},

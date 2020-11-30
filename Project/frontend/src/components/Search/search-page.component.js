@@ -3,11 +3,13 @@ import {Link} from 'react-router-dom';
 import axios from 'axios';
 import "./search.css";
 import "./searchbar.css";
+import './newsbar.scss'
 import Navbar from "../NavBar/navbar.component";
 import requests from '../functions/requests.js';
 
 import SelectSearch from 'react-select-search';
 import Axios from 'axios';
+import queryString from 'query-string'
 
 export default class Search extends Component{
 
@@ -48,6 +50,8 @@ export default class Search extends Component{
 			stockHistory: [],
 			stockValueHistory: [],
 
+			stockNews: [],
+
 			valueHistoryStartDay: '',
 			valueHistoryEndDay: '',
 
@@ -78,10 +82,18 @@ export default class Search extends Component{
 
         })
 
+		if(queryString.parse(this.props.location.search).stock == undefined){
+			console.log("nothing");
+		}
+		else{
+			this.handleChange(queryString.parse(this.props.location.search).stock)
+			console.log();
+		}
 
         var parsedList = await (requests.parseListItems(props.user._id));
         var stockParsedList = await (requests.parseStockItems());
 
+		console.log(stockParsedList);
 
         this.setState({
             watchlists : parsedList,
@@ -316,14 +328,40 @@ export default class Search extends Component{
 
         var highestBid = await (requests.getHighestBid(stockID));
         var lowestAsk = await (requests.getLowestAsk(stockID));
-	    var history = await (requests.getHistory(stockID));
-	   
+		var history = await (requests.getHistory(stockID));
+		
+		var newsstock = stockID;
+
+
+		if(stockID == "MCSFT"){
+			newsstock = "MSFT";
+		}
+
+
+		var filterNews = [];
+		const promise = axios.get('https://finnhub.io/api/v1//company-news?symbol='+newsstock+'&from=2020-11-15&to=2020-12-30&token=bv269bn48v6o5ed6uu4g') //dummy user ID in place
+        const news = await promise.then((response) => response.data);
+
+		filterNews.push(news[0]);
+		filterNews.push(news[1]);
+		filterNews.push(news[2]);
+		filterNews.push(news[3]);
+		filterNews.push(news[4]);
+		filterNews.push(news[5]);
+		filterNews.push(news[6]);
+		filterNews.push(news[7]);
+		filterNews.push(news[8]);
+		filterNews.push(news[9]);
+
+		console.log(filterNews);
+
 		var valueHistory = await (requests.getValueAllHistory(stockID));
         this.setState({
             ask: lowestAsk,
 			bid: highestBid,
 			stockValueHistory: valueHistory,
-            stockHistory: history
+			stockHistory: history,
+			stockNews: filterNews
         });
 
 
@@ -345,10 +383,17 @@ export default class Search extends Component{
                             search
                             onChange = {this.handleChange}
                             name="stocks" 
-                            placeholder="Search for a stock" />
-							
-							
+                            placeholder="Search for a stock" />	
                     </div>
+
+					<div class="ticker-wrap">
+						<div class="ticker">
+							{this.state.stockNews.map((item,index)=>(
+									<div class="ticker__item"><a href={item.url} target="_blank">{item.source + ": " }{item.headline}</a></div>
+							))}  
+						</div>
+					</div>
+					
 					
                     <div id = "main-body" class = "main">
                         <div id = "recent-asks">

@@ -5,10 +5,6 @@ import "./home-page.css"
 import requests from '../functions/requests.js';
 import helper from "../functions/helper.js"
 import SelectSearch from 'react-select-search';
-
-
-
-
     
 export default class Home extends Component{
 
@@ -42,7 +38,8 @@ export default class Home extends Component{
             eventSubscriptions: [],
             watchlistCollection:[],
             parsedLists: [],
-            WLitems: [],
+			WLitems: [],
+			fundsHistory: [],
 			
 			fullfilledBOrders: [],
 			fullfilledSOrders: [],
@@ -62,12 +59,8 @@ export default class Home extends Component{
             
             user: null,
             
-        }
-
-    
-
+		}
     }
-
 
     componentDidMount() {
         console.log('reloaded /home');
@@ -103,7 +96,9 @@ export default class Home extends Component{
             userSellOrders: props.user.unpSellOrders,
             userBuyOrders: props.user.unpBuyOrders,
             eventSubscriptions: props.user.eventSubscriptions,
-          	watchlistCollection: props.user.watchListCollection,
+			watchlistCollection: props.user.watchListCollection,
+			
+			fundsHistory: props.user.fundsHistory,
 
 			fullfilledBOrders: props.user.pBuyOrders,
 			fullfilledSOrders: props.user.pSellOrders,
@@ -251,8 +246,10 @@ export default class Home extends Component{
             var newFunds = this.state.userFunds+Number(this.state.depAmount);
             axios({
                 method: 'post',
-                url: 'http://localhost:5000/users/update/' + this.state.userID, 
+                url: 'http://localhost:5000/users/' + this.state.userID +'/updateFunds', 
                 data: {
+					type: "Deposit",
+					amount: this.state.depAmount,
                     userFunds: newFunds,
                 },
 				headers: {
@@ -286,10 +283,15 @@ export default class Home extends Component{
             var newFunds = this.state.userFunds-Number(this.state.withAmount);
             axios({
                 method: 'post',
-                url: 'http://localhost:5000/users/update/' + this.state.userID, 
-                data: {
+				url: 'http://localhost:5000/users/' + this.state.userID +'/updateFunds', 
+				data: {
+					type: "Withdrawal",
+					amount: this.state.withAmount,
                     userFunds: newFunds,
-                }
+				},
+				headers: {
+					Authorization: "Bearer " + localStorage.getItem("token")
+				}
             })
             .then(res => {
                 console.log(res.data)
@@ -301,7 +303,7 @@ export default class Home extends Component{
             .catch(res => {
                 console.log(res)
                 alert('Something went wrong! Please try again later.')
-                window.location.reload(false);
+               // window.location.reload(false);
             });
         }
         else{
@@ -424,6 +426,19 @@ export default class Home extends Component{
                             <input type="submit" class="fundsButton" value='Withdraw'></input>
                         </form>
                     </div>
+					<br/>
+					<table>
+							<thead>
+								<th>Type</th>
+								<th>Amount</th>
+							</thead>
+                            {this.state.fundsHistory.map((item =>
+                            <tr>
+                                <td>{item.type}</td>
+                                <td>{item.amount}</td>
+                            </tr>
+                            ))}
+                        </table>
                 </div>
                 
                 <div id = "stocks-owned" class = "view">
@@ -440,7 +455,7 @@ export default class Home extends Component{
                             {this.state.stockPortfolio.map((item =>
                             <tr>
                                 <td><input type="radio" name="Sell" value={item.stockID} onChange = {this.onChangeOrderStock}/></td>
-                                <td>{item.stockID}</td>
+                                <td><a href={"http://localhost:3000/search?stock="+item.stockID}>{item.stockID}</a></td>
                                 <td>{item.shares}</td>
                                 <td>{item.currentAsk}</td>
                                 <td>{item.currentBid}</td>
@@ -543,7 +558,7 @@ export default class Home extends Component{
 						</thead>
                         {this.state.WLitems.map((item,index)=>(
                             <tr>
-                                <td>{item.stockID}</td>
+                                <td><a href={"http://localhost:3000/search?stock="+item.stockID}>{item.stockID}</a></td>
                                 <td>{item.name}</td>
                                 <td>{item.currentAsk}</td>
                                 <td>{item.currentBid}</td>

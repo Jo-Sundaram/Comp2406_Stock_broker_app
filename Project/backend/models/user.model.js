@@ -73,7 +73,12 @@ const userSchema = new Schema({
         soldFor: {type: Number, required: true},
         asked: {type: Number, required: true},
         datetime: {type: String, required: true} //users price to sell
-    }]
+	}],
+	
+	fundsHistory: [{
+		amount:{type: Number, required: true},
+		type:{type: String, required: true}
+	}]
     
 },{
     timestamps: true, //idk what this does ngl>???

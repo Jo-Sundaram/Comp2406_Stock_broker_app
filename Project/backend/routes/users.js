@@ -110,6 +110,22 @@ app.post("/:id/updateFunds", passport.authenticate("jwt", { session: false }),fu
 				if(err){
 					return res.status(400).send(err);
 				}
+			}
+		);
+		console.log("?");
+
+		User.findByIdAndUpdate(
+			req.params.id,
+			{$push: {fundsHistory:{
+				type: req.body.type,
+				amount: req.body.amount
+				}}
+			},
+			function(err){
+				if(err){
+					return res.status(400).send(err);
+				}
+				console.log(req.body.type);
 				res.json({success: true});
 			}
 		);
