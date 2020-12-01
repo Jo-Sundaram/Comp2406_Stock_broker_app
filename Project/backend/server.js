@@ -572,6 +572,20 @@ const endDay = async() => {
 			}
 			console.log("success: true")
 		});
+
+		//does this work
+		
+		for (var k in stocks[i].eventSubscriptions){
+			Stock.updateMany(
+				{"symbol": stocks[i].symbol, 'eventSubscriptions.subscriptionID' : stocks[i].eventSubscriptions[k].subscriptionID},
+				{$set: {'eventSubscriptions.$.notifSent': 0}},
+				function(err){
+					if(err){
+						console.log(err);
+					}
+				}
+			);
+		}
 		
 		let lowestBid = stocks[i].currLowestBid;
 		let highestAsk = stocks[i].currHighestAsk;
