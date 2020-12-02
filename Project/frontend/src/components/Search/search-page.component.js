@@ -6,6 +6,7 @@ import "./searchbar.css";
 import './newsbar.scss'
 import Navbar from "../NavBar/navbar.component";
 import requests from '../functions/requests.js';
+import helper from "../functions/helper.js";
 
 import SelectSearch from 'react-select-search';
 import Axios from 'axios';
@@ -43,6 +44,8 @@ export default class Search extends Component{
 
             stocks:[],
             stockList:[],
+            stocksOwned: [],
+            owned:null,
 
             watchlists: [],
             selectedList: null,
@@ -66,7 +69,11 @@ export default class Search extends Component{
             esAmount: 0,
 
             ask: 'N/A',
-            bid: 'N/A'
+            bid: 'N/A',
+
+            currentBid: 'N/A',
+            currentAsk: 'N/A'
+            
         }
     }
 
@@ -79,6 +86,7 @@ export default class Search extends Component{
         this.setState({
             userFunds: props.user.userFunds,
             userID: props.user._id,
+            stocksOwned: props.user.stockPortfolio,
 
         })
 
@@ -219,7 +227,7 @@ export default class Search extends Component{
 			console.log(this.state.esType);
             axios({
                 method: 'post',
-                url: 'http://localhost:5000/update/'+this.state.userID+'/'+this.state.stockID+'/ES/add', //dummy user
+                url: 'http://localhost:5000/update/'+this.state.userID+'/'+this.state.stockID+'/ES/add', 
                 data: {
                     subscriptionID: ID,
                     parameter: this.state.esParameter,
@@ -264,13 +272,18 @@ export default class Search extends Component{
 				}
             })
             .then(res => {
-                console.log(res.data)
-                alert('Added to watchlist')
+                if(res.data.success==false){
+                    console.log(res.data);
+                    alert('Stock already exists on watchlist');
+                }else if(res.data.success==true){
+                    console.log(res.data);
+                    alert('Added to watchlist');
+                }
                 window.location.reload(false);
             })
             .catch(res => {
-                console.log(res)
-                alert('Something went wrong! Please try again later.')
+                console.log(res);
+                alert('Something went wrong! Please try again later.');
             });
         }
         else{
@@ -328,8 +341,12 @@ export default class Search extends Component{
 
         var highestBid = await (requests.getHighestBid(stockID));
         var lowestAsk = await (requests.getLowestAsk(stockID));
-		var history = await (requests.getHistory(stockID));
-		
+        
+        var currentAsk = await (requests.getCurrentAsk(stockID));
+        var currentBid = await (requests.getCurrentBid(stockID));
+        
+        var history = await (requests.getHistory(stockID));
+
 		var newsstock = stockID;
 
 
@@ -355,13 +372,17 @@ export default class Search extends Component{
 
 		console.log(filterNews);
 
-		var valueHistory = await (requests.getValueAllHistory(stockID));
+        var valueHistory = await (requests.getValueAllHistory(stockID));
+        var stockSharesOwned = helper.getOwnedShares(this.state.stocksOwned,stockID);
         this.setState({
             ask: lowestAsk,
 			bid: highestBid,
 			stockValueHistory: valueHistory,
 			stockHistory: history,
-			stockNews: filterNews
+            stockNews: filterNews,
+            owned: stockSharesOwned,
+            currentAsk: currentAsk,
+            currentBid: currentBid
         });
 
 
@@ -401,9 +422,34 @@ export default class Search extends Component{
                             Stock Name: {this.state.stockID}
                             </div>
 
-                            <h4><span id = "bid"> Highest Bid: ${this.state.bid}</span></h4>
+                            {/* <table>
 
-                            <h4><span id = "ask"> Ask: ${this.state.ask}</span> </h4>
+                            <tr>
+                                <thead><th>Highest Bid</th></thead>
+                                <td>${this.state.bid}</td>
+                            </tr>
+                            <tr>
+                                <thead><th>Lowest Ask</th></thead>
+                                <td>${this.state.ask}</td>
+                            </tr>
+                            <tr>
+                            <thead><th>Current Bid</th></thead>
+                                <td>${this.state.currentBid}</td>
+                            </tr>
+                            <tr>
+                            <thead><th>Current Ask</th></thead>
+                                <td>${this.state.currentAsk}</td>
+                            </tr>
+                            <tr>
+                            <thead><th>Shares Owned</th></thead>
+                                <td>{this.state.owned}</td>
+                            </tr>
+                            </table> */}
+                            {/* <h4><span id = "bid"> Highest Bid: ${this.state.bid}</span></h4>
+                            <h4><span id = "ask"> Lowest Ask: ${this.state.ask}</span> </h4>
+                            <h4><span id = "ask"> Current Ask: ${this.state.currentAsk}</span> </h4>
+                            <h4><span id = "ask"> Current Bid: ${this.state.currentBid}</span> </h4>
+                            <h4><span> Shares Owned:{this.state.owned}</span> </h4> */}
 
                             <SelectSearch 
                                 options={this.state.watchlists}

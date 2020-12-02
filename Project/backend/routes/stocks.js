@@ -190,7 +190,7 @@ app.get("/array/0", async(req,res) => {
             res.send("Nothing to get");
         })
         .catch((err)=>{
-            res.send("No data for this stoceeeeeeeeeeeeek");
+            res.send("No data for this stock");
         });
         return;
        

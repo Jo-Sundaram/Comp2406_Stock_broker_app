@@ -78,10 +78,6 @@ export default class LoginUser extends Component{
                 <input type="password" class="logregfield" placeholder="Enter Password" onChange={this.onChangePassword}></input>
             </div>
 
-            <label>
-                <small className="text"><input type="checkbox" checked="checked" name="remember"></input> Remember Me</small>
-            </label><br></br>
-
             <input type="submit" class="submitform" value='Login'></input><br></br>
         </form>
         

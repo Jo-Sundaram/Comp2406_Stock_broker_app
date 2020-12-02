@@ -27,19 +27,38 @@ export default class Home extends Component{
         this.onChangeWith = this.onChangeWith.bind(this);
         this.onSubmitWith = this.onSubmitWith.bind(this);
 
+		this.onSubmitBuyHistory = this.onSubmitBuyHistory.bind(this);
+		this.onSubmitSellHistory = this.onSubmitSellHistory.bind(this);
+        
+        this.onChangeBuyStart = this.onChangeBuyStart.bind(this);
+        this.onChangeBuyEnd = this.onChangeBuyEnd.bind(this);       
+        
+        this.onChangeSellStart = this.onChangeSellStart.bind(this);
+        this.onChangeSellEnd = this.onChangeSellEnd.bind(this);
         
 
         this.state = {
             userID: null,
             userFunds: 0,
+            portfolio:null,
             stockPortfolio: [],
             userSellOrders: [],
             userBuyOrders: [],
+
+            processedBuyOrders: [],
+            processedSellOrders: [],
+
             eventSubscriptions: [],
             watchlistCollection:[],
             parsedLists: [],
 			WLitems: [],
-			fundsHistory: [],
+            fundsHistory: [],
+
+            BuyHistoryStartDay:0,
+			BuyHistoryEndDay: 0,
+            
+            SellHistoryStartDay:0,
+			SellHistoryEndDay: 0,
 			
 			fullfilledBOrders: [],
 			fullfilledSOrders: [],
@@ -70,7 +89,8 @@ export default class Home extends Component{
 	async componentWillReceiveProps(props){ //this is called to before render method
 		
 		let stockList = props.user.stockPortfolio;
-		let stocksOwned = []
+        let stocksOwned = [];
+        let portfolioValue = 0;
 		for(var i in stockList){
 			stocksOwned.push('"'+stockList[i].stockID+'"');
 		}
@@ -86,7 +106,18 @@ export default class Home extends Component{
 					stockList[j]["currentBid"] = dataPromise[k].currentBid;
 				}
 			}
-		}
+        }
+        
+        // calculate stock portfolio value
+
+		for(var j in stockList){
+			for(var k in dataPromise){
+				if(dataPromise[k].symbol == stockList[j].stockID){
+					portfolioValue += (stockList[j].shares*dataPromise[k].currentBid);
+				}
+			}
+        }
+        
 
         this.setState({
             user : props.user.username,
@@ -95,14 +126,18 @@ export default class Home extends Component{
             stockPortfolio: stockList,
             userSellOrders: props.user.unpSellOrders,
             userBuyOrders: props.user.unpBuyOrders,
+
+            
             eventSubscriptions: props.user.eventSubscriptions,
 			watchlistCollection: props.user.watchListCollection,
-			
+			portfolio : portfolioValue,
 			fundsHistory: props.user.fundsHistory,
-
+            
 			fullfilledBOrders: props.user.pBuyOrders,
-			fullfilledSOrders: props.user.pSellOrders,
-
+            fullfilledSOrders: props.user.pSellOrders,
+            
+            processedBuyOrders: props.user.pBuyOrders,
+            processedSellOrders: props.user.pSellOrders,
          }) 
 
          console.log("this user in props: " + this.state.userID);
@@ -348,6 +383,102 @@ export default class Home extends Component{
 
     }
 
+    onChangeBuyStart(e){
+        this.setState({
+            BuyHistoryStartDay: e.target.value
+        })
+    }   
+    
+    onChangeBuyEnd(e){
+        this.setState({
+            BuyHistoryEndDay: e.target.value
+        })
+    }
+    
+    onChangeSellStart(e){
+        this.setState({
+            SellHistoryStartDay: e.target.value
+        })
+    }
+    onChangeSellEnd(e){
+        this.setState({
+            SellHistoryEndDay: e.target.value
+        })
+    }
+    
+    onSubmitBuyHistory(e){
+        e.preventDefault();
+
+        var transactions = [];
+
+        if(this.state.BuyHistoryEndDay==0 && this.state.BuyHistoryStartDay==0){
+            transactions = this.state.processedBuyOrders;
+            this.setState({
+                fullfilledBOrders: transactions
+            })
+
+            return;
+        }
+
+        if(this.state.BuyHistoryEndDay==0 || this.state.BuyHistoryEndDay< this.state.BuyHistoryStartDay){
+            this.state.BuyHistoryEndDay = this.state.processedBuyOrders[this.state.processedBuyOrders.length-1].day;
+        }
+
+        this.state.processedBuyOrders.forEach(element => {
+            console.log("DAY");
+            console.log(element);
+
+            if(element.day >= this.state.BuyHistoryStartDay && element.day <=this.state.BuyHistoryEndDay){
+                transactions.push(element);
+            }
+        });
+
+        console.log(transactions);
+        this.setState({
+            fullfilledBOrders: transactions
+        })
+
+
+        console.log(this.state.processedBuyOrders);
+        
+        
+    }
+
+
+    onSubmitSellHistory(e){
+        e.preventDefault();
+
+        var transactions = [];
+
+        if(this.state.SellHistoryEndDay==0 && this.state.SellHistoryStartDay==0){
+            transactions = this.state.processedSellOrders;
+            this.setState({
+                fullfilledSOrders: transactions
+            })
+            return;
+        }
+
+        if(this.state.SellHistoryEndDay==0 || this.state.SellHistoryEndDay< this.state.SellHistoryStartDay){
+            this.state.SellHistoryEndDay = this.state.processedSellOrders[this.state.processedSellOrders.length-1].day;
+        }
+
+        this.state.processedSellOrders.forEach(element => {
+            console.log("DAY");
+            console.log(element);
+
+            if(element.day >= this.state.SellHistoryStartDay && element.day <=this.state.SellHistoryEndDay){
+                transactions.push(element);
+            }
+        });
+
+        console.log(transactions);
+        this.setState({
+            fullfilledSOrders: transactions
+        })
+
+
+        console.log(this.state.processedSellOrders);
+    }
 
     handleListChange = async (listname) => {
         this.setState({ listname });
@@ -398,7 +529,7 @@ export default class Home extends Component{
                 <div id = "user-funds" class = "view">
                     <h2>User Funds</h2>
                     <b id = "balance">Cash balance: ${this.state.userFunds}</b>
-                    <b id = "total-value">Total portfolio value: $100</b>
+                    <b id = "total-value">Total portfolio value: ${this.state.portfolio}</b>
                     
 					<br></br>
                     <div>
@@ -597,6 +728,26 @@ export default class Home extends Component{
                 
 				<div id = "sellhistory" class = "view">
 					<br/>
+                    <div>
+                        
+                        <form onSubmit={this.onSubmitSellHistory}>
+                                <input 
+                                    placeholder="Start Day"
+                                    type="number"
+                                    min = "0"
+                                    value={this.state.SellHistoryStartDay} 
+                                    onChange = {this.onChangeSellStart}
+                                />
+                                <input 
+                                    placeholder="End Day"
+                                    type="number" 
+                                    id = "0" 
+                                    value={this.state.SellHistoryEndDay} 
+                                    onChange = {this.onChangeSellEnd}
+                                />
+                                <input type="submit" value='Get History'></input>
+                            </form>
+                        </div>
 					<b>User Sell Transaction History</b>
 					<br/>
 					<table>
@@ -621,6 +772,27 @@ export default class Home extends Component{
 					</table>
 
 					<br/>
+                    <div>
+                        
+                    <form onSubmit={this.onSubmitBuyHistory}>
+							<input 
+								placeholder="Start Day"
+								type="number"
+								min = "0"
+								value={this.state.BuyHistoryStartDay} 
+								onChange = {this.onChangeBuyStart}
+							/>
+							<input 
+								placeholder="End Day"
+								type="number" 
+								id = "0" 
+								value={this.state.BuyHistoryEndDay} 
+								onChange = {this.onChangeBuyEnd}
+							/>
+							<input type="submit" value='Get History'></input>
+						</form>
+                    </div>
+
 					<b>User Buy Transaction History</b>
 					<br/>
 					<table>

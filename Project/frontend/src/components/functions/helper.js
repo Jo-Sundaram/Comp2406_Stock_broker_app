@@ -41,7 +41,16 @@ const helper = {
                         'currVal':dataPromise.watchlist[key].currAsk});
         }
         return stocks;
-    }    
+    },
+    
+    getOwnedShares: function(stockPortfolio,symbol){
+        for(var key in stockPortfolio){
+            if(stockPortfolio[key].stockID == symbol){
+                return stockPortfolio[key].shares;
+            }
+        }
+        return 0;
+    }
 }
 
 

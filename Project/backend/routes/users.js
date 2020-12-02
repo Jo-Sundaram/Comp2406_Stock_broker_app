@@ -156,7 +156,6 @@ app.post("/:id/watchlist/add", passport.authenticate("jwt", { session: false }),
 	}
 });
 
-
 //get entire watchlist collection
 app.get("/:id/watchlist/", async(req,res)=>{
 
@@ -169,7 +168,6 @@ app.get("/:id/watchlist/", async(req,res)=>{
     
     
 });
-
 
 // // get single watchlist
 app.get('/:id/watchlist/:wid', passport.authenticate("jwt", { session: false }), async function(req, res){
@@ -195,40 +193,78 @@ app.get('/:id/watchlist/:wid', passport.authenticate("jwt", { session: false }),
 });
 
 // // add stock to a watchlist 
-app.post("/:id/watchlist/update/add", passport.authenticate("jwt", { session: false }), async(req, res)=>{
+app.post("/:id/watchlist/update/add", passport.authenticate("jwt", { session: false }), async function(req, res){
 	if(!req.user){
 		return res.status(401).send("Unauthorized");
 	} else {
-
-		const stock  = await Stock.findOne({'symbol':req.body.stockID})
-			.then((stock)=>{
-				console.log("this stock: " + stock.stockFullName)
+			console.log("searching collection");
+			
+			
+			const user =  User.findById(req.params.id)
+				.catch((err)=>{
+					return res.send("user not found");
+				})
+				.then((user)=>{
 				
+					let collection = user.watchlistCollection;
+					let list;
+					let exists = 0;
+					
+					collection.forEach(element => {
+						if(element.name==req.body.name){
+							console.log(element.name);
+							console.log("hi");
+							
+							list = element;
+						}
+					
+					});
 
+					console.log("watchlist");
 
-			User.updateMany(
-				{_id: req.params.id, 'watchlistCollection.name': req.body.name},
-				{$push:{'watchlistCollection.$.watchlist':
-					{
-						stockID: req.body.stockID,
-						stockName: stock.stockFullName,
-						sharesOwned:0,
-						avgBid:stock.currentBid,
-						currAsk : stock.currHighestAsk,
+					for(let i = 0; i < list["watchlist"].length;i++){
+						if(list["watchlist"][i].stockID == req.body.stockID){
+							console.log(req.body.stockID);
+							res.json({success:false});
+							exists=1;
+							break;
+						}
+
 					}
-			}},
-				function(err){
-					if(err){
-						return res.status(400).send(err);
+					
+					if(exists==1){
+						console.log("Stock already exists");
+						return;
 					}
-					res.json({success: true});
-				}
-			);
 
-		});
-	}
+					const stock  =  Stock.findOne({'symbol':req.body.stockID})
+					.then((stock)=>{
+						console.log("this stock: " + stock.stockFullName)
+					
 
+					})
 
+					User.updateMany(
+						{_id: req.params.id, 'watchlistCollection.name': req.body.name},
+						{$push:{'watchlistCollection.$.watchlist':
+							{
+								stockID: req.body.stockID,
+								stockName: stock.stockFullName,
+								sharesOwned:0,
+								avgBid:stock.currentBid,
+								currAsk : stock.currHighestAsk,
+							}
+					}},
+						function(err){
+							if(err){
+								return res.status(400).send(err);
+							}
+							console.log("added");
+							res.json({success: true});
+						}
+					);
+			});
+		}
 });
 
 // remove stock from a watchlist 
@@ -251,7 +287,6 @@ app.delete("/:id/watchlist/update/remove", passport.authenticate("jwt", { sessio
 	}
 });
 
-
 // // remove a watchlist from the collection
 app.delete('/:id/watchlist/remove', passport.authenticate("jwt", { session: false }), function(req, res){
 	if(!req.user){
@@ -271,6 +306,9 @@ app.delete('/:id/watchlist/remove', passport.authenticate("jwt", { session: fals
 		);
 	}
 });
-       
-// module.exports = router;
+	   
+
+
+
+
 module.exports = app;

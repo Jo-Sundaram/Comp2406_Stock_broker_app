@@ -156,6 +156,34 @@ const requests = {
         return highestBid;
     },
 
+    getCurrentAsk: async function(stockID){
+        const promise = axios.get('http://localhost:5000/stocks/'+stockID+ '/info') //dummy user ID in place
+        
+        const dataPromise = await promise.then((response) => response.data.currentAsk)
+
+        console.log(dataPromise);
+
+        var currAsk = 'N/A';
+        currAsk = dataPromise;
+
+        return currAsk;
+
+    },
+    
+    getCurrentBid: async function(stockID){
+        const promise = axios.get('http://localhost:5000/stocks/'+stockID+ '/info') //dummy user ID in place
+        
+        const dataPromise = await promise.then((response) => response.data.currentBid)
+
+        console.log(dataPromise);
+
+        var currBid = 'N/A';
+        currBid = dataPromise;
+
+        return currBid;
+
+    },
+
     parseListItems: async function(userID){
         const promise = axios.get('http://localhost:5000/users/'+userID) //dummy user ID in place
         
