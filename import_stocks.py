@@ -21,274 +21,6 @@ Collection = db["stocks"]
 # Loading or Opening the json file 
 json_data = '''[{
   "_id": {
-    "$oid": "5f8b044b5138c1578cd77ce6"
-  },
-  "stockFullName": "TESLA",
-  "eventSubscriptions": [
-    {
-      "_id": {
-        "$oid": "5fa46b0e3e22aa65b01b94a8"
-      },
-      "subscriptionID": "5000",
-      "userID": "5f999d97b697054d9cbffbbe",
-      "type": "Bid",
-      "parameter": "incDollar",
-      "value": 5,
-      "triggerOrder": false,
-      "notifSent": 1
-    }
-  ],
-  "buyOrders": [
-    {
-      "_id": {
-        "$oid": "5f99abb6b0575273fccc4d70"
-      },
-      "orderID": "1",
-      "userID": "5f99a6fecf30786874cdde76",
-      "orderPlacement": 1,
-      "shares": 12,
-      "price": 75
-    },
-    {
-      "_id": {
-        "$oid": "5f99abe9b0575273fccc4d72"
-      },
-      "orderID": "6",
-      "orderPlacement": 6,
-      "userID": "5f99a70acf30786874cdde78",
-      "shares": 18,
-      "price": 32
-    },
-    {
-      "_id": {
-        "$oid": "5f99ac04b0575273fccc4d74"
-      },
-      "orderID": "3",
-      "userID": "5f99a76bb0575273fccc4d64",
-      "orderPlacement": 3,
-      "shares": 5,
-      "price": 34
-    },
-    {
-      "_id": {
-        "$oid": "5f99ac32b0575273fccc4d76"
-      },
-      "orderID": "2",
-      "orderPlacement": 2,
-      "userID": "5f99a78fb0575273fccc4d67",
-      "shares": 12,
-      "price": 32
-    },
-    {
-      "_id": {
-        "$oid": "5f99ac48b0575273fccc4d78"
-      },
-      "orderID": "5",
-      "orderPlacement": 5,
-      "userID": "5f99a7a1b0575273fccc4d69",
-      "shares": 7,
-      "price": 20
-    },
-    {
-      "_id": {
-        "$oid": "5f99ac61b0575273fccc4d7a"
-      },
-      "orderID": "4",
-      "orderPlacement": 4,
-      "userID": "5f99a7acb0575273fccc4d6b",
-      "shares": 6,
-      "price": 32
-    },
-    {
-      "_id": {
-        "$oid": "5f99ac80b0575273fccc4d7c"
-      },
-      "orderID": "7",
-      "orderPlacement": 7,
-      "userID": "5f99a7c0b0575273fccc4d6d",
-      "shares": 9,
-      "price": 21
-    },
-    {
-      "_id": {
-        "$oid": "5f99ac91b0575273fccc4d7e"
-      },
-      "orderID": "8",
-      "orderPlacement": "8",
-      "userID": "5f99a7ceb0575273fccc4d6e",
-      "shares": 2,
-      "price": 18
-    },
-    {
-      "_id": {
-        "$oid": "5fa5bcd938ca40416ceef119"
-      },
-      "orderID": "hbdGVW8bY2zk",
-      "orderPlacement": 1,
-      "userID": "5f999d97b697054d9cbffbbe",
-      "shares": 5,
-      "price": 5
-    },
-    {
-      "_id": {
-        "$oid": "5fa5bce838ca40416ceef11b"
-      },
-      "orderID": "AXxKidaXNLLW",
-      "orderPlacement": 2,
-      "userID": "5f999d97b697054d9cbffbbe",
-      "shares": 5,
-      "price": 5
-    }
-  ],
-  "sellOrders": [
-    {
-      "_id": {
-        "$oid": "5f99a1cccf30786874cdde6b"
-      },
-      "orderID": "4",
-      "userID": "5f999d70b697054d9cbffbbc",
-      "orderPlacement": 4,
-      "shares": 15,
-      "price": 32
-    },
-    {
-      "_id": {
-        "$oid": "5f99a20ecf30786874cdde6d"
-      },
-      "orderID": "2",
-      "userID": "5f999d97b697054d9cbffbbe",
-      "orderPlacement": 2,
-      "shares": 18,
-      "price": 16
-    },
-    {
-      "_id": {
-        "$oid": "5f99a23dcf30786874cdde6f"
-      },
-      "orderID": "3",
-      "userID": "5f999da7b697054d9cbffbc0",
-      "orderPlacement": 3,
-      "shares": 12,
-      "price": 19
-    },
-    {
-      "_id": {
-        "$oid": "5f99a255cf30786874cdde71"
-      },
-      "orderID": "1",
-      "userID": "5f999db8b697054d9cbffbc2",
-      "orderPlacement": 1,
-      "shares": 19,
-      "price": 32
-    },
-    {
-      "_id": {
-        "$oid": "5f99a2aecf30786874cdde73"
-      },
-      "orderID": "5",
-      "userID": "5f999dcbb697054d9cbffbc4",
-      "orderPlacement": 5,
-      "shares": 7,
-      "price": 65
-    },
-    {
-      "_id": {
-        "$oid": "5f99a2cccf30786874cdde75"
-      },
-      "orderID": "6",
-      "userID": "5f999ddeb697054d9cbffbc6",
-      "orderPlacement": 6,
-      "shares": 10,
-      "price": 16
-    },
-    {
-      "_id": {
-        "$oid": "5fa5be8a38ca40416ceef11e"
-      },
-      "orderID": "CNai1sB5KDaU",
-      "orderPlacement": 1,
-      "userID": "5f999d97b697054d9cbffbbe",
-      "shares": 5,
-      "price": 5
-    }
-  ],
-  "createdAt": {
-    "$date": "2020-10-17T14:48:43.085Z"
-  },
-  "updatedAt": {
-    "$date": "2020-11-12T20:11:01.303Z"
-  },
-  "currentAsk": 0,
-  "currentBid": 0,
-  "openingAsk": 50,
-  "openingBid": 50,
-  "dailyHistory": [
-    {
-      "_id": {
-        "$oid": "5fa6e972a4518341201ec3b6"
-      },
-      "day": 1,
-      "lowestAsk": 22,
-      "highestBid": 37,
-      "highestAsk": 88,
-      "lowestBid": 33,
-      "sharesSold": 33
-    },
-    {
-      "_id": {
-        "$oid": "5fa6e972a4518341201ec3b7"
-      },
-      "day": 2,
-      "lowestAsk": 23,
-      "highestBid": 34,
-      "highestAsk": 85,
-      "lowestBid": 32,
-      "sharesSold": 19
-    },
-    {
-      "_id": {
-        "$oid": "5fa6e972a4518341201ec3b8"
-      },
-      "day": 3,
-      "lowestAsk": 21,
-      "highestBid": 33,
-      "highestAsk": 55,
-      "lowestBid": 22,
-      "sharesSold": 12
-    },
-    {
-      "_id": {
-        "$oid": "5fa6e972a4518341201ec3b9"
-      },
-      "day": 4,
-      "lowestAsk": 15,
-      "highestBid": 88,
-      "highestAsk": 129,
-      "lowestBid": 5,
-      "sharesSold": 7
-    },
-    {
-      "_id": {
-        "$oid": "5fa6e972a4518341201ec3ba"
-      },
-      "day": 5,
-      "lowestAsk": 5,
-      "highestBid": 80,
-      "highestAsk": 50,
-      "lowestBid": 30,
-      "sharesSold": 7
-    }
-  ],
-  "currHighestAsk": 0,
-  "currLowestBid": 0,
-  "symbol": "TSLA",
-  "fulfilledOrders": [
-  ],
-  "history": [
-  ],
-  "unfulfilledOrders": []
-},{
-  "_id": {
     "$oid": "5fad7af586b60f59ac08ebf9"
   },
   "stockFullName": "Nike",
@@ -301,8 +33,7 @@ json_data = '''[{
   "currLowestBid": 0,
   "eventSubscriptions": [],
   "sellOrders": [],
-  "buyOrders": [
-  ],
+  "buyOrders": [],
   "history": [],
   "dailyHistory": [],
   "fulfilledOrders": [],
@@ -311,7 +42,7 @@ json_data = '''[{
     "$date": "2020-11-12T18:12:05.994Z"
   },
   "updatedAt": {
-    "$date": "2020-11-12T19:19:54.331Z"
+    "$date": "2020-12-04T06:13:47.150Z"
   }
 },{
   "_id": {
@@ -393,7 +124,7 @@ json_data = '''[{
     "$oid": "5fad7bac86b60f59ac08ebfd"
   },
   "stockFullName": "Microsoft Corporation",
-  "symbol": "MCSFT",
+  "symbol": "MSFT",
   "openingAsk": 215.6,
   "openingBid": 215.6,
   "currentAsk": 0,
@@ -402,8 +133,7 @@ json_data = '''[{
   "currLowestBid": 0,
   "eventSubscriptions": [],
   "sellOrders": [],
-  "buyOrders": [
-  ],
+  "buyOrders": [],
   "history": [],
   "dailyHistory": [],
   "fulfilledOrders": [],
@@ -423,12 +153,23 @@ json_data = '''[{
   "openingAsk": 114.32,
   "openingBid": 114.31,
   "currentAsk": 0,
-  "currentBid": 0,
+  "currentBid": 7,
   "currHighestAsk": 0,
   "currLowestBid": 0,
   "eventSubscriptions": [],
   "sellOrders": [],
-  "buyOrders": [],
+  "buyOrders": [
+    {
+      "_id": {
+        "$oid": "5fc9d0ba408d2f2e64dad071"
+      },
+      "orderID": "q9GDW74r1NY7",
+      "orderPlacement": 1,
+      "userID": "5f999d97b697054d9cbffbbe",
+      "shares": 7,
+      "price": 7
+    }
+  ],
   "history": [],
   "dailyHistory": [],
   "fulfilledOrders": [],
@@ -437,14 +178,14 @@ json_data = '''[{
     "$date": "2020-11-12T18:21:13.591Z"
   },
   "updatedAt": {
-    "$date": "2020-11-12T18:21:13.591Z"
+    "$date": "2020-12-04T06:01:30.402Z"
   }
 },{
   "_id": {
     "$oid": "5fad7ea986b60f59ac08ebff"
   },
   "stockFullName": "Visa Inc",
-  "symbol": "Visa",
+  "symbol": "V",
   "openingAsk": 208.42,
   "openingBid": 208.42,
   "currentAsk": 0,
@@ -1038,6 +779,133 @@ json_data = '''[{
   },
   "updatedAt": {
     "$date": "2020-11-12T19:09:40.103Z"
+  }
+},{
+  "_id": {
+    "$oid": "5fc9d1fa408d2f2e64dad074"
+  },
+  "stockFullName": "Tesla",
+  "symbol": "TSLA",
+  "openingAsk": 66,
+  "openingBid": 77,
+  "currentAsk": 0,
+  "currentBid": 0,
+  "currHighestAsk": 0,
+  "currLowestBid": 0,
+  "eventSubscriptions": [],
+  "sellOrders": [],
+  "buyOrders": [
+    {
+      "_id": {
+        "$oid": "5fc9d3799a743c4b989c8d6d"
+      },
+      "orderID": "1",
+      "userID": "5f99a6fecf30786874cdde76",
+      "orderPlacement": 1,
+      "username": "lmao",
+      "shares": 12,
+      "price": 75
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d3799a743c4b989c8d6e"
+      },
+      "orderID": "6",
+      "orderPlacement": 6,
+      "userID": "5f99a70acf30786874cdde78",
+      "shares": 18,
+      "price": 32
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d3799a743c4b989c8d6f"
+      },
+      "orderID": "3",
+      "userID": "5f99a76bb0575273fccc4d64",
+      "orderPlacement": 3,
+      "shares": 5,
+      "price": 34
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d3799a743c4b989c8d70"
+      },
+      "orderID": "2",
+      "orderPlacement": 2,
+      "userID": "5f99a78fb0575273fccc4d67",
+      "shares": 12,
+      "price": 32
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d3799a743c4b989c8d71"
+      },
+      "orderID": "5",
+      "orderPlacement": 5,
+      "userID": "5f99a7a1b0575273fccc4d69",
+      "shares": 7,
+      "price": 20
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d3799a743c4b989c8d72"
+      },
+      "orderID": "4",
+      "orderPlacement": 4,
+      "userID": "5f99a7acb0575273fccc4d6b",
+      "shares": 6,
+      "price": 32
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d3799a743c4b989c8d73"
+      },
+      "orderID": "7",
+      "orderPlacement": 7,
+      "userID": "5f99a7c0b0575273fccc4d6d",
+      "shares": 9,
+      "price": 21
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d3799a743c4b989c8d74"
+      },
+      "orderID": "8",
+      "orderPlacement": 8,
+      "userID": "5f99a7ceb0575273fccc4d6e",
+      "shares": 2,
+      "price": 18
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d3799a743c4b989c8d75"
+      },
+      "orderID": "hbdGVW8bY2zk",
+      "orderPlacement": 1,
+      "userID": "5f999d97b697054d9cbffbbe",
+      "shares": 5,
+      "price": 5
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d3799a743c4b989c8d76"
+      },
+      "orderID": "AXxKidaXNLLW",
+      "orderPlacement": 2,
+      "userID": "5f999d97b697054d9cbffbbe",
+      "shares": 5,
+      "price": 5
+    }
+  ],
+  "history": [],
+  "dailyHistory": [],
+  "fulfilledOrders": [],
+  "unfulfilledOrders": [],
+  "createdAt": {
+    "$date": "2020-12-04T06:06:50.850Z"
+  },
+  "updatedAt": {
+    "$date": "2020-12-04T06:13:13.552Z"
   }
 }]'''
 

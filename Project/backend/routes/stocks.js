@@ -256,11 +256,11 @@ app.post("/add",function(req,res){
 })
 
 app.post("/update/:symbol", function(req,res){
-    Stock.findOneAndUpdate(req.params.symbol, {$set:req.body},{new:true}, function(err){
+    Stock.findOneAndUpdate({"symbol":req.params.symbol}, {$set:req.body},{new:true}, function(err){
         if(err){
             return res.status(400).send(err);
         }
-        // res.json({success: true});
+        res.json({success: true});
     });
 });
 

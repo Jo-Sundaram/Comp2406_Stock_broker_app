@@ -853,6 +853,7 @@ app.get("/:symbol/", async function(req, res){ //i wanna change :day to a query 
 	let lowestBid = stock.currLowestBid;
 	let highestAsk = stock.currHighestAsk;
 
+	console.log
 
 	Stock.findOneAndUpdate(
 		{'symbol' : req.params.symbol},
