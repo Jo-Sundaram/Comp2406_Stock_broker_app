@@ -445,11 +445,11 @@ export default class Search extends Component{
                                 <td>{this.state.owned}</td>
                             </tr>
                             </table> */}
-                            {/* <h4><span id = "bid"> Highest Bid: ${this.state.bid}</span></h4>
+                            <h4><span id = "bid"> Highest Bid: ${this.state.bid}</span></h4>
                             <h4><span id = "ask"> Lowest Ask: ${this.state.ask}</span> </h4>
                             <h4><span id = "ask"> Current Ask: ${this.state.currentAsk}</span> </h4>
                             <h4><span id = "ask"> Current Bid: ${this.state.currentBid}</span> </h4>
-                            <h4><span> Shares Owned:{this.state.owned}</span> </h4> */}
+                            <h4><span> Shares Owned:{this.state.owned}</span> </h4>
 
                             <SelectSearch 
                                 options={this.state.watchlists}

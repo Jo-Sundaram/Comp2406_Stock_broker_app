@@ -46,6 +46,15 @@ export default class Navbar extends Component {
                 </a>
              {/*  </Link> */}
           </li>
+          
+          <li class="nav-item">
+              {/* <Link to = '/home' onclick={() => this.onRefresh()}> */}
+                <a class="nav-link" href='/notifications'>
+                <span class="link-text">Notifications</span>
+                <i class="fas fa-chart-line"></i>
+                </a>
+             {/*  </Link> */}
+          </li>
 
           <li class="nav-item">
             {/* <Link to = "/watchlist"> */}

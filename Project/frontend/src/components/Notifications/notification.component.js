@@ -22,10 +22,11 @@ export default class Notification extends Component{
     } 
 
     async componentWillReceiveProps(props){
-
+        let array = props.user.notifications;
+        
         this.setState({
          	userID: props.user._id,
-          	notifications: props.user.notifications
+          	notifications: array.reverse()
 
         })
 

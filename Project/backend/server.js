@@ -215,7 +215,7 @@ const checkOutProcessedOrders = async client => {
 						// console.log("pop!");
 						client = users[k].clientInfo;
 						client.emit("processedBuyOrder", stocks[i].fulfilledOrders[j], stocks[i].symbol);
-						pushNotification(stocks[i].fulfilledOrders[j].buyerID, ("You bought " + stocks[i].fulfilledOrders[j].shares + ' shares of ' + stocks[i].symbol + " for $" + stocks[i].fulfilledOrders[j].soldFor + " to " + stocks[i].fulfilledOrders[j].buyerID));
+						pushNotification(stocks[i].fulfilledOrders[j].buyerID, ("You bought " + stocks[i].fulfilledOrders[j].shares + ' shares of ' + stocks[i].symbol + " for $" + stocks[i].fulfilledOrders[j].soldFor + " from " + stocks[i].fulfilledOrders[j].sellerID));
 						
 						Stock.updateMany(
 							{'symbol' : stocks[i].symbol, "fulfilledOrders._id": stocks[i].fulfilledOrders[j]._id},{
