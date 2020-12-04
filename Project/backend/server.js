@@ -201,12 +201,7 @@ const checkOutProcessedOrders = async client => {
 							stocks[i].fulfilledOrders[j].buyerID,
 							function(err,result){
 								if(err){
-									return res.status(400).send(err);
-								}
-								for (var i in result.stockPortfolio){
-									if(result.stockPortfolio[i].stockID == req.params.symbol){
-										shares = result.stockPortfolio[i].shares;
-									}
+									console.log("error")
 								}
 							}
 						);
@@ -236,12 +231,7 @@ const checkOutProcessedOrders = async client => {
 							stocks[i].fulfilledOrders[j].sellerID,
 							function(err,result){
 								if(err){
-									return res.status(400).send(err);
-								}
-								for (var i in result.stockPortfolio){
-									if(result.stockPortfolio[i].stockID == req.params.symbol){
-										shares = result.stockPortfolio[i].shares;
-									}
+									console.log("error")
 								}
 							}
 						);
