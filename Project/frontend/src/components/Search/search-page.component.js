@@ -72,7 +72,10 @@ export default class Search extends Component{
             bid: 'N/A',
 
             currentBid: 'N/A',
-            currentAsk: 'N/A'
+            currentAsk: 'N/A',
+            
+            openingBid: 'N/A',
+            openingAsk: 'N/A',
             
         }
     }
@@ -149,16 +152,7 @@ export default class Search extends Component{
                 console.log("Stock on order: " + this.state.stockID);
 
                 axios.all([
-                    /* axios({
-                        method: 'post',
-                        url: 'http://localhost:5000/users/update/' + this.state.userID, 
-                        data: {
-                            userFunds: newUserFunds,
-                        },
-                        headers: {
-                            Authorization: "Bearer " + localStorage.getItem("token")
-                        }
-                    }), */
+               
                     axios({
                         method: 'post',
                         url: 'http://localhost:5000/update/' + this.state.userID + "/" + this.state.stockID+"/buyorder/add", 
@@ -332,7 +326,6 @@ export default class Search extends Component{
 		var valueHistory = await (requests.getSomeHistory(this.state.stockID, this.state.tranHistoryStartDay, this.state.tranHistoryEndDay));
 		this.setState({
 			stockHistory: valueHistory
-         //   stockHistory: history
         });
 	}
 
@@ -344,6 +337,9 @@ export default class Search extends Component{
         
         var currentAsk = await (requests.getCurrentAsk(stockID));
         var currentBid = await (requests.getCurrentBid(stockID));
+        
+        var openingAsk = await (requests.getOpeningAsk(stockID));
+        var openingBid = await (requests.getOpeningBid(stockID));
         
         var history = await (requests.getHistory(stockID));
 
@@ -382,7 +378,9 @@ export default class Search extends Component{
             stockNews: filterNews,
             owned: stockSharesOwned,
             currentAsk: currentAsk,
-            currentBid: currentBid
+            currentBid: currentBid,
+            openingAsk: openingAsk,
+            openingBid:openingBid
         });
 
 
@@ -419,36 +417,15 @@ export default class Search extends Component{
                     <div id = "main-body" class = "main">
                         <div id = "recent-asks">
                             <div id =" stock-name">
-                            Stock Name: {this.state.stockID}
+                           <h4> Stock Name: {this.state.stockID}</h4>
                             </div>
 
-                            {/* <table>
-
-                            <tr>
-                                <thead><th>Highest Bid</th></thead>
-                                <td>${this.state.bid}</td>
-                            </tr>
-                            <tr>
-                                <thead><th>Lowest Ask</th></thead>
-                                <td>${this.state.ask}</td>
-                            </tr>
-                            <tr>
-                            <thead><th>Current Bid</th></thead>
-                                <td>${this.state.currentBid}</td>
-                            </tr>
-                            <tr>
-                            <thead><th>Current Ask</th></thead>
-                                <td>${this.state.currentAsk}</td>
-                            </tr>
-                            <tr>
-                            <thead><th>Shares Owned</th></thead>
-                                <td>{this.state.owned}</td>
-                            </tr>
-                            </table> */}
                             <h4><span id = "bid"> Highest Bid: ${this.state.bid}</span></h4>
                             <h4><span id = "ask"> Lowest Ask: ${this.state.ask}</span> </h4>
-                            <h4><span id = "ask"> Current Ask: ${this.state.currentAsk}</span> </h4>
                             <h4><span id = "ask"> Current Bid: ${this.state.currentBid}</span> </h4>
+                            <h4><span id = "ask"> Current Ask: ${this.state.currentAsk}</span> </h4>
+                            <h4><span id = "ask"> Opening Bid: ${this.state.openingBid}</span> </h4>
+                            <h4><span id = "ask"> Opening Ask: ${this.state.openingAsk}</span> </h4>
                             <h4><span> Shares Owned:{this.state.owned}</span> </h4>
 
                             <SelectSearch 

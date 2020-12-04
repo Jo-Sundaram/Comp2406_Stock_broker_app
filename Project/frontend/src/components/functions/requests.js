@@ -184,6 +184,32 @@ const requests = {
 
     },
 
+    getOpeningAsk: async function(stockID){
+        const promise = axios.get('http://localhost:5000/stocks/'+stockID+ '/info') //dummy user ID in place
+        
+        const dataPromise = await promise.then((response) => response.data.openingAsk)
+
+        console.log(dataPromise);
+
+        var openAsk = 'N/A';
+        openAsk = dataPromise;
+
+        return openAsk;
+    },
+
+    getOpeningBid: async function(stockID){
+        const promise = axios.get('http://localhost:5000/stocks/'+stockID+ '/info') //dummy user ID in place
+        
+        const dataPromise = await promise.then((response) => response.data.openingBid)
+
+        console.log(dataPromise);
+
+        var openBid = 'N/A';
+        openBid = dataPromise;
+
+        return openBid;
+    },
+
     parseListItems: async function(userID){
         const promise = axios.get('http://localhost:5000/users/'+userID) //dummy user ID in place
         
