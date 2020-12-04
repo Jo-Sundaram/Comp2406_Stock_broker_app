@@ -175,6 +175,23 @@ const checkOutProcessedOrders = async client => {
     const stocks = await Stock.find();
     
     for(var i in stocks){
+
+		// openAsk = stocks[i].currentAsk;
+		// openBid = stocks[i].currentBid;
+
+		// Stock.findOneAndUpdate(
+		// 	{'symbol' : stocks[i].symbol},
+		// 	{$set: {
+		// 		openingAsk: openAsk,
+		// 		openingBid: openBid
+		// 	}},
+		// 	function(err){
+		// 		if(err){
+		// 			console.log("error");
+		// 		}
+		// 	}
+		// );
+
         for (var j in stocks[i].fulfilledOrders){
 
 			if(stocks[i].fulfilledOrders[j].sellerID == "" && stocks[i].fulfilledOrders[j].buyerID == ""){
@@ -472,6 +489,7 @@ const processStocks = async () => {
     day+=1;
 
     for(let i in stocks){
+		console.log(stocks[i].symbol);
         var xmlHttp = new XMLHttpRequest();
         xmlHttp.open( "GET", "http://localhost:5000/update/" + stocks[i].symbol + '?day=' + day, true ); // false for synchronous request
         xmlHttp.send( null );
@@ -583,14 +601,14 @@ const endDay = async() => {
 	for(var i in stocks){
         let currentAsk = stocks[i].currentAsk;
 		let currentBid = stocks[i].currentBid;
-        Stock.findOneAndUpdate(stocks[i].symbol, {$set:{openingAsk: currentAsk}},{new:true}, function(err){
+        Stock.findOneAndUpdate({'symbol' : stocks[i].symbol}, {$set:{openingAsk: currentAsk}},{new:true}, function(err){
             if(err){
                 return err;
 			}
 			console.log("success: true")
         });
 
-        Stock.findOneAndUpdate(stocks[i].symbol, {$set:{openingBid: currentBid}},{new:true}, function(err){
+        Stock.findOneAndUpdate({'symbol' : stocks[i].symbol}, {$set:{openingBid: currentBid}},{new:true}, function(err){
             if(err){
                 return err;
 			}
@@ -615,7 +633,7 @@ const endDay = async() => {
 		let highestAsk = stocks[i].currHighestAsk;
 
 		Stock.findOneAndUpdate(
-			stocks[i].symbol,
+			{'symbol' : stocks[i].symbol},
 			{$push: {
 				day: day,
 				lowestAsk: currentAsk,
