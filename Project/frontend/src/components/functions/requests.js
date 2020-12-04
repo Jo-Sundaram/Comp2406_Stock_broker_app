@@ -120,7 +120,7 @@ const requests = {
     getLowestAsk: async function(stockID){
         const promise = axios.get('http://localhost:5000/stocks/'+stockID+ '/info') //dummy user ID in place
         
-        const dataPromise = await promise.then((response) => response.data.sellOrders)
+        const dataPromise = await promise.then((response) => response.data.buyOrders)
 
         console.log(dataPromise);
 
@@ -140,7 +140,7 @@ const requests = {
     getHighestBid: async function(stockID){
         const promise = axios.get('http://localhost:5000/stocks/'+stockID+ '/info') //dummy user ID in place
         
-        const dataPromise = await promise.then((response) => response.data.buyOrders)
+        const dataPromise = await promise.then((response) => response.data.sellOrders)
 
         console.log(dataPromise);
 

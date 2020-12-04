@@ -836,14 +836,14 @@ app.get("/:symbol/", async function(req, res){ //i wanna change :day to a query 
 
 	let currentAsk = stock.currentAsk;
 	let currentBid = stock.currentBid;
-	Stock.findOneAndUpdate(stock.symbol, {$set:{openingAsk: currentAsk}},{new:true}, function(err){
+	Stock.findOneAndUpdate({'symbol' : req.params.symbol}, {$set:{openingAsk: currentAsk}},{new:true}, function(err){
 		if(err){
 			return err;
 		}
 		console.log("success: true")
 	});
 
-	Stock.findOneAndUpdate(stock.symbol, {$set:{openingBid: currentBid}},{new:true}, function(err){
+	Stock.findOneAndUpdate({'symbol' : req.params.symbol}, {$set:{openingBid: currentBid}},{new:true}, function(err){
 		if(err){
 			return err;
 		}
@@ -853,16 +853,17 @@ app.get("/:symbol/", async function(req, res){ //i wanna change :day to a query 
 	let lowestBid = stock.currLowestBid;
 	let highestAsk = stock.currHighestAsk;
 
+
 	Stock.findOneAndUpdate(
-		stock.symbol,
-		{$push: {
+		{'symbol' : req.params.symbol},
+		{$push: {dailyHistory: {
 			day: day,
 			lowestAsk: currentAsk,
 			highestBid: currentBid,
 			highestAsk: highestAsk,
 			lowestBid: lowestBid,
 			sharesSold: sharesSold
-		}},
+		}}},
 		function(err){
 			if(err){
 				console.log(err);
