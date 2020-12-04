@@ -43,21 +43,21 @@ function App() {
             console.log(err);
 		});
 		
-		socket.on("processedBuyOrder", (purchase, symbol) => {
-			alert("You bought " + purchase.shares + ' shares of ' + symbol + " for $" + purchase.soldFor + " from " + purchase.sellerID);
+		socket.on("processedBuyOrder", (purchase, symbol, user) => {
+			alert("You bought " + purchase.shares + ' shares of ' + symbol + " for $" + purchase.soldFor + " from " + user);
 		});
 
-		socket.on("processedSellOrder", (purchase, symbol) => {
+		socket.on("processedSellOrder", (purchase, symbol, user) => {
 			console.log("?");
-		alert("You sold " + purchase.shares + ' shares of ' + symbol + " for $" + purchase.soldFor + " to " + purchase.buyerID);
+			alert("You sold " + purchase.shares + ' shares of ' + symbol + " for $" + purchase.soldFor + " to " + user);
 		});
 
 		socket.on("unprocessedOrder", (order, symbol) => {
-		alert("Could not fulfill " + order.type + " order" + " for " + symbol + " (" + order.price +"/share, " + order.shares + "shares)");
+			alert("Could not fulfill " + order.type + " order" + " for " + symbol + " (" + order.price +"/share, " + order.shares + "shares)");
 		});
 
 		socket.on("eventNotif", (notification) => {
-		alert("EVENT SUBSCRIPTION: " + notification.stock + " " + notification.type + " " + notification.change + " by " + notification.value + notification.param + ".");
+			alert("EVENT SUBSCRIPTION: " + notification.stock + " " + notification.type + " " + notification.change + " by " + notification.value + notification.param + ".");
 		});
 		
 		socket.on("hellow", () => {

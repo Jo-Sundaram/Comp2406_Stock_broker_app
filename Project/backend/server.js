@@ -196,8 +196,25 @@ const checkOutProcessedOrders = async client => {
 					if(stocks[i].fulfilledOrders[j].sellerID == users[k].userID){
 						// console.log("pop!");
 						client = users[k].clientInfo;
-						client.emit("processedSellOrder", stocks[i].fulfilledOrders[j], stocks[i].symbol);
-						pushNotification(stocks[i].fulfilledOrders[j].sellerID, ("You sold " + stocks[i].fulfilledOrders[j].shares + ' shares of ' + stocks[i].symbol + " for $" + stocks[i].fulfilledOrders[j].soldFor + " to " + stocks[i].fulfilledOrders[j].buyerID));
+
+						const thisuser = await User.findById(
+							stocks[i].fulfilledOrders[j].buyerID,
+							function(err,result){
+								if(err){
+									return res.status(400).send(err);
+								}
+								for (var i in result.stockPortfolio){
+									if(result.stockPortfolio[i].stockID == req.params.symbol){
+										shares = result.stockPortfolio[i].shares;
+									}
+								}
+							}
+						);
+
+						client.emit("processedSellOrder", stocks[i].fulfilledOrders[j], stocks[i].symbol, thisuser.username);
+
+
+						pushNotification(stocks[i].fulfilledOrders[j].sellerID, ("You sold " + stocks[i].fulfilledOrders[j].shares + ' shares of ' + stocks[i].symbol + " for $" + stocks[i].fulfilledOrders[j].soldFor + " to " + thisuser.username));
 						Stock.updateMany(
 							{'symbol' : stocks[i].symbol, "fulfilledOrders._id": stocks[i].fulfilledOrders[j].id},{
 							$set: {"fulfilledOrders.$.sellerID": 
@@ -213,9 +230,26 @@ const checkOutProcessedOrders = async client => {
 					}
 					if(stocks[i].fulfilledOrders[j].buyerID == users[k].userID){
 						// console.log("pop!");
+
+
+						const thisuser = await User.findById(
+							stocks[i].fulfilledOrders[j].sellerID,
+							function(err,result){
+								if(err){
+									return res.status(400).send(err);
+								}
+								for (var i in result.stockPortfolio){
+									if(result.stockPortfolio[i].stockID == req.params.symbol){
+										shares = result.stockPortfolio[i].shares;
+									}
+								}
+							}
+						);
+
 						client = users[k].clientInfo;
-						client.emit("processedBuyOrder", stocks[i].fulfilledOrders[j], stocks[i].symbol);
-						pushNotification(stocks[i].fulfilledOrders[j].buyerID, ("You bought " + stocks[i].fulfilledOrders[j].shares + ' shares of ' + stocks[i].symbol + " for $" + stocks[i].fulfilledOrders[j].soldFor + " to " + stocks[i].fulfilledOrders[j].buyerID));
+						client.emit("processedBuyOrder", stocks[i].fulfilledOrders[j], stocks[i].symbol, thisuser.username);
+
+						pushNotification(stocks[i].fulfilledOrders[j].buyerID, ("You bought " + stocks[i].fulfilledOrders[j].shares + ' shares of ' + stocks[i].symbol + " for $" + stocks[i].fulfilledOrders[j].soldFor + " from " + thisuser.username));
 						
 						Stock.updateMany(
 							{'symbol' : stocks[i].symbol, "fulfilledOrders._id": stocks[i].fulfilledOrders[j]._id},{
