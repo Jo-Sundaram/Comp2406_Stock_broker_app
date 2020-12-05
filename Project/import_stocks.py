@@ -25,24 +25,69 @@ json_data = '''[{
   },
   "stockFullName": "Nike",
   "symbol": "NKE",
-  "openingAsk": 125,
-  "openingBid": 124,
-  "currentAsk": 0,
-  "currentBid": 0,
-  "currHighestAsk": 0,
-  "currLowestBid": 0,
+  "openingAsk": 5,
+  "openingBid": 100,
+  "currentAsk": 16,
+  "currentBid": 75,
+  "currHighestAsk": 32,
+  "currLowestBid": 2,
   "eventSubscriptions": [],
   "sellOrders": [],
   "buyOrders": [],
   "history": [],
-  "dailyHistory": [],
+  "dailyHistory": [
+    {
+      "_id": {
+        "$oid": "5fc9d5d3f3977557ed8b1191"
+      },
+      "day": 1,
+      "lowestAsk": 0,
+      "highestBid": 75,
+      "highestAsk": 0,
+      "lowestBid": 5,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d5e5f3977557ed8b11b0"
+      },
+      "day": 2,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d67f6ef4d45a735a3267"
+      },
+      "day": 1,
+      "lowestAsk": 2,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d7096ef4d45a735a328b"
+      },
+      "day": 2,
+      "lowestAsk": 5,
+      "highestBid": 100,
+      "highestAsk": 0,
+      "lowestBid": 100,
+      "sharesSold": 0
+    }
+  ],
   "fulfilledOrders": [],
   "unfulfilledOrders": [],
   "createdAt": {
     "$date": "2020-11-12T18:12:05.994Z"
   },
   "updatedAt": {
-    "$date": "2020-12-04T06:13:47.150Z"
+    "$date": "2020-12-05T02:53:11.566Z"
   }
 },{
   "_id": {
@@ -50,8 +95,8 @@ json_data = '''[{
   },
   "stockFullName": "Apple Inc",
   "symbol": "AAPL",
-  "openingAsk": 119,
-  "openingBid": 119,
+  "openingAsk": 0,
+  "openingBid": 0,
   "currentAsk": 0,
   "currentBid": 0,
   "currHighestAsk": 0,
@@ -60,14 +105,59 @@ json_data = '''[{
   "sellOrders": [],
   "buyOrders": [],
   "history": [],
-  "dailyHistory": [],
+  "dailyHistory": [
+    {
+      "_id": {
+        "$oid": "5fc9d5d3f3977557ed8b1192"
+      },
+      "day": 1,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d5e5f3977557ed8b11b1"
+      },
+      "day": 2,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d67f6ef4d45a735a3268"
+      },
+      "day": 1,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d7096ef4d45a735a328c"
+      },
+      "day": 2,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    }
+  ],
   "fulfilledOrders": [],
   "unfulfilledOrders": [],
   "createdAt": {
     "$date": "2020-11-12T18:12:48.553Z"
   },
   "updatedAt": {
-    "$date": "2020-11-12T18:12:48.553Z"
+    "$date": "2020-12-04T06:28:25.147Z"
   }
 },{
   "_id": {
@@ -75,8 +165,8 @@ json_data = '''[{
   },
   "stockFullName": "Cisco Systems Inc",
   "symbol": "CSCO",
-  "openingAsk": 38,
-  "openingBid": 38,
+  "openingAsk": 0,
+  "openingBid": 0,
   "currentAsk": 0,
   "currentBid": 0,
   "currHighestAsk": 0,
@@ -85,14 +175,59 @@ json_data = '''[{
   "sellOrders": [],
   "buyOrders": [],
   "history": [],
-  "dailyHistory": [],
+  "dailyHistory": [
+    {
+      "_id": {
+        "$oid": "5fc9d5d3f3977557ed8b1193"
+      },
+      "day": 1,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d5e5f3977557ed8b11b2"
+      },
+      "day": 2,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d67f6ef4d45a735a3269"
+      },
+      "day": 1,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d7096ef4d45a735a328d"
+      },
+      "day": 2,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    }
+  ],
   "fulfilledOrders": [],
   "unfulfilledOrders": [],
   "createdAt": {
     "$date": "2020-11-12T18:13:19.735Z"
   },
   "updatedAt": {
-    "$date": "2020-11-12T18:13:19.735Z"
+    "$date": "2020-12-04T06:28:25.161Z"
   }
 },{
   "_id": {
@@ -100,8 +235,8 @@ json_data = '''[{
   },
   "stockFullName": "Dow Jones Industrial Average",
   "symbol": "DOW",
-  "openingAsk": 29000,
-  "openingBid": 29000,
+  "openingAsk": 0,
+  "openingBid": 0,
   "currentAsk": 0,
   "currentBid": 0,
   "currHighestAsk": 0,
@@ -110,14 +245,59 @@ json_data = '''[{
   "sellOrders": [],
   "buyOrders": [],
   "history": [],
-  "dailyHistory": [],
+  "dailyHistory": [
+    {
+      "_id": {
+        "$oid": "5fc9d5d3f3977557ed8b1194"
+      },
+      "day": 1,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d5e5f3977557ed8b11b3"
+      },
+      "day": 2,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d67f6ef4d45a735a326a"
+      },
+      "day": 1,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d7096ef4d45a735a328e"
+      },
+      "day": 2,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    }
+  ],
   "fulfilledOrders": [],
   "unfulfilledOrders": [],
   "createdAt": {
     "$date": "2020-11-12T18:14:25.823Z"
   },
   "updatedAt": {
-    "$date": "2020-11-12T18:14:25.823Z"
+    "$date": "2020-12-04T06:28:25.172Z"
   }
 },{
   "_id": {
@@ -125,8 +305,8 @@ json_data = '''[{
   },
   "stockFullName": "Microsoft Corporation",
   "symbol": "MSFT",
-  "openingAsk": 215.6,
-  "openingBid": 215.6,
+  "openingAsk": 0,
+  "openingBid": 0,
   "currentAsk": 0,
   "currentBid": 0,
   "currHighestAsk": 0,
@@ -135,14 +315,59 @@ json_data = '''[{
   "sellOrders": [],
   "buyOrders": [],
   "history": [],
-  "dailyHistory": [],
+  "dailyHistory": [
+    {
+      "_id": {
+        "$oid": "5fc9d5d3f3977557ed8b1195"
+      },
+      "day": 1,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d5e5f3977557ed8b11b4"
+      },
+      "day": 2,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d67f6ef4d45a735a326b"
+      },
+      "day": 1,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d7096ef4d45a735a328f"
+      },
+      "day": 2,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    }
+  ],
   "fulfilledOrders": [],
   "unfulfilledOrders": [],
   "createdAt": {
     "$date": "2020-11-12T18:15:08.770Z"
   },
   "updatedAt": {
-    "$date": "2020-11-12T19:20:54.064Z"
+    "$date": "2020-12-04T06:28:25.181Z"
   }
 },{
   "_id": {
@@ -150,35 +375,69 @@ json_data = '''[{
   },
   "stockFullName": "IBM Common Stock",
   "symbol": "IBM",
-  "openingAsk": 114.32,
-  "openingBid": 114.31,
+  "openingAsk": 0,
+  "openingBid": 7,
   "currentAsk": 0,
   "currentBid": 7,
   "currHighestAsk": 0,
   "currLowestBid": 0,
   "eventSubscriptions": [],
   "sellOrders": [],
-  "buyOrders": [
+  "buyOrders": [],
+  "history": [],
+  "dailyHistory": [
     {
       "_id": {
-        "$oid": "5fc9d0ba408d2f2e64dad071"
+        "$oid": "5fc9d5d3f3977557ed8b11ae"
       },
-      "orderID": "q9GDW74r1NY7",
-      "orderPlacement": 1,
-      "userID": "5f999d97b697054d9cbffbbe",
-      "shares": 7,
-      "price": 7
+      "day": 1,
+      "lowestAsk": 0,
+      "highestBid": 7,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d5e5f3977557ed8b11b5"
+      },
+      "day": 2,
+      "lowestAsk": 0,
+      "highestBid": 7,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d67f6ef4d45a735a326c"
+      },
+      "day": 1,
+      "lowestAsk": 0,
+      "highestBid": 7,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d7096ef4d45a735a3290"
+      },
+      "day": 2,
+      "lowestAsk": 0,
+      "highestBid": 7,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
     }
   ],
-  "history": [],
-  "dailyHistory": [],
   "fulfilledOrders": [],
   "unfulfilledOrders": [],
   "createdAt": {
     "$date": "2020-11-12T18:21:13.591Z"
   },
   "updatedAt": {
-    "$date": "2020-12-04T06:01:30.402Z"
+    "$date": "2020-12-04T06:28:25.192Z"
   }
 },{
   "_id": {
@@ -186,8 +445,8 @@ json_data = '''[{
   },
   "stockFullName": "Visa Inc",
   "symbol": "V",
-  "openingAsk": 208.42,
-  "openingBid": 208.42,
+  "openingAsk": 0,
+  "openingBid": 0,
   "currentAsk": 0,
   "currentBid": 0,
   "currHighestAsk": 0,
@@ -196,14 +455,59 @@ json_data = '''[{
   "sellOrders": [],
   "buyOrders": [],
   "history": [],
-  "dailyHistory": [],
+  "dailyHistory": [
+    {
+      "_id": {
+        "$oid": "5fc9d5d3f3977557ed8b1196"
+      },
+      "day": 1,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d5e5f3977557ed8b11b6"
+      },
+      "day": 2,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d67f6ef4d45a735a326d"
+      },
+      "day": 1,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d7096ef4d45a735a3291"
+      },
+      "day": 2,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    }
+  ],
   "fulfilledOrders": [],
   "unfulfilledOrders": [],
   "createdAt": {
     "$date": "2020-11-12T18:27:53.552Z"
   },
   "updatedAt": {
-    "$date": "2020-11-12T18:27:53.552Z"
+    "$date": "2020-12-04T06:28:25.227Z"
   }
 },{
   "_id": {
@@ -211,8 +515,8 @@ json_data = '''[{
   },
   "stockFullName": "American Express Company",
   "symbol": "AXP",
-  "openingAsk": 111.48,
-  "openingBid": 110.48,
+  "openingAsk": 0,
+  "openingBid": 0,
   "currentAsk": 0,
   "currentBid": 0,
   "currHighestAsk": 0,
@@ -221,14 +525,59 @@ json_data = '''[{
   "sellOrders": [],
   "buyOrders": [],
   "history": [],
-  "dailyHistory": [],
+  "dailyHistory": [
+    {
+      "_id": {
+        "$oid": "5fc9d5d3f3977557ed8b1197"
+      },
+      "day": 1,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d5e5f3977557ed8b11b7"
+      },
+      "day": 2,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d67f6ef4d45a735a326e"
+      },
+      "day": 1,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d7096ef4d45a735a3292"
+      },
+      "day": 2,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    }
+  ],
   "fulfilledOrders": [],
   "unfulfilledOrders": [],
   "createdAt": {
     "$date": "2020-11-12T18:29:12.040Z"
   },
   "updatedAt": {
-    "$date": "2020-11-12T18:29:12.040Z"
+    "$date": "2020-12-04T06:28:25.238Z"
   }
 },{
   "_id": {
@@ -236,8 +585,8 @@ json_data = '''[{
   },
   "stockFullName": "Amgen",
   "symbol": "AMGN",
-  "openingAsk": 236.01,
-  "openingBid": 236.88,
+  "openingAsk": 0,
+  "openingBid": 0,
   "currentAsk": 0,
   "currentBid": 0,
   "currHighestAsk": 0,
@@ -246,14 +595,59 @@ json_data = '''[{
   "sellOrders": [],
   "buyOrders": [],
   "history": [],
-  "dailyHistory": [],
+  "dailyHistory": [
+    {
+      "_id": {
+        "$oid": "5fc9d5d3f3977557ed8b1198"
+      },
+      "day": 1,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d5e5f3977557ed8b11b8"
+      },
+      "day": 2,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d67f6ef4d45a735a326f"
+      },
+      "day": 1,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d7096ef4d45a735a3293"
+      },
+      "day": 2,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    }
+  ],
   "fulfilledOrders": [],
   "unfulfilledOrders": [],
   "createdAt": {
     "$date": "2020-11-12T18:29:45.123Z"
   },
   "updatedAt": {
-    "$date": "2020-11-12T18:29:45.123Z"
+    "$date": "2020-12-04T06:28:25.246Z"
   }
 },{
   "_id": {
@@ -261,8 +655,8 @@ json_data = '''[{
   },
   "stockFullName": "Boeing Co",
   "symbol": "BA",
-  "openingAsk": 178.65,
-  "openingBid": 178.88,
+  "openingAsk": 0,
+  "openingBid": 0,
   "currentAsk": 0,
   "currentBid": 0,
   "currHighestAsk": 0,
@@ -271,14 +665,59 @@ json_data = '''[{
   "sellOrders": [],
   "buyOrders": [],
   "history": [],
-  "dailyHistory": [],
+  "dailyHistory": [
+    {
+      "_id": {
+        "$oid": "5fc9d5d3f3977557ed8b1199"
+      },
+      "day": 1,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d5e5f3977557ed8b11b9"
+      },
+      "day": 2,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d67f6ef4d45a735a3270"
+      },
+      "day": 1,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d7096ef4d45a735a3294"
+      },
+      "day": 2,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    }
+  ],
   "fulfilledOrders": [],
   "unfulfilledOrders": [],
   "createdAt": {
     "$date": "2020-11-12T18:30:17.751Z"
   },
   "updatedAt": {
-    "$date": "2020-11-12T18:30:17.751Z"
+    "$date": "2020-12-04T06:28:25.255Z"
   }
 },{
   "_id": {
@@ -286,8 +725,8 @@ json_data = '''[{
   },
   "stockFullName": "Caterpillar Inc.",
   "symbol": "CAT",
-  "openingAsk": 168.72,
-  "openingBid": 168.42,
+  "openingAsk": 0,
+  "openingBid": 0,
   "currentAsk": 0,
   "currentBid": 0,
   "currHighestAsk": 0,
@@ -296,14 +735,59 @@ json_data = '''[{
   "sellOrders": [],
   "buyOrders": [],
   "history": [],
-  "dailyHistory": [],
+  "dailyHistory": [
+    {
+      "_id": {
+        "$oid": "5fc9d5d3f3977557ed8b119a"
+      },
+      "day": 1,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d5e5f3977557ed8b11ba"
+      },
+      "day": 2,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d6806ef4d45a735a3271"
+      },
+      "day": 1,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d7096ef4d45a735a3295"
+      },
+      "day": 2,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    }
+  ],
   "fulfilledOrders": [],
   "unfulfilledOrders": [],
   "createdAt": {
     "$date": "2020-11-12T18:30:51.224Z"
   },
   "updatedAt": {
-    "$date": "2020-11-12T18:30:51.224Z"
+    "$date": "2020-12-04T06:28:25.263Z"
   }
 },{
   "_id": {
@@ -311,8 +795,8 @@ json_data = '''[{
   },
   "stockFullName": "Chevron Corporation",
   "symbol": "CVX",
-  "openingAsk": 80.67,
-  "openingBid": 80.32,
+  "openingAsk": 0,
+  "openingBid": 0,
   "currentAsk": 0,
   "currentBid": 0,
   "currHighestAsk": 0,
@@ -321,14 +805,59 @@ json_data = '''[{
   "sellOrders": [],
   "buyOrders": [],
   "history": [],
-  "dailyHistory": [],
+  "dailyHistory": [
+    {
+      "_id": {
+        "$oid": "5fc9d5d3f3977557ed8b119b"
+      },
+      "day": 1,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d5e5f3977557ed8b11bb"
+      },
+      "day": 2,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d6806ef4d45a735a3272"
+      },
+      "day": 1,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d7096ef4d45a735a3296"
+      },
+      "day": 2,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    }
+  ],
   "fulfilledOrders": [],
   "unfulfilledOrders": [],
   "createdAt": {
     "$date": "2020-11-12T18:34:12.851Z"
   },
   "updatedAt": {
-    "$date": "2020-11-12T18:34:12.851Z"
+    "$date": "2020-12-04T06:28:25.291Z"
   }
 },{
   "_id": {
@@ -336,8 +865,8 @@ json_data = '''[{
   },
   "stockFullName": "Goldman Sachs Group Inc",
   "symbol": "GS",
-  "openingAsk": 213.95,
-  "openingBid": 219.32,
+  "openingAsk": 0,
+  "openingBid": 0,
   "currentAsk": 0,
   "currentBid": 0,
   "currHighestAsk": 0,
@@ -346,14 +875,59 @@ json_data = '''[{
   "sellOrders": [],
   "buyOrders": [],
   "history": [],
-  "dailyHistory": [],
+  "dailyHistory": [
+    {
+      "_id": {
+        "$oid": "5fc9d5d3f3977557ed8b119c"
+      },
+      "day": 1,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d5e5f3977557ed8b11bc"
+      },
+      "day": 2,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d6806ef4d45a735a3273"
+      },
+      "day": 1,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d7096ef4d45a735a3297"
+      },
+      "day": 2,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    }
+  ],
   "fulfilledOrders": [],
   "unfulfilledOrders": [],
   "createdAt": {
     "$date": "2020-11-12T18:38:21.996Z"
   },
   "updatedAt": {
-    "$date": "2020-11-12T18:38:21.996Z"
+    "$date": "2020-12-04T06:28:25.305Z"
   }
 },{
   "_id": {
@@ -361,8 +935,8 @@ json_data = '''[{
   },
   "stockFullName": "Home Depot Inc",
   "symbol": "HD",
-  "openingAsk": 274.65,
-  "openingBid": 274.32,
+  "openingAsk": 0,
+  "openingBid": 0,
   "currentAsk": 0,
   "currentBid": 0,
   "currHighestAsk": 0,
@@ -371,14 +945,59 @@ json_data = '''[{
   "sellOrders": [],
   "buyOrders": [],
   "history": [],
-  "dailyHistory": [],
+  "dailyHistory": [
+    {
+      "_id": {
+        "$oid": "5fc9d5d3f3977557ed8b119d"
+      },
+      "day": 1,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d5e5f3977557ed8b11bd"
+      },
+      "day": 2,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d6806ef4d45a735a3274"
+      },
+      "day": 1,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d7096ef4d45a735a3298"
+      },
+      "day": 2,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    }
+  ],
   "fulfilledOrders": [],
   "unfulfilledOrders": [],
   "createdAt": {
     "$date": "2020-11-12T18:39:56.789Z"
   },
   "updatedAt": {
-    "$date": "2020-11-12T18:39:56.789Z"
+    "$date": "2020-12-04T06:28:25.313Z"
   }
 },{
   "_id": {
@@ -386,8 +1005,8 @@ json_data = '''[{
   },
   "stockFullName": "Honeywell International Inc.",
   "symbol": "HON",
-  "openingAsk": 193.51,
-  "openingBid": 195.88,
+  "openingAsk": 0,
+  "openingBid": 0,
   "currentAsk": 0,
   "currentBid": 0,
   "currHighestAsk": 0,
@@ -396,14 +1015,59 @@ json_data = '''[{
   "sellOrders": [],
   "buyOrders": [],
   "history": [],
-  "dailyHistory": [],
+  "dailyHistory": [
+    {
+      "_id": {
+        "$oid": "5fc9d5d3f3977557ed8b119e"
+      },
+      "day": 1,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d5e5f3977557ed8b11be"
+      },
+      "day": 2,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d6806ef4d45a735a3275"
+      },
+      "day": 1,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d7096ef4d45a735a3299"
+      },
+      "day": 2,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    }
+  ],
   "fulfilledOrders": [],
   "unfulfilledOrders": [],
   "createdAt": {
     "$date": "2020-11-12T18:40:53.878Z"
   },
   "updatedAt": {
-    "$date": "2020-11-12T18:40:53.878Z"
+    "$date": "2020-12-04T06:28:25.321Z"
   }
 },{
   "_id": {
@@ -411,8 +1075,8 @@ json_data = '''[{
   },
   "stockFullName": "Intel Coprporation",
   "symbol": "INT",
-  "openingAsk": 44.91,
-  "openingBid": 44.9,
+  "openingAsk": 0,
+  "openingBid": 0,
   "currentAsk": 0,
   "currentBid": 0,
   "currHighestAsk": 0,
@@ -421,14 +1085,59 @@ json_data = '''[{
   "sellOrders": [],
   "buyOrders": [],
   "history": [],
-  "dailyHistory": [],
+  "dailyHistory": [
+    {
+      "_id": {
+        "$oid": "5fc9d5d3f3977557ed8b119f"
+      },
+      "day": 1,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d5e5f3977557ed8b11bf"
+      },
+      "day": 2,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d6806ef4d45a735a3276"
+      },
+      "day": 1,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d7096ef4d45a735a329a"
+      },
+      "day": 2,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    }
+  ],
   "fulfilledOrders": [],
   "unfulfilledOrders": [],
   "createdAt": {
     "$date": "2020-11-12T18:50:27.521Z"
   },
   "updatedAt": {
-    "$date": "2020-11-12T18:50:27.521Z"
+    "$date": "2020-12-04T06:28:25.328Z"
   }
 },{
   "_id": {
@@ -436,8 +1145,8 @@ json_data = '''[{
   },
   "stockFullName": "Johnson & Johnson",
   "symbol": "JNJ",
-  "openingAsk": 147.21,
-  "openingBid": 145.9,
+  "openingAsk": 0,
+  "openingBid": 0,
   "currentAsk": 0,
   "currentBid": 0,
   "currHighestAsk": 0,
@@ -446,14 +1155,59 @@ json_data = '''[{
   "sellOrders": [],
   "buyOrders": [],
   "history": [],
-  "dailyHistory": [],
+  "dailyHistory": [
+    {
+      "_id": {
+        "$oid": "5fc9d5d3f3977557ed8b11a0"
+      },
+      "day": 1,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d5e5f3977557ed8b11c0"
+      },
+      "day": 2,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d6806ef4d45a735a3277"
+      },
+      "day": 1,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d7096ef4d45a735a329b"
+      },
+      "day": 2,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    }
+  ],
   "fulfilledOrders": [],
   "unfulfilledOrders": [],
   "createdAt": {
     "$date": "2020-11-12T18:52:26.431Z"
   },
   "updatedAt": {
-    "$date": "2020-11-12T18:52:26.431Z"
+    "$date": "2020-12-04T06:28:25.349Z"
   }
 },{
   "_id": {
@@ -461,8 +1215,8 @@ json_data = '''[{
   },
   "stockFullName": "Coca-Cola Co",
   "symbol": "KO",
-  "openingAsk": 52.59,
-  "openingBid": 52.97,
+  "openingAsk": 0,
+  "openingBid": 0,
   "currentAsk": 0,
   "currentBid": 0,
   "currHighestAsk": 0,
@@ -471,14 +1225,59 @@ json_data = '''[{
   "sellOrders": [],
   "buyOrders": [],
   "history": [],
-  "dailyHistory": [],
+  "dailyHistory": [
+    {
+      "_id": {
+        "$oid": "5fc9d5d3f3977557ed8b11a1"
+      },
+      "day": 1,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d5e5f3977557ed8b11c1"
+      },
+      "day": 2,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d6806ef4d45a735a3278"
+      },
+      "day": 1,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d7096ef4d45a735a329c"
+      },
+      "day": 2,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    }
+  ],
   "fulfilledOrders": [],
   "unfulfilledOrders": [],
   "createdAt": {
     "$date": "2020-11-12T18:52:54.870Z"
   },
   "updatedAt": {
-    "$date": "2020-11-12T18:52:54.870Z"
+    "$date": "2020-12-04T06:28:25.375Z"
   }
 },{
   "_id": {
@@ -486,8 +1285,8 @@ json_data = '''[{
   },
   "stockFullName": "JPMorgan Chase & Co.",
   "symbol": "JPM",
-  "openingAsk": 115.69,
-  "openingBid": 120.5,
+  "openingAsk": 0,
+  "openingBid": 0,
   "currentAsk": 0,
   "currentBid": 0,
   "currHighestAsk": 0,
@@ -496,14 +1295,59 @@ json_data = '''[{
   "sellOrders": [],
   "buyOrders": [],
   "history": [],
-  "dailyHistory": [],
+  "dailyHistory": [
+    {
+      "_id": {
+        "$oid": "5fc9d5d3f3977557ed8b11a2"
+      },
+      "day": 1,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d5e5f3977557ed8b11c2"
+      },
+      "day": 2,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d6806ef4d45a735a3279"
+      },
+      "day": 1,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d7096ef4d45a735a329d"
+      },
+      "day": 2,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    }
+  ],
   "fulfilledOrders": [],
   "unfulfilledOrders": [],
   "createdAt": {
     "$date": "2020-11-12T18:53:22.540Z"
   },
   "updatedAt": {
-    "$date": "2020-11-12T18:53:22.540Z"
+    "$date": "2020-12-04T06:28:25.391Z"
   }
 },{
   "_id": {
@@ -511,8 +1355,8 @@ json_data = '''[{
   },
   "stockFullName": "McDonald's Corp",
   "symbol": "MCD",
-  "openingAsk": 211.69,
-  "openingBid": 207.5,
+  "openingAsk": 0,
+  "openingBid": 0,
   "currentAsk": 0,
   "currentBid": 0,
   "currHighestAsk": 0,
@@ -521,14 +1365,59 @@ json_data = '''[{
   "sellOrders": [],
   "buyOrders": [],
   "history": [],
-  "dailyHistory": [],
+  "dailyHistory": [
+    {
+      "_id": {
+        "$oid": "5fc9d5d3f3977557ed8b11a3"
+      },
+      "day": 1,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d5e5f3977557ed8b11c3"
+      },
+      "day": 2,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d6806ef4d45a735a327a"
+      },
+      "day": 1,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d7096ef4d45a735a329e"
+      },
+      "day": 2,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    }
+  ],
   "fulfilledOrders": [],
   "unfulfilledOrders": [],
   "createdAt": {
     "$date": "2020-11-12T18:57:10.864Z"
   },
   "updatedAt": {
-    "$date": "2020-11-12T18:57:10.864Z"
+    "$date": "2020-12-04T06:28:25.402Z"
   }
 },{
   "_id": {
@@ -536,8 +1425,8 @@ json_data = '''[{
   },
   "stockFullName": "3M Co",
   "symbol": "MMM",
-  "openingAsk": 166.29,
-  "openingBid": 162.47,
+  "openingAsk": 0,
+  "openingBid": 0,
   "currentAsk": 0,
   "currentBid": 0,
   "currHighestAsk": 0,
@@ -546,14 +1435,59 @@ json_data = '''[{
   "sellOrders": [],
   "buyOrders": [],
   "history": [],
-  "dailyHistory": [],
+  "dailyHistory": [
+    {
+      "_id": {
+        "$oid": "5fc9d5d3f3977557ed8b11a4"
+      },
+      "day": 1,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d5e5f3977557ed8b11c4"
+      },
+      "day": 2,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d6806ef4d45a735a327b"
+      },
+      "day": 1,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d7096ef4d45a735a329f"
+      },
+      "day": 2,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    }
+  ],
   "fulfilledOrders": [],
   "unfulfilledOrders": [],
   "createdAt": {
     "$date": "2020-11-12T18:57:59.765Z"
   },
   "updatedAt": {
-    "$date": "2020-11-12T18:57:59.765Z"
+    "$date": "2020-12-04T06:28:25.424Z"
   }
 },{
   "_id": {
@@ -561,8 +1495,8 @@ json_data = '''[{
   },
   "stockFullName": "Merck & Co., Inc.",
   "symbol": "MRK",
-  "openingAsk": 80.55,
-  "openingBid": 77.82,
+  "openingAsk": 0,
+  "openingBid": 0,
   "currentAsk": 0,
   "currentBid": 0,
   "currHighestAsk": 0,
@@ -571,14 +1505,59 @@ json_data = '''[{
   "sellOrders": [],
   "buyOrders": [],
   "history": [],
-  "dailyHistory": [],
+  "dailyHistory": [
+    {
+      "_id": {
+        "$oid": "5fc9d5d3f3977557ed8b11a5"
+      },
+      "day": 1,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d5e5f3977557ed8b11c5"
+      },
+      "day": 2,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d6806ef4d45a735a327c"
+      },
+      "day": 1,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d7096ef4d45a735a32a0"
+      },
+      "day": 2,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    }
+  ],
   "fulfilledOrders": [],
   "unfulfilledOrders": [],
   "createdAt": {
     "$date": "2020-11-12T18:58:27.014Z"
   },
   "updatedAt": {
-    "$date": "2020-11-12T18:58:27.014Z"
+    "$date": "2020-12-04T06:28:25.457Z"
   }
 },{
   "_id": {
@@ -586,8 +1565,8 @@ json_data = '''[{
   },
   "stockFullName": "Procter & Gamble Co",
   "symbol": "PG",
-  "openingAsk": 144.54,
-  "openingBid": 141.33,
+  "openingAsk": 0,
+  "openingBid": 0,
   "currentAsk": 0,
   "currentBid": 0,
   "currHighestAsk": 0,
@@ -596,14 +1575,59 @@ json_data = '''[{
   "sellOrders": [],
   "buyOrders": [],
   "history": [],
-  "dailyHistory": [],
+  "dailyHistory": [
+    {
+      "_id": {
+        "$oid": "5fc9d5d3f3977557ed8b11a6"
+      },
+      "day": 1,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d5e5f3977557ed8b11c6"
+      },
+      "day": 2,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d6806ef4d45a735a327d"
+      },
+      "day": 1,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d7096ef4d45a735a32a1"
+      },
+      "day": 2,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    }
+  ],
   "fulfilledOrders": [],
   "unfulfilledOrders": [],
   "createdAt": {
     "$date": "2020-11-12T18:58:55.525Z"
   },
   "updatedAt": {
-    "$date": "2020-11-12T18:58:55.525Z"
+    "$date": "2020-12-04T06:28:25.465Z"
   }
 },{
   "_id": {
@@ -611,8 +1635,8 @@ json_data = '''[{
   },
   "stockFullName": "Travelers Companies Inc",
   "symbol": "TRV",
-  "openingAsk": 139.51,
-  "openingBid": 132.33,
+  "openingAsk": 0,
+  "openingBid": 0,
   "currentAsk": 0,
   "currentBid": 0,
   "currHighestAsk": 0,
@@ -621,14 +1645,59 @@ json_data = '''[{
   "sellOrders": [],
   "buyOrders": [],
   "history": [],
-  "dailyHistory": [],
+  "dailyHistory": [
+    {
+      "_id": {
+        "$oid": "5fc9d5d3f3977557ed8b11a7"
+      },
+      "day": 1,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d5e5f3977557ed8b11c7"
+      },
+      "day": 2,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d6806ef4d45a735a327e"
+      },
+      "day": 1,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d7096ef4d45a735a32a2"
+      },
+      "day": 2,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    }
+  ],
   "fulfilledOrders": [],
   "unfulfilledOrders": [],
   "createdAt": {
     "$date": "2020-11-12T18:59:20.138Z"
   },
   "updatedAt": {
-    "$date": "2020-11-12T18:59:20.138Z"
+    "$date": "2020-12-04T06:28:25.470Z"
   }
 },{
   "_id": {
@@ -636,8 +1705,8 @@ json_data = '''[{
   },
   "stockFullName": "UnitedHealth Group Inc",
   "symbol": "UNH",
-  "openingAsk": 357.12,
-  "openingBid": 355.22,
+  "openingAsk": 0,
+  "openingBid": 0,
   "currentAsk": 0,
   "currentBid": 0,
   "currHighestAsk": 0,
@@ -646,14 +1715,59 @@ json_data = '''[{
   "sellOrders": [],
   "buyOrders": [],
   "history": [],
-  "dailyHistory": [],
+  "dailyHistory": [
+    {
+      "_id": {
+        "$oid": "5fc9d5d3f3977557ed8b11a8"
+      },
+      "day": 1,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d5e5f3977557ed8b11c8"
+      },
+      "day": 2,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d6806ef4d45a735a327f"
+      },
+      "day": 1,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d7096ef4d45a735a32a3"
+      },
+      "day": 2,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    }
+  ],
   "fulfilledOrders": [],
   "unfulfilledOrders": [],
   "createdAt": {
     "$date": "2020-11-12T19:00:05.052Z"
   },
   "updatedAt": {
-    "$date": "2020-11-12T19:00:05.052Z"
+    "$date": "2020-12-04T06:28:25.474Z"
   }
 },{
   "_id": {
@@ -661,8 +1775,8 @@ json_data = '''[{
   },
   "stockFullName": "salesforce.com, inc.",
   "symbol": "CRM",
-  "openingAsk": 251.22,
-  "openingBid": 250.22,
+  "openingAsk": 0,
+  "openingBid": 0,
   "currentAsk": 0,
   "currentBid": 0,
   "currHighestAsk": 0,
@@ -671,14 +1785,59 @@ json_data = '''[{
   "sellOrders": [],
   "buyOrders": [],
   "history": [],
-  "dailyHistory": [],
+  "dailyHistory": [
+    {
+      "_id": {
+        "$oid": "5fc9d5d3f3977557ed8b11a9"
+      },
+      "day": 1,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d5e5f3977557ed8b11c9"
+      },
+      "day": 2,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d6806ef4d45a735a3280"
+      },
+      "day": 1,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d7096ef4d45a735a32a4"
+      },
+      "day": 2,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    }
+  ],
   "fulfilledOrders": [],
   "unfulfilledOrders": [],
   "createdAt": {
     "$date": "2020-11-12T19:05:48.302Z"
   },
   "updatedAt": {
-    "$date": "2020-11-12T19:05:48.302Z"
+    "$date": "2020-12-04T06:28:25.478Z"
   }
 },{
   "_id": {
@@ -686,8 +1845,8 @@ json_data = '''[{
   },
   "stockFullName": "Verizon Communications Inc.",
   "symbol": "VZ",
-  "openingAsk": 60.69,
-  "openingBid": 52.69,
+  "openingAsk": 0,
+  "openingBid": 0,
   "currentAsk": 0,
   "currentBid": 0,
   "currHighestAsk": 0,
@@ -696,14 +1855,59 @@ json_data = '''[{
   "sellOrders": [],
   "buyOrders": [],
   "history": [],
-  "dailyHistory": [],
+  "dailyHistory": [
+    {
+      "_id": {
+        "$oid": "5fc9d5d3f3977557ed8b11aa"
+      },
+      "day": 1,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d5e5f3977557ed8b11ca"
+      },
+      "day": 2,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d6806ef4d45a735a3281"
+      },
+      "day": 1,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d7096ef4d45a735a32a5"
+      },
+      "day": 2,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    }
+  ],
   "fulfilledOrders": [],
   "unfulfilledOrders": [],
   "createdAt": {
     "$date": "2020-11-12T19:06:22.159Z"
   },
   "updatedAt": {
-    "$date": "2020-11-12T19:06:22.159Z"
+    "$date": "2020-12-04T06:28:25.491Z"
   }
 },{
   "_id": {
@@ -711,8 +1915,8 @@ json_data = '''[{
   },
   "stockFullName": "Walgreens Boots Alliance Inc",
   "symbol": "WBA",
-  "openingAsk": 40.38,
-  "openingBid": 40.12,
+  "openingAsk": 0,
+  "openingBid": 0,
   "currentAsk": 0,
   "currentBid": 0,
   "currHighestAsk": 0,
@@ -721,14 +1925,59 @@ json_data = '''[{
   "sellOrders": [],
   "buyOrders": [],
   "history": [],
-  "dailyHistory": [],
+  "dailyHistory": [
+    {
+      "_id": {
+        "$oid": "5fc9d5d3f3977557ed8b11ab"
+      },
+      "day": 1,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d5e5f3977557ed8b11cb"
+      },
+      "day": 2,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d6806ef4d45a735a3282"
+      },
+      "day": 1,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d7096ef4d45a735a32a6"
+      },
+      "day": 2,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    }
+  ],
   "fulfilledOrders": [],
   "unfulfilledOrders": [],
   "createdAt": {
     "$date": "2020-11-12T19:08:39.867Z"
   },
   "updatedAt": {
-    "$date": "2020-11-12T19:08:39.867Z"
+    "$date": "2020-12-04T06:28:25.495Z"
   }
 },{
   "_id": {
@@ -736,8 +1985,8 @@ json_data = '''[{
   },
   "stockFullName": "Walmart Inc",
   "symbol": "WMT",
-  "openingAsk": 157.25,
-  "openingBid": 147.22,
+  "openingAsk": 0,
+  "openingBid": 0,
   "currentAsk": 0,
   "currentBid": 0,
   "currHighestAsk": 0,
@@ -746,14 +1995,59 @@ json_data = '''[{
   "sellOrders": [],
   "buyOrders": [],
   "history": [],
-  "dailyHistory": [],
+  "dailyHistory": [
+    {
+      "_id": {
+        "$oid": "5fc9d5d3f3977557ed8b11ac"
+      },
+      "day": 1,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d5e5f3977557ed8b11cc"
+      },
+      "day": 2,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d6806ef4d45a735a3283"
+      },
+      "day": 1,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d7096ef4d45a735a32a7"
+      },
+      "day": 2,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    }
+  ],
   "fulfilledOrders": [],
   "unfulfilledOrders": [],
   "createdAt": {
     "$date": "2020-11-12T19:09:12.301Z"
   },
   "updatedAt": {
-    "$date": "2020-11-12T19:09:12.301Z"
+    "$date": "2020-12-04T06:28:25.500Z"
   }
 },{
   "_id": {
@@ -761,8 +2055,8 @@ json_data = '''[{
   },
   "stockFullName": " Walt Disney Co",
   "symbol": "DIS",
-  "openingAsk": 132.88,
-  "openingBid": 131.59,
+  "openingAsk": 0,
+  "openingBid": 0,
   "currentAsk": 0,
   "currentBid": 0,
   "currHighestAsk": 0,
@@ -771,14 +2065,59 @@ json_data = '''[{
   "sellOrders": [],
   "buyOrders": [],
   "history": [],
-  "dailyHistory": [],
+  "dailyHistory": [
+    {
+      "_id": {
+        "$oid": "5fc9d5d3f3977557ed8b11ad"
+      },
+      "day": 1,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d5e5f3977557ed8b11cd"
+      },
+      "day": 2,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d6806ef4d45a735a3284"
+      },
+      "day": 1,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    },
+    {
+      "_id": {
+        "$oid": "5fc9d7096ef4d45a735a32a8"
+      },
+      "day": 2,
+      "lowestAsk": 0,
+      "highestBid": 0,
+      "highestAsk": 0,
+      "lowestBid": 0,
+      "sharesSold": 0
+    }
+  ],
   "fulfilledOrders": [],
   "unfulfilledOrders": [],
   "createdAt": {
     "$date": "2020-11-12T19:09:40.103Z"
   },
   "updatedAt": {
-    "$date": "2020-11-12T19:09:40.103Z"
+    "$date": "2020-12-04T06:28:25.504Z"
   }
 },{
   "_id": {
@@ -786,126 +2125,155 @@ json_data = '''[{
   },
   "stockFullName": "Tesla",
   "symbol": "TSLA",
-  "openingAsk": 66,
-  "openingBid": 77,
-  "currentAsk": 0,
-  "currentBid": 0,
+  "openingAsk": 5,
+  "openingBid": 100,
+  "currentAsk": 16,
+  "currentBid": 75,
   "currHighestAsk": 0,
   "currLowestBid": 0,
   "eventSubscriptions": [],
-  "sellOrders": [],
+  "sellOrders": [
+    {
+      "_id": {
+        "$oid": "5fcaf239ffc982555012c864"
+      },
+      "orderID": "3UQ439Qz9xCW",
+      "orderPlacement": 1,
+      "userID": "5f999d70b697054d9cbffbbc",
+      "shares": 15,
+      "price": 32
+    },
+    {
+      "_id": {
+        "$oid": "5fcaf25bffc982555012c866"
+      },
+      "orderID": "z4sGWbJa30JZ",
+      "orderPlacement": 2,
+      "userID": "5f999d97b697054d9cbffbbe",
+      "shares": 18,
+      "price": 16
+    },
+    {
+      "_id": {
+        "$oid": "5fcaf2d5ffc982555012c86c"
+      },
+      "orderID": "BgxoUeFrg4tE",
+      "orderPlacement": 3,
+      "userID": "5f99a78fb0575273fccc4d67",
+      "shares": 12,
+      "price": 19
+    },
+    {
+      "_id": {
+        "$oid": "5fcaf300ffc982555012c871"
+      },
+      "orderID": "LoNj3C86SjlD",
+      "orderPlacement": 4,
+      "userID": "5f999db8b697054d9cbffbc2",
+      "shares": 19,
+      "price": 32
+    },
+    {
+      "_id": {
+        "$oid": "5fcaf454ffc982555012c87c"
+      },
+      "orderID": "9g0DGICY6Zfq",
+      "orderPlacement": 5,
+      "userID": "5f999ddeb697054d9cbffbc6",
+      "shares": 10,
+      "price": 16
+    }
+  ],
   "buyOrders": [
     {
       "_id": {
-        "$oid": "5fc9d3799a743c4b989c8d6d"
+        "$oid": "5fcaf236ffc982555012c862"
       },
-      "orderID": "1",
+      "orderID": "8kymu2ErAKbT",
+      "orderPlacement": 2,
       "userID": "5f99a6fecf30786874cdde76",
-      "orderPlacement": 1,
-      "username": "lmao",
       "shares": 12,
       "price": 75
     },
     {
       "_id": {
-        "$oid": "5fc9d3799a743c4b989c8d6e"
+        "$oid": "5fcaf25fffc982555012c868"
       },
-      "orderID": "6",
-      "orderPlacement": 6,
+      "orderID": "lU1wkNXbDkAr",
+      "orderPlacement": 3,
       "userID": "5f99a70acf30786874cdde78",
       "shares": 18,
       "price": 32
     },
     {
       "_id": {
-        "$oid": "5fc9d3799a743c4b989c8d6f"
+        "$oid": "5fcaf283ffc982555012c86a"
       },
-      "orderID": "3",
+      "orderID": "sPyaspmTNHtg",
+      "orderPlacement": 4,
       "userID": "5f99a76bb0575273fccc4d64",
-      "orderPlacement": 3,
       "shares": 5,
       "price": 34
     },
     {
       "_id": {
-        "$oid": "5fc9d3799a743c4b989c8d70"
+        "$oid": "5fcaf2feffc982555012c86f"
       },
-      "orderID": "2",
-      "orderPlacement": 2,
-      "userID": "5f99a78fb0575273fccc4d67",
-      "shares": 12,
-      "price": 32
+      "orderID": "RrO5G9kV16Fs",
+      "orderPlacement": 5,
+      "userID": "5f999da7b697054d9cbffbc0",
+      "shares": 32,
+      "price": 12
     },
     {
       "_id": {
-        "$oid": "5fc9d3799a743c4b989c8d71"
+        "$oid": "5fcaf338ffc982555012c873"
       },
-      "orderID": "5",
-      "orderPlacement": 5,
+      "orderID": "RMg6GmgkukFt",
+      "orderPlacement": 6,
       "userID": "5f99a7a1b0575273fccc4d69",
       "shares": 7,
       "price": 20
     },
     {
       "_id": {
-        "$oid": "5fc9d3799a743c4b989c8d72"
+        "$oid": "5fcaf368ffc982555012c875"
       },
-      "orderID": "4",
-      "orderPlacement": 4,
+      "orderID": "AtB5acjjgQnf",
+      "orderPlacement": 7,
       "userID": "5f99a7acb0575273fccc4d6b",
       "shares": 6,
       "price": 32
     },
     {
       "_id": {
-        "$oid": "5fc9d3799a743c4b989c8d73"
+        "$oid": "5fcaf395ffc982555012c877"
       },
-      "orderID": "7",
-      "orderPlacement": 7,
+      "orderID": "WukLNGs9osxU",
+      "orderPlacement": 8,
       "userID": "5f99a7c0b0575273fccc4d6d",
       "shares": 9,
       "price": 21
     },
     {
       "_id": {
-        "$oid": "5fc9d3799a743c4b989c8d74"
+        "$oid": "5fcaf3bcffc982555012c879"
       },
-      "orderID": "8",
-      "orderPlacement": 8,
+      "orderID": "bDjDQnb7OWwN",
+      "orderPlacement": 9,
       "userID": "5f99a7ceb0575273fccc4d6e",
-      "shares": 2,
-      "price": 18
-    },
-    {
-      "_id": {
-        "$oid": "5fc9d3799a743c4b989c8d75"
-      },
-      "orderID": "hbdGVW8bY2zk",
-      "orderPlacement": 1,
-      "userID": "5f999d97b697054d9cbffbbe",
-      "shares": 5,
-      "price": 5
-    },
-    {
-      "_id": {
-        "$oid": "5fc9d3799a743c4b989c8d76"
-      },
-      "orderID": "AXxKidaXNLLW",
-      "orderPlacement": 2,
-      "userID": "5f999d97b697054d9cbffbbe",
-      "shares": 5,
-      "price": 5
+      "shares": 18,
+      "price": 2
     }
   ],
   "history": [],
-  "dailyHistory": [],
   "fulfilledOrders": [],
   "unfulfilledOrders": [],
   "createdAt": {
     "$date": "2020-12-04T06:06:50.850Z"
   },
   "updatedAt": {
-    "$date": "2020-12-04T06:13:13.552Z"
+    "$date": "2020-12-05T02:45:40.996Z"
   }
 }]'''
 

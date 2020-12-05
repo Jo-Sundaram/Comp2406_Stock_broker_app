@@ -23,8 +23,15 @@ json_data = '''[{
   "username": "Jothika",
   "email": "jo@admin.com",
   "password": "badpassword",
-  "userFunds": 0,
-  "notifications": [],
+  "userFunds": 10400,
+  "notifications": [
+    {
+      "_id": {
+        "$oid": "5fc9d70a6ef4d45a735a32ae"
+      },
+      "notification": "You bought 5 shares of TSLA for $100 from Anwar"
+    }
+  ],
   "eventSubscriptions": [],
   "watchlistCollection": [],
   "stockPortfolio": [
@@ -33,17 +40,32 @@ json_data = '''[{
         "$oid": "5f999d70b697054d9cbffbbd"
       },
       "stockID": "TSLA",
-      "shares": 65
+      "shares": 55
     }
   ],
   "unpBuyOrders": [],
-  "pBuyOrders": [],
+  "pBuyOrders": [
+    {
+      "_id": {
+        "$oid": "5fc9d7096ef4d45a735a32ab"
+      },
+      "day": 2,
+      "buyerID": "5f999d70b697054d9cbffbbc",
+      "sellerID": "5f999d97b697054d9cbffbbe",
+      "buyerName": "Jothika",
+      "sellerName": "Anwar",
+      "shares": 5,
+      "soldFor": 100,
+      "asked": 5,
+      "datetime": "2"
+    }
+  ],
   "unpSellOrders": [
     {
       "_id": {
-        "$oid": "5f99a1cccf30786874cdde6a"
+        "$oid": "5fcaf239ffc982555012c863"
       },
-      "orderID": "4",
+      "orderID": "3UQ439Qz9xCW",
       "stockID": "TSLA",
       "shares": 15,
       "price": 32
@@ -54,9 +76,18 @@ json_data = '''[{
     "$date": "2020-10-28T16:33:52.060Z"
   },
   "updatedAt": {
-    "$date": "2020-10-28T16:52:28.451Z"
+    "$date": "2020-12-05T02:36:41.145Z"
   },
-  "__v": 0
+  "__v": 0,
+  "fundsHistory": [
+    {
+      "_id": {
+        "$oid": "5fc9d6f06ef4d45a735a3286"
+      },
+      "type": "Deposit",
+      "amount": 1000
+    }
+  ]
 },{
   "_id": {
     "$oid": "5f999d97b697054d9cbffbbe"
@@ -64,8 +95,15 @@ json_data = '''[{
   "username": "Anwar",
   "email": "anwar@admin.com",
   "password": "badpassword",
-  "userFunds": 0,
-  "notifications": [],
+  "userFunds": 500,
+  "notifications": [
+    {
+      "_id": {
+        "$oid": "5fc9d70a6ef4d45a735a32af"
+      },
+      "notification": "You sold 5 shares of TSLA for $100 to Jothika"
+    }
+  ],
   "eventSubscriptions": [],
   "watchlistCollection": [],
   "stockPortfolio": [
@@ -74,7 +112,7 @@ json_data = '''[{
         "$oid": "5f999d97b697054d9cbffbbf"
       },
       "stockID": "TSLA",
-      "shares": 32
+      "shares": 9
     }
   ],
   "unpBuyOrders": [],
@@ -82,20 +120,35 @@ json_data = '''[{
   "unpSellOrders": [
     {
       "_id": {
-        "$oid": "5f99a20ecf30786874cdde6c"
+        "$oid": "5fcaf25bffc982555012c865"
       },
-      "orderID": "2",
+      "orderID": "z4sGWbJa30JZ",
       "stockID": "TSLA",
       "shares": 18,
       "price": 16
     }
   ],
-  "pSellOrders": [],
+  "pSellOrders": [
+    {
+      "_id": {
+        "$oid": "5fc9d7096ef4d45a735a32ac"
+      },
+      "day": 2,
+      "buyerID": "5f999d70b697054d9cbffbbc",
+      "sellerID": "5f999d97b697054d9cbffbbe",
+      "buyerName": "Jothika",
+      "sellerName": "Anwar",
+      "shares": 5,
+      "soldFor": 100,
+      "asked": 5,
+      "datetime": "2"
+    }
+  ],
   "createdAt": {
     "$date": "2020-10-28T16:34:31.804Z"
   },
   "updatedAt": {
-    "$date": "2020-10-28T16:53:34.254Z"
+    "$date": "2020-12-05T02:37:15.796Z"
   },
   "__v": 0
 },{
@@ -105,7 +158,7 @@ json_data = '''[{
   "username": "Hamza",
   "email": "hamza@admin.com",
   "password": "badpassword",
-  "userFunds": 0,
+  "userFunds": 616,
   "notifications": [],
   "eventSubscriptions": [],
   "watchlistCollection": [],
@@ -118,27 +171,36 @@ json_data = '''[{
       "shares": 4
     }
   ],
-  "unpBuyOrders": [],
-  "pBuyOrders": [],
-  "unpSellOrders": [
+  "unpBuyOrders": [
     {
       "_id": {
-        "$oid": "5f99a23dcf30786874cdde6e"
+        "$oid": "5fcaf2feffc982555012c86e"
       },
-      "orderID": "3",
+      "orderID": "RrO5G9kV16Fs",
       "stockID": "TSLA",
-      "shares": 12,
-      "price": 19
+      "shares": 32,
+      "price": 12
     }
   ],
+  "pBuyOrders": [],
+  "unpSellOrders": [],
   "pSellOrders": [],
   "createdAt": {
     "$date": "2020-10-28T16:34:47.104Z"
   },
   "updatedAt": {
-    "$date": "2020-10-28T16:54:21.065Z"
+    "$date": "2020-12-05T02:39:58.132Z"
   },
-  "__v": 0
+  "__v": 0,
+  "fundsHistory": [
+    {
+      "_id": {
+        "$oid": "5fcaf2eaffc982555012c86d"
+      },
+      "type": "Deposit",
+      "amount": 1000
+    }
+  ]
 },{
   "_id": {
     "$oid": "5f999db8b697054d9cbffbc2"
@@ -156,7 +218,7 @@ json_data = '''[{
         "$oid": "5f999db8b697054d9cbffbc3"
       },
       "stockID": "TSLA",
-      "shares": 331
+      "shares": 312
     }
   ],
   "unpBuyOrders": [],
@@ -164,9 +226,9 @@ json_data = '''[{
   "unpSellOrders": [
     {
       "_id": {
-        "$oid": "5f99a255cf30786874cdde70"
+        "$oid": "5fcaf300ffc982555012c870"
       },
-      "orderID": "1",
+      "orderID": "LoNj3C86SjlD",
       "stockID": "TSLA",
       "shares": 19,
       "price": 32
@@ -177,7 +239,7 @@ json_data = '''[{
     "$date": "2020-10-28T16:35:04.705Z"
   },
   "updatedAt": {
-    "$date": "2020-10-28T16:54:45.343Z"
+    "$date": "2020-12-05T02:40:00.260Z"
   },
   "__v": 0
 },{
@@ -187,7 +249,7 @@ json_data = '''[{
   "username": "Mirah",
   "email": "mirah@admin.com",
   "password": "badpassword",
-  "userFunds": 0,
+  "userFunds": 1000,
   "notifications": [],
   "eventSubscriptions": [],
   "watchlistCollection": [],
@@ -202,25 +264,24 @@ json_data = '''[{
   ],
   "unpBuyOrders": [],
   "pBuyOrders": [],
-  "unpSellOrders": [
-    {
-      "_id": {
-        "$oid": "5f99a2aecf30786874cdde72"
-      },
-      "orderID": "5",
-      "stockID": "TSLA",
-      "shares": 7,
-      "price": 65
-    }
-  ],
+  "unpSellOrders": [],
   "pSellOrders": [],
   "createdAt": {
     "$date": "2020-10-28T16:35:23.879Z"
   },
   "updatedAt": {
-    "$date": "2020-10-28T16:56:14.082Z"
+    "$date": "2020-12-05T02:35:08.145Z"
   },
-  "__v": 0
+  "__v": 0,
+  "fundsHistory": [
+    {
+      "_id": {
+        "$oid": "5fcaf1dcffc982555012c85e"
+      },
+      "type": "Deposit",
+      "amount": 1000
+    }
+  ]
 },{
   "_id": {
     "$oid": "5f999ddeb697054d9cbffbc6"
@@ -238,7 +299,7 @@ json_data = '''[{
         "$oid": "5f999ddeb697054d9cbffbc7"
       },
       "stockID": "TSLA",
-      "shares": 5
+      "shares": 10
     }
   ],
   "unpBuyOrders": [],
@@ -246,9 +307,9 @@ json_data = '''[{
   "unpSellOrders": [
     {
       "_id": {
-        "$oid": "5f99a2cccf30786874cdde74"
+        "$oid": "5fcaf454ffc982555012c87b"
       },
-      "orderID": "6",
+      "orderID": "9g0DGICY6Zfq",
       "stockID": "TSLA",
       "shares": 10,
       "price": 16
@@ -259,7 +320,7 @@ json_data = '''[{
     "$date": "2020-10-28T16:35:42.600Z"
   },
   "updatedAt": {
-    "$date": "2020-10-28T16:56:44.463Z"
+    "$date": "2020-12-05T02:45:40.994Z"
   },
   "__v": 0
 },{
@@ -269,7 +330,7 @@ json_data = '''[{
   "username": "samee",
   "email": "samee@admin.com",
   "password": "badpassword",
-  "userFunds": 1100,
+  "userFunds": 200,
   "notifications": [],
   "eventSubscriptions": [],
   "watchlistCollection": [],
@@ -285,9 +346,9 @@ json_data = '''[{
   "unpBuyOrders": [
     {
       "_id": {
-        "$oid": "5f99abb6b0575273fccc4d6f"
+        "$oid": "5fcaf236ffc982555012c861"
       },
-      "orderID": "1",
+      "orderID": "8kymu2ErAKbT",
       "stockID": "TSLA",
       "shares": 12,
       "price": 75
@@ -300,7 +361,7 @@ json_data = '''[{
     "$date": "2020-10-28T17:14:38.859Z"
   },
   "updatedAt": {
-    "$date": "2020-10-28T17:34:46.111Z"
+    "$date": "2020-12-05T02:36:38.705Z"
   },
   "__v": 0
 },{
@@ -310,7 +371,7 @@ json_data = '''[{
   "username": "musa",
   "email": "musa@admin.com",
   "password": "badpassword",
-  "userFunds": 1424,
+  "userFunds": 848,
   "notifications": [],
   "eventSubscriptions": [],
   "watchlistCollection": [],
@@ -318,9 +379,9 @@ json_data = '''[{
   "unpBuyOrders": [
     {
       "_id": {
-        "$oid": "5f99abe9b0575273fccc4d71"
+        "$oid": "5fcaf25fffc982555012c867"
       },
-      "orderID": "6",
+      "orderID": "lU1wkNXbDkAr",
       "stockID": "TSLA",
       "shares": 18,
       "price": 32
@@ -333,7 +394,7 @@ json_data = '''[{
     "$date": "2020-10-28T17:14:50.512Z"
   },
   "updatedAt": {
-    "$date": "2020-10-28T17:35:37.465Z"
+    "$date": "2020-12-05T02:37:19.487Z"
   },
   "__v": 0
 },{
@@ -343,7 +404,7 @@ json_data = '''[{
   "username": "martin",
   "email": "martin@admin.com",
   "password": "badpassword",
-  "userFunds": 1830,
+  "userFunds": 1660,
   "notifications": [],
   "eventSubscriptions": [],
   "watchlistCollection": [],
@@ -351,9 +412,9 @@ json_data = '''[{
   "unpBuyOrders": [
     {
       "_id": {
-        "$oid": "5f99ac04b0575273fccc4d73"
+        "$oid": "5fcaf283ffc982555012c869"
       },
-      "orderID": "3",
+      "orderID": "sPyaspmTNHtg",
       "stockID": "TSLA",
       "shares": 5,
       "price": 34
@@ -366,7 +427,7 @@ json_data = '''[{
     "$date": "2020-10-28T17:16:27.913Z"
   },
   "updatedAt": {
-    "$date": "2020-10-28T17:36:04.773Z"
+    "$date": "2020-12-05T02:37:55.830Z"
   },
   "__v": 0
 },{
@@ -386,28 +447,28 @@ json_data = '''[{
         "$oid": "5f99a78fb0575273fccc4d68"
       },
       "stockID": "TSLA",
-      "shares": 34
+      "shares": 22
     }
   ],
-  "unpBuyOrders": [
+  "unpBuyOrders": [],
+  "pBuyOrders": [],
+  "unpSellOrders": [
     {
       "_id": {
-        "$oid": "5f99ac32b0575273fccc4d75"
+        "$oid": "5fcaf2d5ffc982555012c86b"
       },
-      "orderID": "2",
+      "orderID": "BgxoUeFrg4tE",
       "stockID": "TSLA",
       "shares": 12,
-      "price": 32
+      "price": 19
     }
   ],
-  "pBuyOrders": [],
-  "unpSellOrders": [],
   "pSellOrders": [],
   "createdAt": {
     "$date": "2020-10-28T17:17:03.301Z"
   },
   "updatedAt": {
-    "$date": "2020-10-28T17:36:50.615Z"
+    "$date": "2020-12-05T02:39:17.898Z"
   },
   "__v": 0
 },{
@@ -417,7 +478,7 @@ json_data = '''[{
   "username": "Matt",
   "email": "matt@admin.com",
   "password": "badpassword",
-  "userFunds": 1860,
+  "userFunds": 1720,
   "notifications": [],
   "eventSubscriptions": [],
   "watchlistCollection": [],
@@ -433,9 +494,9 @@ json_data = '''[{
   "unpBuyOrders": [
     {
       "_id": {
-        "$oid": "5f99ac48b0575273fccc4d77"
+        "$oid": "5fcaf338ffc982555012c872"
       },
-      "orderID": "5",
+      "orderID": "RMg6GmgkukFt",
       "stockID": "TSLA",
       "shares": 7,
       "price": 20
@@ -448,7 +509,7 @@ json_data = '''[{
     "$date": "2020-10-28T17:17:21.209Z"
   },
   "updatedAt": {
-    "$date": "2020-10-28T17:37:12.383Z"
+    "$date": "2020-12-05T02:40:56.912Z"
   },
   "__v": 0
 },{
@@ -458,7 +519,7 @@ json_data = '''[{
   "username": "Tal",
   "email": "tal@admin.com",
   "password": "badpassword",
-  "userFunds": 1808,
+  "userFunds": 1616,
   "notifications": [],
   "eventSubscriptions": [],
   "watchlistCollection": [],
@@ -474,9 +535,9 @@ json_data = '''[{
   "unpBuyOrders": [
     {
       "_id": {
-        "$oid": "5f99ac61b0575273fccc4d79"
+        "$oid": "5fcaf368ffc982555012c874"
       },
-      "orderID": "4",
+      "orderID": "AtB5acjjgQnf",
       "stockID": "TSLA",
       "shares": 6,
       "price": 32
@@ -489,7 +550,7 @@ json_data = '''[{
     "$date": "2020-10-28T17:17:32.551Z"
   },
   "updatedAt": {
-    "$date": "2020-10-28T17:37:37.858Z"
+    "$date": "2020-12-05T02:41:44.715Z"
   },
   "__v": 0
 },{
@@ -499,7 +560,7 @@ json_data = '''[{
   "username": "Carter",
   "email": "carter@admin.com",
   "password": "badpassword",
-  "userFunds": 1811,
+  "userFunds": 1622,
   "notifications": [],
   "eventSubscriptions": [],
   "watchlistCollection": [],
@@ -507,9 +568,9 @@ json_data = '''[{
   "unpBuyOrders": [
     {
       "_id": {
-        "$oid": "5f99ac80b0575273fccc4d7b"
+        "$oid": "5fcaf395ffc982555012c876"
       },
-      "orderID": "7",
+      "orderID": "WukLNGs9osxU",
       "stockID": "TSLA",
       "shares": 9,
       "price": 21
@@ -522,7 +583,7 @@ json_data = '''[{
     "$date": "2020-10-28T17:17:52.627Z"
   },
   "updatedAt": {
-    "$date": "2020-10-28T17:38:08.024Z"
+    "$date": "2020-12-05T02:42:29.914Z"
   },
   "__v": 0
 },{
@@ -532,7 +593,7 @@ json_data = '''[{
   "username": "Nikita",
   "email": "nikita@admin.com",
   "password": "badpassword",
-  "userFunds": 1964,
+  "userFunds": 1928,
   "notifications": [],
   "eventSubscriptions": [],
   "watchlistCollection": [],
@@ -540,12 +601,12 @@ json_data = '''[{
   "unpBuyOrders": [
     {
       "_id": {
-        "$oid": "5f99ac91b0575273fccc4d7d"
+        "$oid": "5fcaf3bcffc982555012c878"
       },
-      "orderID": "8",
+      "orderID": "bDjDQnb7OWwN",
       "stockID": "TSLA",
-      "shares": 2,
-      "price": 18
+      "shares": 18,
+      "price": 2
     }
   ],
   "pBuyOrders": [],
@@ -555,7 +616,7 @@ json_data = '''[{
     "$date": "2020-10-28T17:18:06.115Z"
   },
   "updatedAt": {
-    "$date": "2020-10-28T17:38:25.816Z"
+    "$date": "2020-12-05T02:43:08.568Z"
   },
   "__v": 0
 }]'''

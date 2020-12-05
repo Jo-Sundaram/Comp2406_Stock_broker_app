@@ -396,12 +396,35 @@ app.get("/:symbol/", async function(req, res){ //i wanna change :day to a query 
         {'symbol' : req.params.symbol},
         function(err, result){
             if(err){
-                return res.status(400).send(err);
+				console.log(err);
             }
             sellOrders = result.sellOrders;
             buyOrders = result.buyOrders;
         }
-    );
+	);
+	
+	var highestAsk = 'N/A';
+	for (var key in sellOrders){
+		if(sellOrders[key].price > highestAsk || highestAsk == 'N/A')
+		{
+			highestAsk = sellOrders[key].price;
+		}
+	}
+	if(highestAsk == 'N/A'){
+		highestAsk = 0;
+	}
+
+	var lowestBid = 'N/A';
+	for (var key in buyOrders){
+		if(buyOrders[key].price < lowestBid || lowestBid == 'N/A')
+		{
+			lowestBid = buyOrders[key].price;
+		}
+		
+	}
+	if(lowestBid == 'N/A'){
+		lowestBid = 0;
+	}
     
     let isSwapped = true;
     while(isSwapped)
@@ -562,7 +585,7 @@ app.get("/:symbol/", async function(req, res){ //i wanna change :day to a query 
             buyOrder.userID,
             function(err, res){
                 if(err){
-                    return res.status(400).send(err);
+                    console.log(err);
                 }
                 userPortfolio = res.stockPortfolio;
                 console.log(res)
@@ -586,7 +609,7 @@ app.get("/:symbol/", async function(req, res){ //i wanna change :day to a query 
                 {$set: {'stockPortfolio.$.shares': currStocks+shares}},
                 function(err){
                     if(err){
-                        return res.status(422).send(err);
+                        console.log(err);
                     }
                     //console.log('buyorder '+ buyOrder.userID +' fulfilled');
                 }
@@ -639,7 +662,7 @@ app.get("/:symbol/", async function(req, res){ //i wanna change :day to a query 
             sellOrder.userID,
             function(err, res){
                 if(err){
-                    console.log("err");
+                    console.log(err);
                 }
                 sellerName = res.username;
             }
@@ -650,7 +673,7 @@ app.get("/:symbol/", async function(req, res){ //i wanna change :day to a query 
             buyOrder.userID,
             function(err, res){
                 if(err){
-                    console.log("err");
+                    console.log(err);
                 }
                 buyerName = res.username;
             }
@@ -676,7 +699,7 @@ app.get("/:symbol/", async function(req, res){ //i wanna change :day to a query 
                 sellOrders[i].userID,
                 function(err, res){
                     if(err){
-                        return res.status(400).send(err);
+                        console.log(err);
                     }
                     userPortfolio = res.stockPortfolio;
                 }
@@ -698,7 +721,7 @@ app.get("/:symbol/", async function(req, res){ //i wanna change :day to a query 
                     {$set: {'stockPortfolio.$.shares': currStocks+sellOrders[i].shares}},
                     function(err){
                         if(err){
-                            return res.status(422).send(err);
+							console.log(err);
                         }
                     }
                 );
@@ -712,7 +735,7 @@ app.get("/:symbol/", async function(req, res){ //i wanna change :day to a query 
                     }}}, 
                     function(err){
                         if(err){
-                            return res.status(422).send(err);
+							console.log(err);
                         }
                     }
                 );
@@ -737,7 +760,7 @@ app.get("/:symbol/", async function(req, res){ //i wanna change :day to a query 
 					console.log("is there a problem?")
 				
                     if(err){
-                        return res.status(400).send(err);
+                        console.log(err);
                     }
                     funds = result.userFunds;
                 }
@@ -748,7 +771,7 @@ app.get("/:symbol/", async function(req, res){ //i wanna change :day to a query 
                 {$set:{userFunds: funds+(buyOrders[i].price*buyOrders[i].price)}},
                 function(err){
                     if(err){
-                        return res.status(400).send(err);
+                        console.log(err);
                     }
                 }
             );
@@ -768,7 +791,7 @@ app.get("/:symbol/", async function(req, res){ //i wanna change :day to a query 
 
         function(err){
             if(err){
-                return res.status(400).send(err);
+				console.log(err);
             }
             console.log("success");
         }
@@ -782,8 +805,8 @@ app.get("/:symbol/", async function(req, res){ //i wanna change :day to a query 
     
             function(err){
                 if(err){
-                    return res.status(400).send(err);
-                }
+					console.log(err);
+				}
             }
         );
 
@@ -792,7 +815,7 @@ app.get("/:symbol/", async function(req, res){ //i wanna change :day to a query 
             {$push: {pBuyOrders: completedOrders[i]}},
             function(err){
                 if(err){
-                    return res.status(400).send(err);
+					console.log(err);
                 }
                 
             }
@@ -803,10 +826,10 @@ app.get("/:symbol/", async function(req, res){ //i wanna change :day to a query 
             {$push: {pSellOrders: completedOrders[i]}},
             function(err){
                 if(err){
-                    return res.status(400).send(err);
+					console.log(err);
                 }
                 
-            }
+			}
 		);
 		
 		sharesSold = completedOrders[i].shares + sharesSold;
@@ -818,7 +841,7 @@ app.get("/:symbol/", async function(req, res){ //i wanna change :day to a query 
 
         function(err){
             if(err){
-                return res.status(400).send(err);
+				console.log(err);
             }
         }
     );
@@ -829,7 +852,7 @@ app.get("/:symbol/", async function(req, res){ //i wanna change :day to a query 
 
         function(err){
             if(err){
-                return res.status(400).send(err);
+				console.log(err);
             }
         }
     );
@@ -849,9 +872,6 @@ app.get("/:symbol/", async function(req, res){ //i wanna change :day to a query 
 		}
 		console.log("success: true")
 	});
-	
-	let lowestBid = stock.currLowestBid;
-	let highestAsk = stock.currHighestAsk;
 
 	console.log
 
