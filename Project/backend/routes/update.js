@@ -873,8 +873,6 @@ app.get("/:symbol/", async function(req, res){ //i wanna change :day to a query 
 		console.log("success: true")
 	});
 
-	console.log
-
 	Stock.findOneAndUpdate(
 		{'symbol' : req.params.symbol},
 		{$push: {dailyHistory: {
